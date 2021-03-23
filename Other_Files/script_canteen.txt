@@ -1,0 +1,75 @@
+create database CanteenManagement
+go
+
+use CanteenManagement
+go
+
+create table Role(
+	id varchar(10) primary key not null,
+	role_name nvarchar(30) not null
+)
+go
+
+create table Staff(
+	id varchar(10) primary key not null,
+	staff_name nvarchar(30) not null,
+	phone_num nvarchar(10),
+	address nvarchar(100),
+	--password varchar(20) not null
+)
+go
+
+create table UserLogin(
+	userid varchar(10) primary key not null,
+	password varchar(20) not null,
+	roleid varchar(10) not null,
+)
+go
+
+create table Customer_Order(
+	id varchar(10) primary key not null,
+	order_time smalldatetime not null,
+	status_now int, --  = 0: Đã giao, = 1 : Chưa giao,  = 2 :
+	staffid varchar(10) not null
+)
+go
+
+create table Menu(
+	id varchar(10) primary key not null,
+	time_now smalldatetime not null
+)
+
+create table Food(
+	id varchar(10) primary key not null,
+	name nvarchar(50) not null,
+	describe ntext not null,
+	price money not null,
+	img text
+)
+
+create table MenuDetail(
+	menuid varchar(10) not null,
+	foodid varchar(10) not null,
+	num_food_in_menu int not null,
+	constraint PK_Menu primary key(menuid, foodid)
+)
+go
+
+create table OrderDetail(
+	orderid varchar(10) not null,
+	foodid varchar(10) not null,
+	num_of_food int default 1,
+	cur_price money,
+	constraint PK_Order primary key(orderid, foodid)
+)
+go
+
+alter table OrderDetail add constraint FK_Order foreign key (orderid) references Customer_Order(id)
+alter table OrderDetail add constraint FK_Order2 foreign key (foodid) references Food(id)
+alter table MenuDetail add constraint FK_Menu foreign key(menuid) references Menu(id)
+alter table MenuDetail add constraint FK_Menu2 foreign key(foodid) references Food(id)
+alter table Customer_Order add constraint FK_Cus foreign key(staffid) references Staff(id)
+alter table UserLogin add constraint FK_User_Role foreign key(roleid) references Role(id)
+alter table UserLogin add constraint FK_User_Staff foreign key(userid) references Staff(id)
+
+
