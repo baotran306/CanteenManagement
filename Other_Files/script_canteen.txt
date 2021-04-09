@@ -13,6 +13,8 @@ go
 create table Staff(
 	id varchar(10) primary key not null,
 	staff_name nvarchar(30) not null,
+	identity_card nvarchar(10),
+	day_of_birth(date),
 	phone_num nvarchar(10),
 	address nvarchar(100),
 	--password varchar(20) not null
@@ -29,7 +31,7 @@ go
 create table Customer_Order(
 	id varchar(10) primary key not null,
 	order_time smalldatetime not null,
-	status_now int, --  = 0: Đã giao, = 1 : Chưa giao,  = 2 :
+	status_now int check (status_now in(0, 1)), --  = 0: Đã giao, = 1 : Chưa giao,  = 2 :
 	staffid varchar(10) not null
 )
 go
@@ -50,7 +52,6 @@ create table Food(
 create table MenuDetail(
 	menuid varchar(10) not null,
 	foodid varchar(10) not null,
-	num_food_in_menu int not null,
 	constraint PK_Menu primary key(menuid, foodid)
 )
 go
