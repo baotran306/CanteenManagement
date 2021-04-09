@@ -26,5 +26,5 @@ class Bill:
     def set_status_now(self, st):
         self.__status_now = st
 
-    def get_num_of_foods(self):
+    def get_status_now(self):
         return self.__status_now
