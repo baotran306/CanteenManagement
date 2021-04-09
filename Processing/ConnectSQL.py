@@ -20,6 +20,10 @@ class SqlFunction:
             cursor = self.func
             if tablename.lower() == 'userlogin':
                 cursor.execute("select * from {} where userid = ?".format(tablename), idb)
+            elif tablename.lower() == 'orderdetail':
+                cursor.execute("select * from {} where orderid = ?".format(tablename), idb)
+            elif tablename.lower() == 'menudetail':
+                cursor.execute("select * from {} where menuid = ?".format(tablename), idb)
             else:
                 cursor.execute("select * from {} where id = ?".format(tablename), idb)
             cnt = 0
@@ -111,14 +115,14 @@ class SqlFunction:
             print(ex)
             return False
 
-    def insert_staff(self, ids, name, phone, addr):
+    def insert_staff(self, ids, name, id_card, dob, phone, addr):
         try:
             if self.check_existed_id("staff", ids):
                 return False
             cursor = self.func
             cursor.execute(
-                'insert into staff values (?, ?, ?, ?);',
-                (ids, name, phone, addr)
+                'insert into staff values (?, ?, ?, ?, ?, ?);',
+                (ids, name, id_card, dob, phone, addr)
             )
             cursor.commit()
             return True
@@ -238,14 +242,15 @@ class SqlFunction:
             print(ex)
             return False
 
-    def update_staff(self, ids, name, phone="", addr=""):
+    def update_staff(self, ids, name, id_card=None, dob=None, phone=None, addr=None):
         try:
             if not self.check_existed_id("staff", ids):
                 return False
             cursor = self.func
             cursor.execute(
-                'update staff set staff_name = ?, phone_num = ?, address = ? where id = ?;',
-                (name, phone, addr, ids)
+                'update staff set staff_name = ?, identity_card = ?, day_of_birth = ?,'
+                ' phone_num = ?, address = ? where id = ?;',
+                (name, id_card, dob, phone, addr, ids)
             )
             cursor.commit()
             return True
@@ -272,7 +277,8 @@ class SqlFunction:
         try:
             if self.check_existed_id("staff", ids):
                 cursor = self.func
-                sql = "select staff_name, phone_num, address, role_name, password from staff, " \
+                sql = "select staff_name, identity_card, day_of_birth, phone_num, address, role_name, " \
+                      "password from staff, " \
                       "UserLogin, role where role.id = UserLogin.roleid and UserLogin.userid = Staff.id " \
                       "and staff.id = ?"
                 cursor.execute(sql, ids)
@@ -284,6 +290,8 @@ class SqlFunction:
                     ans.append(row[2])
                     ans.append(row[3])
                     ans.append(row[4])
+                    ans.append(row[5])
+                    ans.append(row[6])
                     break
                 cursor.commit()
                 return ans
@@ -351,41 +359,56 @@ class SqlFunction:
             print(ex)
             return False
 
-    # def get_info_menu_detail(self, menu_id):
-    #     try:
-    #         cursor = self.func
-    #         if not self.check_existed_id("MenuDetail", menu_id)
-    #             return []
-    #         cursor.execute("select ")
+    def get_info_menu_detail(self, menu_id):
+        try:
+            cursor = self.func
+            if not self.check_existed_id("MenuDetail", menu_id):
+                return []
+            cursor.execute("select name, describe, price, img from Food, MenuDetail "
+                           "where food.id = menudetail.foodid and menudetail.menuid = ?", menu_id)
+            ans = []
+            for r in cursor:
+                ans.append(r)
+            cursor.commit()
+            return ans
+        except Exception as ex:
+            print("----Error in get_info_menu_detail----")
+            print(ex)
+            return []
+
 
 """Testing"""
 sql_func = SqlFunction()
-# print(sql_func.insert_menu("123", "2020-08-15 04:06:00"))
-# print(sql_func.insert_food("141", "Bánh test", "Test 3, mô tả sau", 20000,
+# print(sql_func.insert_menu("127800", "2020-08-15 04:06:00"))
+# print(sql_func.insert_food("1412222", "Bánh abc", "Test 3, mô tả sau", 20000,
 #                            "https://drive.google.com/file/d/1wK-NZkD33_ZqxlKzWBGCodfGbs-xQaRi/view?usp=sharing"))
-# print(sql_func.insert_staff("1232321", "Nguyễn Lê Tấn Tài", "0940123334", "Quận 7")) ok
-# print(sql_func.insert_bill("126212", "2021-03-21 10:30:00", 1, "1232321")) ok
-# print(sql_func.insert_role("3", "Shipper")) ok
-# print(sql_func.insert_user_login("1232321", "abcd", "3")) ok
-# print(sql_func.check_existed_id("menu", "127803")) ok
+# print(sql_func.insert_staff("90000", "Nguyễn Thị Hoa", "197406988", "2000-03-21", "0940123334", "Quận 12"))
+# print(sql_func.insert_bill("9900022", "2021-03-21 10:30:00", 1, "9191919"))
+# print(sql_func.insert_role("4", "Nhân viên vệ sinh"))
+# print(sql_func.insert_user_login("9191919", "ggggg", "4"))
+# ok
+# print(sql_func.check_existed_id("menu", "123444"))
 # print(sql_func.delete_function("menu", "id", "127800"))
-# print(sql_func.update_menu("127801", "2021-11-17 19:30:00")) ok
-# print(sql_func.update_food("149", "Bánh xèo", "update", 19000,
+# print(sql_func.update_menu("123444", "2021-11-17 19:30:00"))
+# print(sql_func.update_food("1412222", "Bánh hỏi", "update", 25000,
 #                            "https://drive.google.com/file/d/1wK-NZkDh2_ZqxlKzWBGCodfGbs-xQaRi/view?usp=sharing"))
-# print(sql_func.update_staff("1231222", "Nguyễn Hữu Long", "0949618234", "Quận 12"))
+# print(sql_func.update_staff("9191919", "Nguyễn Đình Trung", "198293812", "2000-03-21", "0908969231", "Quận Thủ Đức"))
 #
 # print(ck.check_date("2016-02-29"))
 # print(ck.check_format_datetime("1998-01-28 15:05:08"))
 # print(ck.check_format_datetime("1998-01-28"))
 # print(ck.check_hms("23:65:03"))
 # print(ck.convert_date("20/03/2020 15:03:05"))
-# print(sql_func.get_pass_of_staff("123"))
-# print(sql_func.check_login_staff('123', 'abc'))
-# print(sql_func.check_existed_id('staff', 'abc'))
+# print(sql_func.get_pass_of_staff("9191919"))
+# print(sql_func.check_login_staff('9191919', 'ggggg'))
+# print(sql_func.check_existed_id('staff', '9191919'))
 # print(np.random.permutation(10))
-# print(sql_func.get_info_staff_by_id("123"))
-# print(sql_func.add_food_to_menu('127801', '143', 50))
-# print(sql_func.add_food_to_menu('12671', '141', 50))
+print(sql_func.get_info_staff_by_id("9191919"))
+# print(sql_func.add_food_to_menu('123444', '12311'))
+# print(sql_func.add_food_to_menu('12671', '141'))
 # for i in range(0, 20):
 #     print(sql_func.insert_food("123" + str(i), "Bánh xèo", "test" + str(i), 19000 + 1000 * i))
-print(sql_func.select_food_to_menu(123, 10))
+# print(sql_func.select_food_to_menu(123, 10))
+# print(sql_func.get_info_menu_detail('123'))
+# print("select * from {} where id = {}".format("MenuDetail", '123'))
+# Id ở Role, Menu, Food và customer order nên để tự tăng
