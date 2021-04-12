@@ -5,72 +5,95 @@ use CanteenManagement
 go
 
 create table Role(
-	id varchar(10) primary key not null,
+	id int identity primary key not null,
 	role_name nvarchar(30) not null
 )
 go
 
-create table Staff(
-	id varchar(10) primary key not null,
-	staff_name nvarchar(30) not null,
+create table Person(
+	id varchar(15) primary key not null,
+	name nvarchar(30),
 	identity_card nvarchar(10),
-	day_of_birth(date),
+	day_of_birth date,
 	phone_num nvarchar(10),
-	address nvarchar(100),
-	--password varchar(20) not null
+	address nvarchar(300)
 )
 go
 
 create table UserLogin(
-	userid varchar(10) primary key not null,
+	user_id varchar(20) primary key not null,
 	password varchar(20) not null,
-	roleid varchar(10) not null,
+	role_id int not null,
+	staff_id varchar(15) unique not null
 )
 go
 
-create table Customer_Order(
-	id varchar(10) primary key not null,
+create table CustomerOrder(
+	id int identity primary key not null,
 	order_time smalldatetime not null,
 	status_now int check (status_now in(0, 1)), --  = 0: Đã giao, = 1 : Chưa giao,  = 2 :
-	staffid varchar(10) not null
+	staff_id varchar(15) not null,
+	customer_id varchar(15)
 )
 go
 
 create table Menu(
-	id varchar(10) primary key not null,
+	id int identity primary key not null,
 	time_now smalldatetime not null
 )
 
 create table Food(
-	id varchar(10) primary key not null,
+	id int identity primary key not null,
 	name nvarchar(50) not null,
-	describe ntext not null,
+	describe ntext,
 	price money not null,
 	img text
 )
 
 create table MenuDetail(
-	menuid varchar(10) not null,
-	foodid varchar(10) not null,
-	constraint PK_Menu primary key(menuid, foodid)
+	menu_id int not null,
+	food_id int not null,
+	constraint PK_Menu primary key(menu_id, food_id)
 )
 go
 
 create table OrderDetail(
-	orderid varchar(10) not null,
-	foodid varchar(10) not null,
+	order_id int not null,
+	food_id int not null,
 	num_of_food int default 1,
 	cur_price money,
-	constraint PK_Order primary key(orderid, foodid)
+	constraint PK_Order primary key(order_id, food_id)
 )
 go
 
-alter table OrderDetail add constraint FK_Order foreign key (orderid) references Customer_Order(id)
-alter table OrderDetail add constraint FK_Order2 foreign key (foodid) references Food(id)
-alter table MenuDetail add constraint FK_Menu foreign key(menuid) references Menu(id)
-alter table MenuDetail add constraint FK_Menu2 foreign key(foodid) references Food(id)
-alter table Customer_Order add constraint FK_Cus foreign key(staffid) references Staff(id)
-alter table UserLogin add constraint FK_User_Role foreign key(roleid) references Role(id)
-alter table UserLogin add constraint FK_User_Staff foreign key(userid) references Staff(id)
+create table Customer(
+	id varchar(15) primary key not null,
+	VIP varchar(3) check (VIP in('YES', 'NO'))
+)
+go
+
+create table Staff(
+	id varchar(15) primary key not null,
+	salary money not null
+)
+go
+
+create table CustomerUser(
+	user_id varchar(20) primary key not null,
+	password varchar(20) not null,
+	customer_id varchar(15) not null
+)
+
+alter table OrderDetail add constraint FK_Order_Id foreign key (order_id) references CustomerOrder(id)
+alter table OrderDetail add constraint FK_Order_Food foreign key (food_id) references Food(id)
+alter table MenuDetail add constraint FK_Menu_Id foreign key(menu_id) references Menu(id)
+alter table MenuDetail add constraint FK_Menu_Food foreign key(food_id) references Food(id)
+alter table CustomerOrder add constraint FK_Cus foreign key(staff_id) references Staff(id)
+alter table UserLogin add constraint FK_User_Role foreign key(role_id) references Role(id)
+alter table UserLogin add constraint FK_User_Staff foreign key(staff_id) references Staff(id)
+alter table CustomerUser add constraint FK_User_Customer foreign key (customer_id) references Customer(id)
+alter table CustomerOrder add constraint FK_Customer_Order foreign key(customer_id) references Customer(id)
+alter table Customer add constraint FK_Customer foreign key(id) references Person(id)
+alter table Staff add constraint FK_Staff foreign key(id)  references Person(id)
 
 
