@@ -1,4 +1,5 @@
 import datetime
+from datetime import datetime as dt
 
 
 def convert_date(date):
@@ -15,7 +16,7 @@ def convert_date(date):
             new_form = y + "-" + m + "-" + d
             return new_form
     except Exception as ex:
-        print('----Error in conver_date----')
+        print('----Error in convert_date----')
         print(ex)
         return False
 
@@ -27,6 +28,7 @@ def check_date(date):
             raise ValueError
         return True
     except ValueError:
+        print("----Wrong Format Date in check_date----")
         return False
 
 
@@ -72,3 +74,14 @@ def check_format_datetime(date):
         print('----Error in check_format_datetime----')
         print(ex)
         return False
+
+
+def check_limit_time(time_inp):
+    now = dt.now()
+    if str(now) < time_inp:
+        print('----Deny time input greater than time now----')
+        return False
+    return True
+
+
+# print(str(dt.now()) > "2020-08-15 04:06:00")
