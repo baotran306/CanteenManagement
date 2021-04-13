@@ -84,4 +84,11 @@ def check_limit_time(time_inp):
     return True
 
 
+def check_start_end_time(time_start, time_end):
+    if time_start > time_end:
+        print('----Deny time start greater than time end----')
+        return False
+    return True
+
+
 # print(str(dt.now()) > "2020-08-15 04:06:00")

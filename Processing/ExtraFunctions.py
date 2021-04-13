@@ -9,7 +9,7 @@ def check_type_customer(customer_type):
 
 
 def check_status_order(stt_order):
-    if stt_order not in [0, 1]:
+    if stt_order not in [0, 1, 2]:
         print("----status order not acceptable in check_status_order(just 0, 1)----")
         return False
     return True
@@ -43,6 +43,15 @@ def check_str_all_num(your_str):
         print('----Deny phone number or identity card contains character----')
         return True
     return False
+
+
+def status_type(stt_type):
+    if stt_type == 0:
+        return "Chưa giao"
+    elif stt_type == 1:
+        return "Đã giao"
+    else:
+        return "Hủy đơn"
 
 
 # if __name__ == "__main__":

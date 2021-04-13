@@ -92,16 +92,18 @@ class SqlFunction:
         else:
             return None
 
-    def insert_menu(self, date):
+    def insert_menu(self, date_start, date_end):
         try:
-            if not ck.check_format_datetime(date):
+            if not ck.check_format_datetime(date_start) or not ck.check_format_datetime(date_end):
                 return False
-            if not ck.check_limit_time(date):
+            if not ck.check_limit_time(date_start) or not ck.check_limit_time(date_end):
+                return False
+            if not ck.check_start_end_time(date_start, date_end):
                 return False
             cursor = self.func
             cursor.execute(
-                'insert into Menu values (?);',
-                date
+                'insert into Menu values (?, ?);',
+                date_start, date_end
             )
             cursor.commit()
             return True
@@ -323,16 +325,22 @@ class SqlFunction:
             print(ex)
             return False
 
-    def update_menu(self, idm, date):
+    def update_menu(self, idm, date_start, date_end):
         try:
             if not self.check_existed_id("menu", idm):
                 return False
-            if not ck.check_format_datetime(date):
+            if not ck.check_format_datetime(date_start):
+                return False
+            if not ck.check_format_datetime(date_end):
+                return False
+            if not ck.check_start_end_time(date_start, date_end):
+                return False
+            if not ck.check_limit_time(date_start) or not ck.check_limit_time(date_end):
                 return False
             cursor = self.func
             cursor.execute(
-                'update Menu set time_now = ? where id = ?',
-                (date, idm)
+                'update Menu set time_start = ?, time_end = ? where id = ?',
+                (date_start, date_end, idm)
             )
             cursor.commit()
             return True
@@ -618,6 +626,53 @@ class SqlFunction:
             print(ex)
             return []
 
+    def calculate_order_id(self, order_id):
+        try:
+            if not self.check_existed_id("OrderDetail", order_id):
+                print('----order_id not existed, cann\'t calculate revenue----')
+                return 0
+            cursor = self.func
+            cursor.execute("select dbo.CalculateOrderID(?)", order_id)
+            ans = []
+            for c in cursor:
+                ans = c
+            cursor.commit()
+            return float(ans[0])
+        except Exception as ex:
+            print("----Error in calculate_order_id----")
+            print(ex)
+            return 0
+
+    def stats_order_revenue(self):
+        try:
+            cursor = self.func
+            cursor.execute("select * from dbo.InfoOrder()")
+            ans = []
+            for r in cursor:
+                tmp = [r[0], float(r[1]), str(r[3]), ef.status_type(r[4]), r[5], r[6]]
+                ans.append(tmp)
+            cursor.commit()
+            return ans
+        except Exception as ex:
+            print("----Error in stats_order_revenue----")
+            print(ex)
+            return False
+
+    def stats_revenue_by_month(self):
+        try:
+            cursor = self.func
+            cursor.execute("select * from dbo.StatsRevenueByMonth()")
+            ans = []
+            for r in cursor:
+                tmp = [r[0], float(r[1])]
+                ans.append(tmp)
+            cursor.commit()
+            return ans
+        except Exception as ex:
+            print('----Error in stats_revenue_by_month')
+            print(ex)
+            return False
+
 
 """Testing"""
 sql_func = SqlFunction()
@@ -627,7 +682,7 @@ sql_func = SqlFunction()
 # print(sql_func.get_all_info_customer())
 # print(sql_func.get_info_all_staff())
 # print(sql_func.get_info_menu_detail(2))
-# print(sql_func.insert_menu("2021-04-12 20:06:00"))
+# print(sql_func.insert_menu("2021-04-11 20:06:00", "2021-04-11 06:06:00"))
 # print(sql_func.insert_food("1412222", "Bánh abc", "Test 3, mô tả sau", 20000,
 #                            "https://drive.google.com/file/d/1wK-NZkD33_ZqxlKzWBGCodfGbs-xQaRi/view?usp=sharing"))
 # print(sql_func.insert_staff("90000", "Nguyễn Thị Hoa", "197406988", "2000-03-21", "0940123334", "Quận 12"))
@@ -657,6 +712,9 @@ sql_func = SqlFunction()
 # for i in range(0, 20):
 #     print(sql_func.insert_food("Bánh xèo", "test" + str(i), 19000 + 1000 * i))
 # print(sql_func.select_food_to_menu(123, 10))
-# print(sql_func.get_info_menu_detail('123'))
+# print(sql_func.get_info_menu_detail(2))
 # print("select * from {} where id = {}".format("MenuDetail", '123'))
 # Id ở Role, Menu, Food và customer order nên để tự tăng
+# print(sql_func.calculate_order_id(2))
+# print(sql_func.stats_order_revenue())
+# print(sql_func.stats_revenue_by_month())
