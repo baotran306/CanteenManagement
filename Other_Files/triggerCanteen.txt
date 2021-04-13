@@ -1,0 +1,120 @@
+create trigger CannotDeleteAdmin
+on dbo.userlogin
+for delete
+as
+begin
+	declare @count int = 0
+	select @count = count(*) from deleted, Role
+	where deleted.role_id = Role.id and role_name = N'Quản lý'
+	if @count > 0
+	begin
+		print(N'Không được xóa tài khoản admin')
+		rollback tran
+	end
+end
+go
+
+create trigger LimitInsertMinAgePerson
+on dbo.Person
+for insert, update
+as
+begin
+	declare @count int = 0
+	select @count = count(*) from inserted
+	where year(GETDATE()) - year(inserted.day_of_birth) < 16
+	if @count > 0
+	begin
+		print(N'Không được thêm hoặc sửa người dưới 16 tuổi')
+		rollback tran
+	end
+end
+go
+
+/* trigger chưa add, đang lỗi
+create trigger CannotChangeStaffIdInUser
+on dbo.UserLogin
+for update
+as
+begin
+	declare @count int = 0
+	select @count = count(*) from inserted
+	where inserted.staff_id <> staff_id
+	if @count > 0
+	begin
+		print(N'Không được sửa tài khoản của nhân viên này thành tài khoản của nhân viên khác')
+		rollback tran
+	end
+end
+go
+*/
+
+
+create trigger LimitTimeStartEndMenu
+on Menu
+for insert, update
+as
+begin
+	if(exists(select * from inserted where inserted.time_end < inserted.time_start))
+	begin
+		print(N'Không thể thêm hoặc cập nhật thời gian bắt đầu của menu lớn hơn thời gian kết thúc')
+		rollback
+	end
+end
+
+create trigger LimitTimeEndMenu
+on Menu
+for insert, update
+as
+begin
+	if(exists(select * from inserted where inserted.time_end > DATEADD(minute,1,GETDATE())))
+	begin
+		print(N'Không thể thêm hoặc cập nhật ngày giờ lớn hơn thời điểm hiện tại')
+		rollback
+	end
+end
+go
+
+create trigger LimitTimeStartMenu
+on Menu
+for insert, update
+as
+begin
+	if(exists(select * from inserted where inserted.time_start > DATEADD(minute,1,GETDATE())))
+	begin
+		print(N'Không thể thêm hoặc cập nhật ngày giờ lớn hơn thời điểm hiện tại')
+		rollback
+	end
+end
+go
+
+create trigger LimitTimeCustomerOrder
+on CustomerOrder
+for insert, update
+as
+begin
+	if(exists(select * from inserted where inserted.order_time > DATEADD(minute,1,GETDATE())))
+	begin
+		print(N'Không thể thêm hoặc cập nhật ngày giờ lớn hơn thời điểm hiện tại')
+		rollback
+	end
+end
+
+create trigger CurrentFoodInMenu
+on OrderDetail
+for insert
+as
+begin
+	declare @order_id int, @food_id int
+	select @order_id = order_id from inserted
+	select @food_id = food_id from inserted
+	declare @order_time smalldatetime
+	select @order_time = order_time from CustomerOrder where id = @order_id
+	if(not exists(select * from MenuDetail, Menu
+where Menu.id = MenuDetail.menu_id and food_id = @food_id and 
+time_start <= @order_time and time_end >= @order_time))
+	begin
+		print(N'Món ăn không có trong menu hiện tại, không thể thêm')
+		rollback
+	end
+end
+go
