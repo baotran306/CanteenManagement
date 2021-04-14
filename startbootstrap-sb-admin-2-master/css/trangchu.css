@@ -1,0 +1,260 @@
+/* Reset cho các thẻ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Arial, Helvetica, sans-serif ;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#header {
+    height: 100px;
+    background-color: rgb(1,127,255);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+
+
+.opacityhover:hover {
+    /* font-weight: 600; */
+    opacity: 0.5;
+    /* background-color: red; */
+    cursor: pointer;
+}
+
+.grid {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    height:100%;
+}
+
+
+.header__nav {
+    display : flex;
+    justify-content: space-between;
+}
+
+
+.header__nav-mid {
+    flex: 2;
+    height:100%;
+    position: relative;
+}
+
+.tabs {
+    display: flex;
+  position: relative;
+}
+
+.tab-item {
+    width: 100px;
+    padding: 15px 0px 0px 20px;
+    color: white;
+}
+
+.sreach {
+    width:70%;
+    margin-left: 150px;
+    margin-top: 15px
+}
+
+.mybutton {
+    border: 1px solid black;
+    background-color: Gray;
+    color: white;
+}
+
+.header__nav-barsreach {
+    position: absolute;
+    width: 60%;
+    height: 30px;
+    top: 30px;
+    left: 150px;
+}
+
+.btn-barsreach {
+    position: absolute;
+    top: 30px;
+    right: 140px;
+    height: 30px;
+}
+
+.header__nav-suggest {
+    position: absolute;
+    top: 80px;
+    left: 190px;
+}
+
+.item-suggest {
+    text-decoration: none;
+    color: white;
+    margin-left: 20px;
+}
+
+.logoPtit {
+    width:120px;
+    height:70px;
+    margin-top: 20px;
+}
+
+.header__nav-item {
+    padding-top: 5px;
+    color: white;
+}
+
+/* Đây là phần của container  */
+
+.container__slider {
+    padding-top: 110px;
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+}
+  
+.img-slider {
+    height: 250px;
+    width: 100%;
+}
+
+.slider-info {
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Number text (1/3 etc) */
+.numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+  }
+  
+  /* The dots/bullets/indicators */
+.dot {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+  }
+  
+.active {
+    background-color: #717171;
+  }
+  
+  /* Fading animation */
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+  }
+  
+@-webkit-keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+  }
+  
+@keyframes fade {
+    from {opacity: .4} 
+    to {opacity: 1}
+  }
+
+/*Đây là phần trình bày list products */
+
+.container__products {
+    padding-top: 20px;
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+}
+
+.titleProduct {
+    text-align: center;
+    background-color: green;
+}
+
+.container__products-list-item {
+    display: flex;
+    margin-left: 40px;
+    padding-top: 20px;
+}
+
+.img-product {
+    width: 85%;
+    height: 120px;
+}
+
+.Amount {
+    width:18px;
+}
+
+.infoProduct {
+    position: relative;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nameProduct {
+    padding-left:40px;
+}
+
+.priceProduct {
+    padding-left:40px;
+}
+
+.valueAmount {
+    margin-left:55px;
+}
+
+/* Đây là phần của footer */
+
+#footer{
+    padding: 64px 16px;
+    text-align: center;
+    background-color:black;
+}
+
+.link {
+    padding: 8px 0;
+    color : white;
+    opacity: 0.7;
+    text-decoration: none;
+}
+
+
+.source {
+    opacity: 0.5;
+    color: white;
+}
+
+.social-list {
+    margin-bottom: 10px;
+}
+
+.btn-functional {
+    margin-left: 20px;
+    border: 1px solid black;
+    background-color:gray;
+}

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/trangchu.css">
+    <link rel="stylesheet" href="./fonts/themify-icons/themify-icons.css">
+    <script src="JS/checklogin.js"></script>
+    <script src="js/scroll.js"></script>
+    <title>PTIT'S CANTEEN</title>
+</head>
+<body>
+    <div id="header">
+        <div class="header__nav grid">
+            <div class="header__nav-left">
+                <a href="trangchu.html" class="header__nav-logo">
+                    <img src="./img/logo/Logo_PTIT.jpg" alt="Đây là logo PTIT" class="logoPtit">
+                </a>
+            </div>
+
+            <div class="header__nav-mid">
+                <input type="text" class="header__nav-barsreach" placeholder="SREACH ....">
+                <button class="btn-barsreach">SREACH</button>
+                <div class="header__nav-suggest">
+                    <a class="item-suggest opacityhover"></a>
+                    <a class="item-suggest opacityhover" onclick="scrollToID('title-1')">MORNING</a>
+                    <a class="item-suggest opacityhover" onclick="scrollToID('title-2')">LUNCH</a>
+                    <a class="item-suggest opacityhover" onclick="scrollToID('title-3')">AFTERNOON</a>
+                </div>
+            </div>
+
+            <div class="header__nav-right">
+                <ul class="header__nav-list-item" style="list-style-type: none;">
+                    <li class="header__nav-item opacityhover" onclick="comeback()">
+                        <i class="icon ti-power-off"></i>
+                        LOGOUT
+                    </li>
+                    <li class="header__nav-item opacityhover" onclick="comeback()">
+                        <i class="icon ti-menu"></i>
+                        CHECK YOUR BILL
+                    </li>
+                    <!-- <li class="header__nav-item opacityhover" onclick="window.location.href='listhoadon.html'">
+                        <i class="icon ti-menu"></i>
+                        Xem danh sách hóa đơn
+                    </li>
+                    <li class="header__nav-item opacityhover" onclick="window.location.href='listnhanvien.html'">
+                        <i class="icon ti-menu"></i>
+                        Xem danh sách nhân viên
+                    </li>
+                    <li class="header__nav-item opacityhover" onclick="window.location.href='DangKy.html'">
+                        <i class="icon ti-plus"></i>
+                        Thêm nhân viên
+                    </li> -->
+                </ul>
+                <script>
+                    function comeback() {
+                        sessionStorage.removeItem("role")
+                        sessionStorage.removeItem("name")
+                        window.location.href = 'loginCustom.html'
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div id="cotaniner">
+        <!--Đây là slider đồ ăn giới thiệu sản phẩm-->
+        <div class="container__slider">
+            <div class="mySlides fade">
+              <img src="./img/mon_an/1.jpg" class="img-slider"  >
+              <div class="slider-info">
+                  <h3 class="slider-name">A</h3>
+                  <br>
+                  <span class="slider-description">A is</span>
+              </div>
+            </div>
+            
+            <div class="mySlides fade">
+              <img src="img/mon_an/2.jpg" class="img-slider">
+              <div class="slider-info">
+                <h3 class="slider-name">B</h3>
+                <br>
+                <span class="slider-description">B is</span>
+            </div>
+            </div>
+            
+            <div class="mySlides fade">
+              <img src="img/mon_an/3.jpg" class="img-slider">
+              <div class="slider-info">
+                <h3 class="slider-name">C</h3>
+                <br>
+                <span class="slider-description">C is</span>
+            </div>
+            </div>
+
+            </div>
+            <br>
+            <div class="wrap-dots" style="text-align:center">
+              <span class="dot"></span> 
+              <span class="dot"></span> 
+              <span class="dot"></span> 
+            </div>
+
+            <script>
+                var slideIndex = 0;
+                showSlides();
+                
+                function showSlides() {
+                  var i;
+                  var slides = document.getElementsByClassName("mySlides");
+                  var dots = document.getElementsByClassName("dot");
+                  for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";  
+                  }
+                  slideIndex++;
+                  if (slideIndex > slides.length) {slideIndex = 1}    
+                  for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                  }
+                  slides[slideIndex-1].style.display = "block";  
+                  dots[slideIndex-1].className += " active";
+                  setTimeout(showSlides, 2000); 
+                }
+            </script>
+
+        <!--Đây là phần trình bày sản phẩm và đặt sản phẩm-->
+        <div class="container__products">
+            <h2 class="titleProduct" id="title-1">MORNING</h2>
+            <div class="container__products-list-item">
+                <div class="container__products-item">
+                    <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+                   
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+            </div>
+
+            <div class="container__products-list-item">
+                <div class="container__products-item">
+                    <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+                    
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+                   
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+            </div>
+            <br> 
+            <br>
+            <h2 class="titleProduct" id="title-2">LUNCH</h2>
+            <div class="container__products-list-item">
+                <div class="container__products-item">
+                    <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+                    
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+                   
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+            </div>
+
+            <div class="container__products-list-item">
+                <div class="container__products-item">
+                    <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+                    
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+                   
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+            </div>
+            <br>
+            <br>
+            <h2 class="titleProduct" id="title-3">AFTERNOON</h2>
+            <div class="container__products-list-item">
+                <div class="container__products-item">
+                    <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+                    
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+                   
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+            </div>
+
+            <div class="container__products-list-item">
+                <div class="container__products-item">
+                    <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+                    
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+                   
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+                <div class="container__products-item">
+                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="footer">
+        <div class="social-list">
+            <a href="" class="link">
+                <i class="icon ti-facebook"></i>
+            </a>
+            <a href="" class="link">
+                <i class="icon ti-instagram"></i>
+            </a>
+            <a href="" class="link">
+                <i class="icon ti-youtube"></i>
+            </a>
+            <a href="" class="link">
+                <i class="icon ti-pinterest"></i>
+            </a>
+            <a href="" class="link">
+                <i class="icon ti-twitter"></i>
+            </a>
+            <a href="" class="link">
+                <i class="icon ti-linkedin"></i>
+            </a>
+        </div>
+        <div class="source">Power by @ <a href="" class="link" style="text-decoration:none">PTIT'S CANTEEN</a></div>
+    </div>
+    <script>
+        // checklogin(["Shipper"])
+    </script>
+</body>
+</html>
