@@ -19,10 +19,13 @@
 
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    
+
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/test.css">
+    <script src="js/rendernhanvien.js">startRenderNhanVien()</script>
+    <link rel="stylesheet" href="css/modal.css">
+    <script src="js/modal.js"></script>
 </head>
 
 <body id="page-top">
@@ -448,6 +451,27 @@
         </div>
     </div>
 
+    <!--CHỨC NĂNG EDIT-->
+    <div id="modal">
+        <div class="modal__overplay"></div>
+        <div class="modal__body">
+            <div class="modal__body-container">
+                <div class="modal__body-container-header">
+                    <h2>EDIT</h2>
+                </div>
+
+                <div class="modal__body-container-content">
+                    <input type="text" class="id_account content-input" placeholder="Nhập tên tài khoản đăng kí">
+                    <input type="password" class="pass_account content-input" placeholder="Nhập pass">
+                    <input type="password" class="passagain_account content-input" placeholder="Nhập lại pass">
+                    <input type="text" class="codeconfirm-input" placeholder="Nhập mã xác nhận">
+                    <button class="btn btn-finish">Hoàn tất</button>
+                    <button class="btn btn-comeback">Trở lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -464,6 +488,11 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+
+    <script>
+        activeForm('btn-primary', 'Edit')
+        closeForm("btn-comeback", "Trở lại")
+    </script>
 
 </body>
 

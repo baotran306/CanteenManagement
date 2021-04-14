@@ -53,7 +53,7 @@ def stats_order_revenue():
     for r in rows:
         data.append({
             'order_id': r[0],
-            'revenue': r[1],
+            'total': r[1],
             'order_time': r[2],
             'status_now': r[3],
             'staff_id': r[4],
