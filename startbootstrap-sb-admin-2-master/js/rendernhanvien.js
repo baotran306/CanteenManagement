@@ -11,20 +11,24 @@ var getData = function() {
 }
 
 var renderNhanVien = function (listNhanVien) {
-    var list = document.querySelector("#listnhanvien")
+    var list = document.querySelector("#liststaff")
     var htmls = listNhanVien.map(function(nhanvien){
         return `
         <tr>
-            <td class="column1">${nhanvien.name}</td>
-            <td class="column2">${nhanvien.id}</td>
-            <td class="column3">${nhanvien.address}</td>
-            <td class="column4">${nhanvien.phone}</td>
-            <td class="column5">${nhanvien.role}</td>
-            <td class="column6">
-                <button class="btn-functional btn-delete">X</button>
-                <button class="btn-functional btn-edit">Edit</button>
-            </td>
-        </tr>
+        <th>${nhanvien.id}</th>
+        <th>${nhanvien.name}</th>
+        <th>${nhanvien.identity_card}</th>
+        <th>${nhanvien.gender}</th>
+        <th>${nhanvien.address}</th>
+        <th>${nhanvien.day_of_birth}</th>
+        <th>${nhanvien.role_name}</th>
+        <th>${nhanvien.salary}</th</th>>
+        <th>${nhanvien.phone_num}</th>
+        <th>
+            <button class="btn-secondary">Delete</button>
+            <button class="btn-primary">Edit</button>
+        </th>
+    </tr>
         `
     })
     list.innerHTML = htmls.join('')

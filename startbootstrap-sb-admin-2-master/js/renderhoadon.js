@@ -10,17 +10,18 @@ var getData = function() {
     .then(data => renderHoaDon(data))
 }
 
-var renderNhanVien = function (listHoaDon) {
-    var list = document.querySelector("#listhoadon")
+var renderHoaDon = function (listHoaDon) {
+    var list = document.querySelector("#listbill")
     var htmls = listHoaDon.map(function(hoadon){
         return `
         <tr>
-            <td class="column1">${hoadon.name}</td>
-            <td class="column2">${hoadon.id}</td>
-            <td class="column3">${hoadon.address}</td>
-            <td class="column4">${hoadon.phone}</td>
-            <td class="column5">${hoadon.role}</td>
-        </tr>
+        <th>${hoadon.order_id}</th>
+        <th>${hoadon.customer_id}</th>
+        <th>${hoadon.staff_id}</th>
+        <th>${hoadon.total}</th>
+        <th>${hoadon.order_time}</th>
+        <th>${hoadon.status_now}</th>
+    </tr>
         `
     })
     list.innerHTML = htmls.join('')
