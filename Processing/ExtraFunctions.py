@@ -54,6 +54,33 @@ def status_type(stt_type):
         return "Hủy đơn"
 
 
+def check_input_id_person(inp):
+    try:
+        if inp[:2].upper() == 'NV':
+            if int(inp[2:]):
+                return True
+        if inp[:2].upper() == 'KH':
+            if int(inp[2:]):
+                return True
+        return False
+    except Exception as ex:
+        print(ex)
+        return False
+
+
+def auto_generate_id_person(inp):
+    prefix = inp[:2]
+    suffix = int(inp[2:])
+    suffix += 1
+    if suffix < 10:
+        return prefix + "00" + suffix
+    elif suffix < 100:
+        return prefix + "0" + suffix
+    else:
+        return prefix + suffix
+
+
 # if __name__ == "__main__":
-#     print(check_regex_password("AAAAAAAAAAa1"))
-#     print(check_str_all_num('123aa'))
+    # print(check_regex_password("AAAAAAAAAAa1"))
+    # print(check_str_all_num('123aa'))
+    # print(check_input_id_person('NV12a'))

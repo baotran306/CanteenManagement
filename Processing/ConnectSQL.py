@@ -126,7 +126,7 @@ class SqlFunction:
             print(ex)
             return False
 
-    def insert_person(self, ids, name, gender, id_card, dob, phone, addr):
+    def insert_person(self, ids, name=None, gender=None, id_card=None, dob=None, phone=None, addr=None):
         try:
             if self.check_existed_id("person", ids):
                 return False
@@ -227,7 +227,7 @@ class SqlFunction:
             print(ex)
             return False
 
-    def insert_customer_user(self, user_id, password, customer_id):
+    def insert_customer_user(self, user_id, password, customer_id, staff_id=None):
         try:
             if self.check_existed_id("CustomerUser", user_id):
                 return False
@@ -235,8 +235,11 @@ class SqlFunction:
                 return False
             if not ef.check_regex_password(password):
                 return False
+            if staff_id is not None:
+                if not self.check_existed_id("Staff", staff_id):
+                    return False
             cursor = self.func
-            cursor.execute("insert into CustomerUser values(?, ?, ?);", (user_id, password, customer_id))
+            cursor.execute("insert into CustomerUser values(?, ?, ?, ?);", (user_id, password, customer_id, staff_id))
             cursor.commit()
             return True
         except Exception as ex:
@@ -673,6 +676,25 @@ class SqlFunction:
             print(ex)
             return False
 
+    def generate_new_id_person(self, type_id):
+        try:
+            cursor = self.func
+            if type_id == 0:  # type 0 is Staff
+                cursor.execute("select top(1) id from Person where id like 'NV%' order by id desc")
+            else:  # Customer
+                cursor.execute("select top(1) id from Person where id like 'KH%' order by id desc")
+            ans = ""
+            for r in cursor:
+                ans = r[0]
+                break
+            cursor.commit()
+            ans = ef.auto_generate_id_person(ans)
+            return ans
+        except Exception as ex:
+            print("----Error in last_id_person----")
+            print(ex)
+            return ""
+
 
 """Testing"""
 sql_func = SqlFunction()
@@ -718,3 +740,4 @@ sql_func = SqlFunction()
 # print(sql_func.calculate_order_id(2))
 # print(sql_func.stats_order_revenue())
 # print(sql_func.stats_revenue_by_month())
+# print(sql_func.last_id_person(0))
