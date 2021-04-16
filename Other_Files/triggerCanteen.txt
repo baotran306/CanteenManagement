@@ -118,3 +118,16 @@ time_start <= @order_time and time_end >= @order_time))
 	end
 end
 go
+
+create trigger LimitPrefixIdPerson
+on dbo.Person
+for insert, update
+as
+begin
+	if(exists(select * from inserted where id not like 'NV%' and id not like 'KH%'))
+	begin
+		print(N'Id Person phải bắt đầu bằng NV hoặc KH')
+		rollback tran
+	end
+end
+go
