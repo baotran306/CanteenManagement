@@ -1,8 +1,9 @@
 class User:
-    def __init__(self, user_id, password, role_id):
+    def __init__(self, user_id="", password="", role_id="", staff_id=""):
         self.__user_id = user_id
         self.__password = password
         self.__role_id = role_id
+        self.__staff_id = staff_id
 
     def set_user_id(self, user_id):
         self.__user_id = user_id
@@ -21,3 +22,9 @@ class User:
 
     def get_role_id(self):
         return self.__role_id
+
+    def set_staff_id(self, staff_id):
+        self.__staff_id = staff_id
+
+    def get_staff_id(self):
+        return self.__staff_id
