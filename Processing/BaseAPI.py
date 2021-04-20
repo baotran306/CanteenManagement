@@ -74,5 +74,72 @@ def stats_revenue_by_month():
     return jsonify(data)
 
 
+@app.route("/customer/register", methods=['POST', 'GET'])
+def insert_customer(ls):
+    # not complete, ls is list of all info of register customer
+    sign = False
+    new_id = connect.generate_new_id_person(1)
+    if connect.insert_person(new_id):
+        if connect.insert_customer(new_id, vip="NO"):
+            if connect.insert_customer_user(ls[-1], ls[-2], new_id):
+                sign = True
+    return jsonify(sign)
+
+
+@app.route("/admin/register", methods=['POST', 'GET'])
+def insert_staff(ls):
+    # not complete, ls is list of all info of register customer
+    sign = False
+    new_id = connect.generate_new_id_person(0)
+    if connect.insert_person(new_id):
+        if connect.insert_staff(new_id):
+            if connect.insert_user_login(ls[-1], ls[-2], ls[-3], new_id):
+                sign = True
+    return jsonify(sign)
+
+
+@app.route("/admin/food", methods=['POST', 'GET'])
+def insert_food(ls):
+    sign = False
+    if connect.insert_food(ls[0], ls[1], ls[2], ls[3]):
+        sign = True
+    return jsonify(sign)
+
+
+@app.route("/admin/menu", methods=['GET', 'POST'])
+def insert_menu(ls):
+    sign = False
+    if connect.insert_menu(ls[0], ls[1]):
+        sign = True
+    return jsonify(sign)
+
+
+@app.route("/admin/menudetail", methods=['POST', 'GET'])
+def insert_menu_detail(ls):
+    sign = False
+    if connect.insert_menu_detail(ls[0], ls[1]):
+        sign = True
+    return jsonify(sign)
+
+
+@app.route("/admin/role", methods=['POST', 'GET'])
+def insert_role(ls):
+    sign = True
+    for i in ls():
+        if not connect.insert_role(i):
+            sign = False
+    return jsonify(sign)
+
+
+@app.route("/staff/order", methods=['POST', 'GET'])
+def insert_order(ls):
+    sign = False
+    if connect.insert_customer_order(ls[0], ls[1], ls[2], ls[3]):
+        # use loop to add menu food in order
+        if connect.insert_order_detail(ls[0], ls[4], ls[5], ls[6]):
+            sign = True
+    return jsonify(sign)
+
+
 if __name__ == "__main__":
-    app.run()
+    app.run(port=3000)

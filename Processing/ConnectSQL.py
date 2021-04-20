@@ -414,36 +414,49 @@ class SqlFunction:
             print(ex)
             return False
 
-    def update_user_login(self, user_id, password, role_id):
+    def update_user_login_password(self, user_id, password):
+        try:
+            if not self.check_existed_id("userlogin", user_id):
+                return False
+            if not ef.check_regex_password(password):
+                return False
+            cursor = self.func
+            cursor.execute("update UserLogin set password = ? where user_id = ?", (password, user_id))
+            cursor.commit()
+            return True
+        except Exception as ex:
+            print('----Error update_user_login_password----')
+            print(ex)
+            return False
+
+    def update_user_login_role(self, user_id, role_id):
         try:
             if not self.check_existed_id("userlogin", user_id):
                 return False
             if not self.check_existed_id("Role", role_id):
                 return False
-            if not ef.check_regex_password(password):
-                return False
             cursor = self.func
-            cursor.execute("update UserLogin set password = ?, role_id = ? "
-                           "where user_id = ?", (password, role_id, user_id))
+            cursor.execute("update UserLogin set role_id = ? "
+                           "where user_id = ?", (role_id, user_id))
             cursor.commit()
             return True
         except Exception as ex:
-            print('----Error insert_user_logic----')
+            print('----Error insert_user_login_role----')
             print(ex)
             return False
 
-    def update_customer_user(self, user_id, password):
+    def update_customer_user_password(self, user_id, password):
         try:
             if not self.check_existed_id("CustomerUser", user_id):
                 return False
-            if ef.check_regex_password(password):
+            if not ef.check_regex_password(password):
                 return False
             cursor = self.func
             cursor.execute("update CustomerUser set password = ? where user_id = ?;", (password, user_id))
             cursor.commit()
             return True
         except Exception as ex:
-            print("----Error in insert_customer_user")
+            print("----Error in insert_customer_user_password")
             print(ex)
             return False
 
@@ -695,9 +708,114 @@ class SqlFunction:
             print(ex)
             return ""
 
+    def get_id_card(self, id_inp):
+        """
+        Get identity card of person
+        :param id_inp: id of person who need to get identity car
+        :return: identity card of this Person
+        """
+        try:
+            if not self.check_existed_id("Person", id_inp):
+                return ""
+            cursor = self.func
+            cursor.execute("select identity_card from Person where id = ?", id_inp)
+            ans = ""
+            for c in cursor:
+                ans = c[0]
+                break
+            return ans
+        except Exception as ex:
+            print("----Error in get_id_card----")
+            print(ex)
+            return ""
+
+    def get_phone_num(self, id_inp):
+        """
+        Get identity card of person
+        :param id_inp: id of person who need to get phone number
+        :return: phone number of this Person
+        """
+        try:
+            if not self.check_existed_id("Person", id_inp):
+                return ""
+            cursor = self.func
+            cursor.execute("select phone_num from Person where id = ?", id_inp)
+            ans = ""
+            for c in cursor:
+                ans = c[0]
+                break
+            return ans
+        except Exception as ex:
+            print("----Error in get_phone_num----")
+            print(ex)
+            return ""
+
+    def get_id_person_from_user(self, user_name, type_person=0):
+        """
+        Get identity card of person
+        :param user_name: user name of person who need to get id
+        :param type_person: if type_person = 0 is customer else staff
+        :return: identity card of this Person
+        """
+        try:
+            cursor = self.func
+            if type_person == 0:
+                if not self.check_existed_id("CustomerUser", user_name):
+                    return ""
+                cursor.execute("select customer_id from CustomerUser where user_id = ?", user_name)
+            else:
+                if not self.check_existed_id("UserLogin", user_name):
+                    return ""
+                cursor.execute("select staff_id from UserLogin where user_id = ?", user_name)
+            ans = ""
+            for c in cursor:
+                ans = c[0]
+                break
+            return ans
+        except Exception as ex:
+            print("----Error in get_id_card----")
+            print(ex)
+            return ""
+
+    def reset_password_staff(self, user_name, id_card, phone, new_pass):
+        try:
+            if not self.check_existed_id("UserLogin", user_name):
+                return False
+            if not ef.check_regex_password(new_pass):
+                return False
+            id_staff = self.get_id_person_from_user(user_name, 1)
+            if self.get_id_card(id_staff) == id_card and self.get_phone_num(id_staff) == phone:
+                return self.update_user_login_password(user_name, new_pass)
+            else:
+                return False
+        except Exception as ex:
+            print('----Error in reset_password_staff')
+            print(ex)
+            return False
+
+    def reset_password_customer(self, user_name, id_card, phone, new_pass):
+        try:
+            if not self.check_existed_id("CustomerUser", user_name):
+                return False
+            if not ef.check_regex_password(new_pass):
+                return False
+            id_customer = self.get_id_person_from_user(user_name, 0)
+            if self.get_id_card(id_customer) == id_card and self.get_phone_num(id_customer) == phone:
+                return self.update_customer_user_password(user_name, new_pass)
+            else:
+                return False
+        except Exception as ex:
+            print('----Error in reset_password_customer')
+            print(ex)
+            return False
+
 
 """Testing"""
 sql_func = SqlFunction()
+# print(sql_func.get_id_card('KH006'))
+# print(sql_func.reset_password_staff('Taideeptry2', '198299328', '0987287188', 'conAiDepTraiHonTai1'))
+# print(sql_func.reset_password_customer('gamelade', '198738192', '0918231231', 'gggTai1234'))
+# print(sql_func.get_id_person_from_user('gamelade', 0))
 # print(sql_func.insert_person('KH006', 'Nguyễn Quốc Thắng', 'Nam', '123123123', '20150503', '0987654432', 'Quận 9'))
 # print(sql_func.insert_customer('KH005', 'No'))
 # print(sql_func.insert_customer_user("mumumu", "mumumu123A", "KH005"))
@@ -720,7 +838,7 @@ sql_func = SqlFunction()
 # print(sql_func.update_staff("9191919", "Nguyễn Đình Trung", "198293812", "2000-03-21", "0908969231", "Quận Thủ Đức"))
 #
 # print(ck.check_date("2016-02-29"))
-# print(ck.check_format_datetime("1998-01-28 15:05:08"))
+# print(ck.check_format_datetime("1996-02-29 24:59:08"))
 # print(ck.check_format_datetime("1998-01-28"))
 # print(ck.check_hms("23:65:03"))
 # print(ck.convert_date("20/03/2020 15:03:05"))
