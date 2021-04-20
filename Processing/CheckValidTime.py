@@ -7,9 +7,9 @@ def convert_date(date):
         date = date.strip()
         tmp = date.find(" ")
         if tmp != -1:
-            dt, tm = date.split(" ")
-            d, m, y = dt.split("/")
-            new_form = y + "-" + m + "-" + d + " " + tm
+            date_split, time_split = date.split(" ")
+            d, m, y = date_split.split("/")
+            new_form = y + "-" + m + "-" + d + " " + time_split
             return new_form
         else:
             d, m, y = date.split("/")
@@ -58,8 +58,8 @@ def check_format_datetime(date):
         date = date.strip()
         tmp = date.find(" ")
         if tmp != -1:
-            dt, tm = date.split(" ")
-            if check_date(dt) and check_hms(tm):
+            date_split, time_split = date.split(" ")
+            if check_date(date_split) and check_hms(time_split):
                 return True
             else:
                 print('format_datetime is false: yyyy-mm-dd hh:mm:ss')
@@ -89,6 +89,19 @@ def check_start_end_time(time_start, time_end):
         print('----Deny time start greater than time end----')
         return False
     return True
+
+
+def get_session_day_menu(time_day):
+    time_day = time_day.strip()
+    _, time = time_day.split(" ")
+    hour = time[:2]
+    if int(hour) < 10:
+        return "Buổi sáng"
+    elif int(hour) < 16:
+        return "Buổi trưa"
+    else:
+        return "Buổi chiều"
+    pass
 
 
 # print(str(dt.now()) > "2020-08-15 04:06:00")
