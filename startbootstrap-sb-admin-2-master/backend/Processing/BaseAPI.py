@@ -1,11 +1,10 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import Processing.ConnectSQL
-connect = Processing.ConnectSQL.SqlFunction()
+import ConnectSQL
+connect = ConnectSQL.SqlFunction()
 
 app = Flask(__name__)
 CORS(app)
-
 
 @app.route("/staff", methods=['GET'])
 def get_all_staff():
@@ -75,4 +74,4 @@ def stats_revenue_by_month():
 
 
 if __name__ == "__main__":
-    app.run(3000)
+    app.run()

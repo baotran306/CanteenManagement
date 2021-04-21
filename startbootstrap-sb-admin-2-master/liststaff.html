@@ -23,9 +23,9 @@
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/test.css">
-    <script src="js/rendernhanvien.js">startRenderNhanVien()</script>
     <link rel="stylesheet" href="css/modal.css">
     <script src="js/modal.js"></script>
+    
 </head>
 
 <body id="page-top">
@@ -322,53 +322,9 @@
                                             <th>Function</th>
                                         </tr>
                                     </thead>
+                                    
                                     <tbody id="liststaff">
-                                        <tr>
-                                            <th>123456789</th>
-                                            <th>Nguyễn Lê Tấn Tài</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>
-                                                <button class="btn-secondary">Delete</button>
-                                                <button class="btn-primary">Edit</button>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th>555</th>
-                                            <th>Nguyễn Tấn Tài</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>
-                                                <button class="btn-secondary">Delete</button>
-                                                <button class="btn-primary">Edit</button>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th>133</th>
-                                            <th>Nguyễn Lê Tấn</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>123456789</th>
-                                            <th>
-                                                <button class="btn-secondary">Delete</button>
-                                                <button class="btn-primary">Edit</button>
-                                            </th>
-                                        </tr>
-                                        <tr>
+                                        <!-- <tr>
                                             <th>456</th>
                                             <th>Nguyễn Lê Tấn Tài</th>
                                             <th>123456789</th>
@@ -380,7 +336,7 @@
                                             <th>123456789</th>
                                             <th>
                                                 <button class="btn-secondary">Delete</button>
-                                                <button class="btn-primary">Edit</button>
+                                                <button class="btn-primary btn-Edit">Edit</button>
                                             </th>
                                         </tr>
                                         <tr>
@@ -395,15 +351,14 @@
                                             <th>123456789</th>
                                             <th>
                                                 <button class="btn-secondary">Delete</button>
-                                                <button class="btn-primary">Edit</button>
+                                                <button class="btn-primary btn-Edit">Edit</button>
                                             </th>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
 
@@ -445,7 +400,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="loginStaff.html">Logout</a>
                 </div>
             </div>
         </div>
@@ -466,11 +421,12 @@
                     <input type="password" class="passagain_account content-input" placeholder="Nhập lại pass">
                     <input type="text" class="codeconfirm-input" placeholder="Nhập mã xác nhận">
                     <button class="btn btn-finish">Hoàn tất</button>
-                    <button class="btn btn-comeback">Trở lại</button>
+                    <button class="btn btn-comeback" onclick="closeForm()">Trở lại</button>
                 </div>
             </div>
         </div>
     </div>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -483,17 +439,13 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
+    <script type="text/javascript" src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <!-- <script src="js/rendernhanvien.js"></script> -->
+    
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
-
-    <script>
-        activeForm('btn-primary', 'Edit')
-        closeForm("btn-comeback", "Trở lại")
-    </script>
+    <!-- <script src="js/demo/datatables-demo.js"></script> -->
+    <script src="js/rendernhanvien.js"></script>
 
 </body>
-
 </html>

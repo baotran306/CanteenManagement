@@ -1,6 +1,6 @@
 import pyodbc
-import Processing.CheckValidTime as ck
-import Processing.ExtraFunctions as ef
+import CheckValidTime as ck
+import ExtraFunctions as ef
 
 connect = pyodbc.connect(
     "Driver={SQL Server Native Client 11.0};"
