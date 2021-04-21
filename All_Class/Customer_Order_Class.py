@@ -1,9 +1,10 @@
 class CustomerOrder:
-    def __init__(self, idb="", order_time="", status_now=1, staff_id="", customer_id=None):
+    def __init__(self, idb="", order_time="", status_now=1, staff_id="", address=None, customer_id=None):
         self.__id_order = idb
         self.__order_time = order_time
         self.__staff_id = staff_id
         self.__status_now = status_now  # status = 1 is delivered, status = 0 is not complete, 2 is cancel
+        self.__address = address
         self.__customer_id = customer_id
 
     def set_id_order(self, idb=""):
@@ -34,4 +35,10 @@ class CustomerOrder:
         self.__customer_id = idc
 
     def get_customer_id(self):
+        return self.__customer_id
+
+    def set_address(self, address=None):
+        self.__customer_id = address
+
+    def get_address(self):
         return self.__customer_id
