@@ -11,7 +11,7 @@ function login() {
         //         passInput: passInput,
         //     }
         // ]
-        fetch("http://127.0.0.1:3000/staff")
+        fetch("http://127.0.0.1:5000/staff")
             .then(res=> res.json())
             // fetch(url checklogin, {
             // method: 'POST', 

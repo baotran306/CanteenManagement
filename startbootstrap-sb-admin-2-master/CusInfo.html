@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Information</title>
+    <title>Thông tin tài khoản</title>
     <link rel="stylesheet" href="./css/trangchu.css">
     <link rel="stylesheet" href="./fonts/themify-icons/themify-icons.css">
 </head>
@@ -19,25 +19,25 @@
                 </a>
             </div>
             <div class="header__nav-mid">
-                <h2 style="color:red ;font-size:40px; width: 100%; vertical-align: middle; padding: 20px 0px 0px 150px">
-                    CHECK YOUR INFORMATION</h2>
+                <h2 style="color:red ;font-size:40px; width: 100%; vertical-align: middle; padding: 20px 0px 0px 220px">
+                    KIỂM TRA THÔNG TIN</h2>
             </div>
             <div class="header__nav-right">
                 <ul class="header__nav-list-item" style="list-style-type: none;">
                     <li class="header__nav-item opacityhover" onclick="comeback()">
                         <i class="icon ti-power-off"></i>
-                        LOGOUT
+                        Đăng xuất
                     </li>
                     <li class="header__nav-item opacityhover">
                         <i class="icon ti-menu"></i>
                         <a href="CusBill.html" style="text-decoration: none;color:white">
-                            CHECK YOUR BILL
+                            Xem hóa đơn
                         </a>
                     </li>
                     <li class="header__nav-item opacityhover">
                         <i class="icon ti-user"></i>
                         <a href="CusInfo.html" style="text-decoration: none;color:white">
-                            CHECK YOUR INFORMATION
+                            Xem thông tin tài khoản
                         </a>
                     </li>
                 </ul>
@@ -114,44 +114,44 @@
         <!-- Đây là phần show thông tin -->
         <div class="container__CusInfo">
             <div class="CusInfo">
-                <h2 style="padding-bottom: 20px; padding-left: 350px;">Your Account Information</h2>
-                <label">UserName</label>
-                    <input type="text" disabled value="ABCXYZ" id="userName">
+                <h2 style="padding-bottom: 20px; padding-left: 350px;">THÔNG TIN TÀI KHOẢN CỦA BẠN</h2>
+                <label">Tên đăng nhập</label>
+                    <input type="text" disabled value="ABCXYZ" id="userName" style="margin-left: 20px;">
                     <br>
                     <br>
-                    <label">Password</label>
-                        <input type="password" id="passWord" value="123456">
+                    <label">Mật khẩu</label>
+                        <input type="password" id="passWord" value="123456" style="margin-left: 60px;">
                         <br>
                         <br>
-                        <label">Name</label>
-                            <input type="text" value="Nguyễn Văn A" id="name">
+                        <label">Họ và tên</label>
+                            <input type="text" value="Nguyễn Văn A" id="name" style="margin-left: 57px;">
                             <br>
                             <br>
                             <label">Email</label>
-                                <input type="text" disabled value="ABCXYZ@gmail.com" id="email">
+                                <input type="text" disabled value="ABCXYZ@gmail.com" id="email" style="margin-left: 85px;">
                                 <br>
                                 <br>
-                                <label">Addresses</label>
-                                    <input type="text" value="9 Man Thiện Quận 10" id="addresses">
+                                <label">Địa chỉ</label>
+                                    <input type="text" value="9 Man Thiện Quận 10" id="addresses" style="margin-left: 77px;">
                                     <br>
                                     <br>
-                                    <label">Gender</label>
-                                        <select id="gender">
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
+                                    <label">Giới tính</label>
+                                        <select id="gender" style="margin-left: 65px;">
+                                            <option value="Nam">Nam</option>
+                                            <option value="Nữ">Nữ</option>
                                         </select>
                                         <br>
                                         <br>
-                                        <label">Birthday</label>
-                                            <input type="date" value="2000-02-03">
+                                        <label">Ngày sinh</label>
+                                            <input type="date" value="2000-02-03" style="margin-left: 55px;">
+                                         <br>
                                             <br>
-                                            <br>
-                                            <label">Id</label>
-                                                <input type="text" disabled value="0123456789">
+                                            <label">CMND</label>
+                                                <input type="text" disabled value="0123456789" style="margin-left: 75px;">
             </div>
 
             <div class="ConfirmChange" style="padding-top: 20px;">
-                <button>Change Information</button>
+                <button id= "change">Thay đổi thông tin</button>
             </div>
         </div>
     </div>
@@ -178,7 +178,7 @@
                 <i class="icon ti-linkedin"></i>
             </a>
         </div>
-        <div class="source">Power by @ <a href="" class="link" style="text-decoration:none">PTIT'S CANTEEN</a></div>
+        <div class="source">Thực hiện bởi @ <a href="" class="link" style="text-decoration:none">Căn tin PTIT</a></div>
     </div>
 </body>
 

@@ -31,7 +31,6 @@
 fetch("http://127.0.0.1:5000//admin/stats/order")
     .then(res => res.json())
     .then(listHoaDon => {
-        console.log(listHoaDon)
         var output = '';
         for (let i in listHoaDon) {
             output += `
