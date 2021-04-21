@@ -10,7 +10,7 @@ def check_type_customer(customer_type):
 
 def check_status_order(stt_order):
     if stt_order not in [0, 1, 2]:
-        print("----status order not acceptable in check_status_order(just 0, 1)----")
+        print("----status order not acceptable in check_status_order(just 0, 1, 2)----")
         return False
     return True
 

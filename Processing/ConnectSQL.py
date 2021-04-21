@@ -177,18 +177,20 @@ class SqlFunction:
             print(ex)
             return False
 
-    def insert_customer_order(self, time, stt, stid, cus_id=None):
+    def insert_customer_order(self, time, stt, staff_id, address=None, cus_id=None):
         try:
             if not ck.check_limit_time(time):
                 return False
-            if not self.check_existed_id("Staff", stid):
+            if not self.check_existed_id("Staff", staff_id):
                 return False
             if not ck.check_format_datetime(time):
                 return False
+            if not ef.check_status_order(stt):
+                return False
             cursor = self.func
             cursor.execute(
-                'insert into CustomerOrder values (?, ?, ?, ?);',
-                (time, stt, stid, cus_id)
+                'insert into CustomerOrder values (?, ?, ?, ?, ?);',
+                (time, stt, staff_id, address, cus_id)
             )
             cursor.commit()
             return True
@@ -526,7 +528,6 @@ class SqlFunction:
                     ans.append(row[6])
                     ans.append(row[7])
                     ans.append(float(row[8]))
-                    ans.append(row[9])
                     break
                 cursor.commit()
                 return ans
@@ -541,7 +542,7 @@ class SqlFunction:
     def get_info_all_staff(self):
         """
         :return: List of all staff
-        [staff_id, name, gender, identity_card, day_of_birth, phone_num, address, role_name, salary, password]
+        [staff_id, name, gender, identity_card, day_of_birth, phone_num, address, role_name, salary]
         """
         try:
             cursor = self.func
@@ -549,7 +550,9 @@ class SqlFunction:
             rows = cursor.execute(sql)
             ans = []
             for row in rows:
-                tmp = [row[0], row[1], row[2], row[3], str(row[4]), row[5], row[6], row[7], float(row[8]), row[9]]
+                if row[8] is None:
+                    row[8] = 0
+                tmp = [row[0], row[1], row[2], row[3], str(row[4]), row[5], row[6], row[7], float(row[8])]
                 ans.append(tmp)
             cursor.commit()
             return ans
@@ -562,7 +565,7 @@ class SqlFunction:
         """
         :param ids: id of customer need to find info
         :return: List of all info of this customer
-        [customer_id, name, gender, identity_card, day_of_birth, phone_num, address, vip_member, password]
+        [customer_id, name, gender, identity_card, day_of_birth, phone_num, address, vip_member]
         """
         try:
             if self.check_existed_id("customer", ids):
@@ -579,7 +582,6 @@ class SqlFunction:
                     ans.append(row[5])
                     ans.append(row[6])
                     ans.append(row[7])
-                    ans.append(row[8])
                     break
                 cursor.commit()
                 return ans
@@ -594,7 +596,7 @@ class SqlFunction:
     def get_all_info_customer(self):
         """
         :return: List of all info of all customer
-        [customer_id, name, gender, identity_card, day_of_birth, phone_num, address, vip_member, password]
+        [customer_id, name, gender, identity_card, day_of_birth, phone_num, address, vip_member]
         """
         try:
             cursor = self.func
@@ -602,7 +604,7 @@ class SqlFunction:
             cursor.execute(sql)
             ans = []
             for row in cursor:
-                tmp = [row[0], row[1], row[2], row[3], str(row[4]), row[5], row[6], row[7], row[8]]
+                tmp = [row[0], row[1], row[2], row[3], str(row[4]), row[5], row[6], row[7]]
                 ans.append(tmp)
             cursor.commit()
             return ans
@@ -611,13 +613,13 @@ class SqlFunction:
             print(ex)
             return False
 
-    def all_food(self):
+    def get_all_food(self):
         try:
             cursor = self.func
             cursor.execute("select * from food")
             list_food = []
             for r in cursor:
-                list_food.append(r)
+                list_food.append([r[0], r[1], r[2], float(r[3]), r[4]])
             return list_food
         except Exception as ex:
             print("----Error in all_food----")
@@ -723,6 +725,7 @@ class SqlFunction:
             for c in cursor:
                 ans = c[0]
                 break
+            cursor.commit()
             return ans
         except Exception as ex:
             print("----Error in get_id_card----")
@@ -744,6 +747,7 @@ class SqlFunction:
             for c in cursor:
                 ans = c[0]
                 break
+            cursor.commit()
             return ans
         except Exception as ex:
             print("----Error in get_phone_num----")
@@ -771,6 +775,7 @@ class SqlFunction:
             for c in cursor:
                 ans = c[0]
                 break
+            cursor.commit()
             return ans
         except Exception as ex:
             print("----Error in get_id_card----")
@@ -808,6 +813,101 @@ class SqlFunction:
             print('----Error in reset_password_customer')
             print(ex)
             return False
+
+    def get_order_time_stt_address_by_id(self, id_order):
+        try:
+            if not self.check_existed_id("CustomerOrder", id_order):
+                return []
+            cursor = self.func
+            cursor.execute("select order_time, status_now, address from CustomerOrder where id = ?", id_order)
+            ans = []
+            for r in cursor:
+                ans.append(str(r[0]))
+                ans.append(ef.status_type(r[1]))
+                ans.append(r[2])
+                break
+            cursor.commit()
+            return ans
+        except Exception as ex:
+            print("----Error in get_order_time_and_stt_by_id")
+            print(ex)
+            return []
+
+    def get_info_order_detail_by_id(self, id_order):
+        try:
+            if not self.check_existed_id("OrderDetail", id_order):
+                return []
+            cursor = self.func
+            cursor.execute("select food_id, num_of_food, cur_price from OrderDetail where order_id = ?", id_order)
+            info = [id_order]
+            food_list = []
+            num_list = []
+            cur_price = []
+            for r in cursor:
+                food_list.append(r[0])
+                num_list.append(int(r[1]))
+                cur_price.append(float(r[2]))
+            info.append([self.get_food_name_by_id(x) for x in food_list])
+            info.append(num_list)
+            info.append(cur_price)
+            info.append(self.calculate_order_id(id_order))
+            info_order = self.get_order_time_stt_address_by_id(id_order)
+            info.append(info_order[0])
+            info.append(info_order[1])
+            info.append(info_order[2])
+            cursor.commit()
+            return info
+        except Exception as ex:
+            print('----Error in get_info_order_detail_by_id')
+            print(ex)
+            return []
+
+    def get_all_info_order(self, type_inp=0):
+        """
+        :param type_inp: type of order which want to select.
+            - type = 0 is  order has status = 0 (Not complete ship)
+            - type = 1 is  order has status = 1 (Completed ship)
+            - type = 2 is  order has status = 2 (Cancel Order)
+            else all of order
+        :return: list of info order
+        """
+        try:
+            cursor = self.func
+            if type_inp not in [0, 1, 2]:
+                cursor.execute("select id from CustomerOrder")
+            else:
+                cursor.execute("select id from CustomerOrder where status_now = ?", type_inp)
+            list_id = []
+            for r in cursor:
+                list_id.append(r[0])
+            ans = []
+            for id_order in list_id:
+                if not self.check_existed_id("OrderDetail", id_order):
+                    continue
+                ans.append(self.get_info_order_detail_by_id(id_order))
+            cursor.commit()
+            return ans
+        except Exception as ex:
+            print("----Error in get_food_name_by_id----")
+            print(ex)
+            return []
+
+    def get_food_name_by_id(self, food_id):
+        try:
+            cursor = self.func
+            if not self.check_existed_id("Food", food_id):
+                return ""
+            cursor.execute("select name from food where id = ? ", food_id)
+            ans = ""
+            for r in cursor:
+                ans = r[0]
+                break
+            cursor.commit()
+            return ans
+        except Exception as ex:
+            print("----Error in get_food_name_by_id----")
+            print(ex)
+            return ""
 
 
 """Testing"""
@@ -847,9 +947,12 @@ sql_func = SqlFunction()
 # print(sql_func.check_existed_id('staff', '9191919'))
 # print(np.random.permutation(10))
 # print(sql_func.get_info_customer_by_id("KH001"))
+# print(sql_func.get_all_info_customer())
+# print(sql_func.get_info_all_staff())
+# print(sql_func.get_info_staff_by_id('NV002'))
 # print(sql_func.add_food_to_menu('123444', '12311'))
 # print(sql_func.add_food_to_menu('12671', '141'))
-# for i in range(0, 20):
+# for i in range(0, 10):
 #     print(sql_func.insert_food("Bánh xèo", "test" + str(i), 19000 + 1000 * i))
 # print(sql_func.select_food_to_menu(123, 10))
 # print(sql_func.get_info_menu_detail(2))
@@ -859,3 +962,6 @@ sql_func = SqlFunction()
 # print(sql_func.stats_order_revenue())
 # print(sql_func.stats_revenue_by_month())
 # print(sql_func.last_id_person(0))
+# print(sql_func.get_info_order_detail_by_id(2))
+# print(sql_func.get_all_info_order(1))
+# print(sql_func.get_all_food())
