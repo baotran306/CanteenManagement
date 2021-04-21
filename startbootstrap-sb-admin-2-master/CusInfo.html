@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Information</title>
+    <link rel="stylesheet" href="./css/trangchu.css">
+    <link rel="stylesheet" href="./fonts/themify-icons/themify-icons.css">
+</head>
+
+<body>
+    <div id="header">
+        <div class="header__nav grid">
+            <div class="header__nav-left">
+                <a href="homepage.html" class="header__nav-logo">
+                    <img src="./img/logo/Logo_PTIT.jpg" alt="Đây là logo PTIT" class="logoPtit">
+                </a>
+            </div>
+            <div class="header__nav-mid">
+                <h2 style="color:red ;font-size:40px; width: 100%; vertical-align: middle; padding: 20px 0px 0px 150px">
+                    CHECK YOUR INFORMATION</h2>
+            </div>
+            <div class="header__nav-right">
+                <ul class="header__nav-list-item" style="list-style-type: none;">
+                    <li class="header__nav-item opacityhover" onclick="comeback()">
+                        <i class="icon ti-power-off"></i>
+                        LOGOUT
+                    </li>
+                    <li class="header__nav-item opacityhover">
+                        <i class="icon ti-menu"></i>
+                        <a href="CusBill.html" style="text-decoration: none;color:white">
+                            CHECK YOUR BILL
+                        </a>
+                    </li>
+                    <li class="header__nav-item opacityhover">
+                        <i class="icon ti-user"></i>
+                        <a href="CusInfo.html" style="text-decoration: none;color:white">
+                            CHECK YOUR INFORMATION
+                        </a>
+                    </li>
+                </ul>
+                <script>
+                    function comeback() {
+                        sessionStorage.removeItem("role")
+                        sessionStorage.removeItem("name")
+                        window.location.href = 'loginCustom.html'
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+    <div id="cotaniner">
+        <!--Đây là slider đồ ăn giới thiệu sản phẩm-->
+        <div class="container__slider">
+            <div class="mySlides fade">
+                <img src="./img/mon_an/1.jpg" class="img-slider">
+                <div class="slider-info">
+                    <h3 class="slider-name">A</h3>
+                    <br>
+                    <span class="slider-description">A is</span>
+                </div>
+            </div>
+
+            <div class="mySlides fade">
+                <img src="img/mon_an/2.jpg" class="img-slider">
+                <div class="slider-info">
+                    <h3 class="slider-name">B</h3>
+                    <br>
+                    <span class="slider-description">B is</span>
+                </div>
+            </div>
+
+            <div class="mySlides fade">
+                <img src="img/mon_an/3.jpg" class="img-slider">
+                <div class="slider-info">
+                    <h3 class="slider-name">C</h3>
+                    <br>
+                    <span class="slider-description">C is</span>
+                </div>
+            </div>
+
+        </div>
+        <br>
+        <div class="wrap-dots" style="text-align:center">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+
+        <script>
+            var slideIndex = 0;
+            showSlides();
+
+            function showSlides() {
+                var i;
+                var slides = document.getElementsByClassName("mySlides");
+                var dots = document.getElementsByClassName("dot");
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+                slideIndex++;
+                if (slideIndex > slides.length) { slideIndex = 1 }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                }
+                slides[slideIndex - 1].style.display = "block";
+                dots[slideIndex - 1].className += " active";
+                setTimeout(showSlides, 2000);
+            }
+        </script>
+
+        <!-- Đây là phần show thông tin -->
+        <div class="container__CusInfo">
+            <div class="CusInfo">
+                <h2 style="padding-bottom: 20px; padding-left: 350px;">Your Account Information</h2>
+                <label">UserName</label>
+                    <input type="text" disabled value="ABCXYZ" id="userName">
+                    <br>
+                    <br>
+                    <label">Password</label>
+                        <input type="password" id="passWord" value="123456">
+                        <br>
+                        <br>
+                        <label">Name</label>
+                            <input type="text" value="Nguyễn Văn A" id="name">
+                            <br>
+                            <br>
+                            <label">Email</label>
+                                <input type="text" disabled value="ABCXYZ@gmail.com" id="email">
+                                <br>
+                                <br>
+                                <label">Addresses</label>
+                                    <input type="text" value="9 Man Thiện Quận 10" id="addresses">
+                                    <br>
+                                    <br>
+                                    <label">Gender</label>
+                                        <select id="gender">
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                        <br>
+                                        <br>
+                                        <label">Birthday</label>
+                                            <input type="date" value="2000-02-03">
+                                            <br>
+                                            <br>
+                                            <label">Id</label>
+                                                <input type="text" disabled value="0123456789">
+            </div>
+
+            <div class="ConfirmChange" style="padding-top: 20px;">
+                <button>Change Information</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="footer">
+        <div class="social-list">
+            <a href="" class="link">
+                <i class="icon ti-facebook"></i>
+            </a>
+            <a href="" class="link">
+                <i class="icon ti-instagram"></i>
+            </a>
+            <a href="" class="link">
+                <i class="icon ti-youtube"></i>
+            </a>
+            <a href="" class="link">
+                <i class="icon ti-pinterest"></i>
+            </a>
+            <a href="" class="link">
+                <i class="icon ti-twitter"></i>
+            </a>
+            <a href="" class="link">
+                <i class="icon ti-linkedin"></i>
+            </a>
+        </div>
+        <div class="source">Power by @ <a href="" class="link" style="text-decoration:none">PTIT'S CANTEEN</a></div>
+    </div>
+</body>
+
+</html>
