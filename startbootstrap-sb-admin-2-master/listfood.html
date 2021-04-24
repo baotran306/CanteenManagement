@@ -9,17 +9,23 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Doanh thu căn tin PTIT</title>
+    <title>Danh sách nhân viên</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template-->
+    <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/test.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <script src="js/modal.js"></script>
+    
 </head>
 
 <body id="page-top">
@@ -35,46 +41,47 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Trang nhân viên căn tin PTIT</div>
+                <div class="sidebar-brand-text mx-3">Trang Nhân Viên Căn Tin PTIT</div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-           
-           
-          
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
 
+
+
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
 
 
             <!-- Nav Item - Doanh Thu -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="turnover.html">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Doanh thu</span></a>
             </li>
 
-            <!-- Nav Item - DANH SÁCH NHÂN VIÊN -->
+            <!-- Nav Item - Danh sách nhân viên -->
             <li class="nav-item">
                 <a class="nav-link" href="liststaff.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh sách nhân viên</span></a>
             </li>
-            <!-- Nav Item - ĐANH SÁCH HÓA ĐƠN -->
+            <!-- Nav Item - Danh sách hóa đơn  -->
             <li class="nav-item">
                 <a class="nav-link" href="listbill.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh sách hóa đơn</span></a>
             </li>
              <!-- Nav Item - DANH SÁCH MÓN ĂN -->
-             <li class="nav-item">
-                <a class="nav-link active" href="listfood.html">
+             <li class="nav-item active">
+                <a class="nav-link " href="listfood.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh sách món ăn</span></a>
             </li>
@@ -90,7 +97,6 @@
                     <i class="fas fa-fw fa-plus"></i>
                     <span>Thêm nhân viên</span></a>
             </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -112,9 +118,11 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+                    <form class="form-inline">
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                    </form>
 
                     <!-- Topbar Search -->
                     <form
@@ -224,8 +232,7 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -236,8 +243,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -248,8 +254,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -281,12 +286,12 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
+
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -303,30 +308,35 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Content Row -->
-                    <div class="row">
+                    <!-- Page Heading -->
 
-                        <div class="col-xl-8 col-lg-7">
 
-                            
 
-                            <!-- BẢNG DOANH THU CỦA CANTEEN -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Doanh thu của căn tin PTIT</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="chart-bar">
-                                        <canvas id="myBarChart"></canvas>
-                                    </div>
-                                    <hr>
-                                    Styling for the bar chart can be found in the
-                                    <code>/js/demo/chart-bar-demo.js</code> file.
-                                </div>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Danh sách món ăn của căn tin PTIT</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Hình ảnh</th>
+                                            <th>Mã món</th>
+                                            <th>Tên món</th>
+                                            <th>Giá</th>
+                                            <th>Mô tả</th>
+                                            <th>Chức năng</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tbody id="listfood">
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
 
@@ -337,7 +347,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Thực hiện bởi &copy; Căn tin PTIT</span>
+                        <span>Power by &copy; PTIT'S CANTEEN</span>
                     </div>
                 </div>
             </footer>
@@ -368,11 +378,46 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="loginStaff.html">Logout</a>
                 </div>
             </div>
         </div>
     </div>
+
+    <!--CHỨC NĂNG EDIT-->
+    <div id="modal">
+        <div class="modal__overplay"></div>
+        <div class="modal__body">
+            <div class="modal__body-container">
+                <div class="modal__body-container-header">
+                    <h2 style="color:red">Chỉnh sửa thông tin món ăn</h2>
+                </div>
+
+                <div class="modal__body-container-content">
+                    <label>Mã món</label>
+                    <input type="text" id="food_id" style="margin-left: 5px;" disabled>
+                    <br>
+                    <br>
+                    <label>Tên món</label>
+                    <input type="text" id="food_name" style="margin-left: 5px;">
+                    <br>
+                    <br>
+                    <label>Giá</label>
+                    <input type="number" id="food_price" style="margin-left:40px">
+                    <br>
+                    <br>
+                    <label>Mô tả</label>
+                    <textarea rows="4" cols="40" type="text" id="food_description"></textarea>
+                    <div class="wrap-btn">
+
+                        <button class="btn btn-finish">Hoàn tất</button>
+                        <button class="btn btn-comeback" onclick="closeForm()">Trở lại</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -385,13 +430,13 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
+    <script type="text/javascript" src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <!-- <script src="js/rendernhanvien.js"></script> -->
+    
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-    <script src="js/demo/chart-bar-demo.js"></script>
+    <!-- <script src="js/demo/datatables-demo.js"></script> -->
+    <script src="js/renderlistmon.js"></script>
 
 </body>
-
 </html>

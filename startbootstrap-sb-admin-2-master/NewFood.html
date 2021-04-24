@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Doanh thu căn tin PTIT</title>
+    <title>Thêm món ăn mới</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -43,9 +43,9 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider">
-           
-           
-          
+
+
+
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -54,7 +54,7 @@
 
 
             <!-- Nav Item - Doanh Thu -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="turnover.html">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Doanh thu</span></a>
@@ -72,14 +72,14 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh sách hóa đơn</span></a>
             </li>
-             <!-- Nav Item - DANH SÁCH MÓN ĂN -->
-             <li class="nav-item">
+            <!-- Nav Item - DANH SÁCH MÓN ĂN -->
+            <li class="nav-item">
                 <a class="nav-link active" href="listfood.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh sách món ăn</span></a>
             </li>
             <!-- Nav Item - THÊM MÓN ĂN -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="NewFood.html">
                     <i class="fas fa-fw fa-plus"></i>
                     <span>Thêm món mới</span></a>
@@ -224,8 +224,7 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -236,8 +235,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -248,8 +246,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -281,8 +278,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -308,20 +304,47 @@
 
                         <div class="col-xl-8 col-lg-7">
 
-                            
 
-                            <!-- BẢNG DOANH THU CỦA CANTEEN -->
+
+                            <!-- THÊM MÓN ĂN MỚI CHO CANTEEN -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Doanh thu của căn tin PTIT</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Thêm món ăn mới cho căn tin PTIT</h6>
                                 </div>
-                                <div class="card-body">
-                                    <div class="chart-bar">
-                                        <canvas id="myBarChart"></canvas>
+                                <div class="newfood" style="padding-left: 30px;">
+                                    <div>
+                                        <label>Tên món ăn</label>
+                                        <br>
+                                        <input type="text" id="foodName">
+                                        <br>
+                                        <br>
+                                        <label>Giá</label>
+                                        <br>
+                                        <input type="number" id="price">
+                                        <br>
+                                        <br>
+                                        <label>Mô tả</label>
+                                        <br>
+                                        <input type="text" id="description">
+                                        <br>
+                                        <br>
+                                        <label>Chọn hình ảnh</label>
+                                        <input type="file" name="myImage" accept="image/*" id="myInputImg">
+                                        <div class="wrapImg">
+
+                                            <img id="myImgLoad" width="200px">
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <button class="btn-primary" onclick="addnewfood()">Hoàn tất</button>
                                     </div>
-                                    <hr>
-                                    Styling for the bar chart can be found in the
-                                    <code>/js/demo/chart-bar-demo.js</code> file.
+                                    <script>
+                                        const imgSelector = document.getElementById('myInputImg');
+                                        imgSelector.addEventListener('change', (event) => {
+                                            let img = document.getElementById('myImgLoad')
+                                            img.src = URL.createObjectURL(event.target.files[0])
+                                        });
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -385,12 +408,9 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-    <script src="js/demo/chart-bar-demo.js"></script>
 
 </body>
 
