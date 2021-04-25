@@ -229,7 +229,7 @@ class SqlFunction:
             print(ex)
             return False
 
-    def insert_customer_user(self, user_id, password, customer_id, staff_id=None):
+    def insert_customer_user(self, user_id, password, customer_id):
         try:
             if self.check_existed_id("CustomerUser", user_id):
                 return False
@@ -237,11 +237,8 @@ class SqlFunction:
                 return False
             if not ef.check_regex_password(password):
                 return False
-            if staff_id is not None:
-                if not self.check_existed_id("Staff", staff_id):
-                    return False
             cursor = self.func
-            cursor.execute("insert into CustomerUser values(?, ?, ?, ?);", (user_id, password, customer_id, staff_id))
+            cursor.execute("insert into CustomerUser values(?, ?, ?);", (user_id, password, customer_id))
             cursor.commit()
             return True
         except Exception as ex:
@@ -510,7 +507,7 @@ class SqlFunction:
         """
         :param ids: id of staff need to find info
         :return: List of all info of this staff
-        [staff_id, name, gender, identity_card, day_of_birth, phone_num, address, role_name, salary, password]
+        [staff_id, name, gender, identity_card, day_of_birth, phone_num, address, role_name, salary]
         """
         try:
             if self.check_existed_id("staff", ids):
@@ -527,6 +524,8 @@ class SqlFunction:
                     ans.append(row[5])
                     ans.append(row[6])
                     ans.append(row[7])
+                    if row[8] is None:
+                        row[8] = 0
                     ans.append(float(row[8]))
                     break
                 cursor.commit()
@@ -667,7 +666,7 @@ class SqlFunction:
             cursor.execute("select * from dbo.InfoOrder()")
             ans = []
             for r in cursor:
-                tmp = [r[0], float(r[1]), str(r[3]), ef.status_type(r[4]), r[5], r[6]]
+                tmp = [r[0], float(r[1]), str(r[3]), ef.status_type(r[4]), r[5], r[6], r[7]]
                 ans.append(tmp)
             cursor.commit()
             return ans
@@ -909,6 +908,57 @@ class SqlFunction:
             print(ex)
             return ""
 
+    def get_role_id_by_name(self, role_name):
+        try:
+            cursor = self.func
+            if not self.check_existed_id("Role", role_name):
+                return ""
+            cursor.execute("select id from Role where role_name = ? ", role_name)
+            ans = ""
+            for r in cursor:
+                ans = r[0]
+                break
+            cursor.commit()
+            return ans
+        except Exception as ex:
+            print("----Error in get_role_id_name_by_name----")
+            print(ex)
+            return ""
+
+    def get_id_order_by_time_staff_id(self, time, staff_id):
+        try:
+            cursor = self.func
+            if not self.check_existed_id("Staff", staff_id):
+                return ""
+            cursor.execute("select id from CustomerOrder where order_time = ? and staff_id = ?", time, staff_id)
+            ans = ""
+            for r in cursor:
+                ans = r[0]
+                break
+            cursor.commit()
+            return ans
+        except Exception as ex:
+            print("----Error in get_id_order_by_time_staff_id----")
+            print(ex)
+            return ""
+
+    def get_id_order_by_time_customer_id(self, time, customer_id):
+        try:
+            cursor = self.func
+            if not self.check_existed_id("Customer", customer_id):
+                return ""
+            cursor.execute("select id from CustomerOrder where order_time = ? and customer_id = ?", time, customer_id)
+            ans = ""
+            for r in cursor:
+                ans = r[0]
+                break
+            cursor.commit()
+            return ans
+        except Exception as ex:
+            print("----Error in get_id_order_by_time_customer_id----")
+            print(ex)
+            return ""
+
 
 """Testing"""
 sql_func = SqlFunction()
@@ -965,3 +1015,6 @@ sql_func = SqlFunction()
 # print(sql_func.get_info_order_detail_by_id(2))
 # print(sql_func.get_all_info_order(1))
 # print(sql_func.get_all_food())
+# print(sql_func.get_id_order_by_time_customer_id('2021-04-12 19:34:00', 'KH005'))
+# print(sql_func.get_id_person_from_user('admin', 1))
+# print(sql_func.get_info_staff_by_id(sql_func.get_id_person_from_user('admin', 1)))

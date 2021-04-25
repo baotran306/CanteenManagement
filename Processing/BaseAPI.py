@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from datetime import datetime
 import Processing.ConnectSQL
 connect = Processing.ConnectSQL.SqlFunction()
 
@@ -51,11 +52,12 @@ def stats_order_revenue():
     for r in rows:
         data.append({
             'order_id': r[0],
-            'revenue': r[1],
+            'total': r[1],
             'order_time': r[2],
             'status_now': r[3],
             'staff_id': r[4],
-            'customer_id': r[5]
+            'address': r[5],
+            'customer_id': r[6]
         })
     return jsonify(data)
 
@@ -99,7 +101,8 @@ def get_all_food():
             'id_food': r[0],
             'food_name': r[1],
             'describe': r[2],
-            'image': r[3]
+            'cur_price': r[3],
+            'image': r[4]
         })
     return jsonify(data)
 
@@ -155,6 +158,205 @@ def get_cancel_order():
             'status': r[6],
             'address': r[7]
         })
+    return jsonify(data)
+
+
+@app.route("/customer/register", methods=['POST'])
+def insert_customer():
+    new_id = connect.generate_new_id_person(1)
+    name = request.json['name']
+    gender = request.json['gender']
+    id_card = request.json['id_card']
+    dob = request.json['dob']
+    phone = request.json['phone']
+    address = request.json['address']
+    user = request.json['user']
+    password = request.json['password']
+    if connect.insert_person(new_id, name, gender, id_card, dob, phone, address):
+        if connect.insert_customer(new_id, vip="NO"):
+            if connect.insert_customer_user(user, password, new_id):
+                data = {'result': True, 'error': 'Đăng kí thành công'}
+                return jsonify(data)
+    data = {'result': False, 'error': 'Đăng kí thất bại'}
+    return jsonify(data)
+
+
+@app.route("/admin/register", methods=['POST'])
+def insert_staff():
+    new_id = connect.generate_new_id_person(0)
+    name = request.json['name']
+    gender = request.json['gender']
+    id_card = request.json['id_card']
+    dob = request.json['dob']
+    phone = request.json['phone']
+    address = request.json['address']
+    user = request.json['user']
+    password = request.json['password']
+    role_name = request.json['role_name']
+    role_id = connect.get_role_id_by_name(role_name)
+    if connect.insert_person(new_id, name, gender, id_card, dob, phone, address):
+        if connect.insert_staff(new_id):
+            if connect.insert_user_login(user, password, role_id, new_id):
+                data = {'result': True, 'error': 'Đăng kí nhân viên thành công'}
+                return jsonify(data)
+    data = {'result': False, 'error': 'Đăng kí thất bại'}
+    return jsonify(data)
+
+
+@app.route("/admin/food", methods=['POST'])
+def insert_food():
+    name = request.json['name']
+    describe = request.json['describe']
+    price = request.json['price']
+    image = request.json['image']
+    if connect.insert_food(name, describe, price, image):
+        data = {'result': True, 'error': 'Thêm món mới thành công'}
+        return jsonify(data)
+    data = {'result': False, 'error': 'Thêm thất bại'}
+    return jsonify(data)
+
+
+@app.route("/admin/menu", methods=['POST'])
+def insert_menu():
+    time_start = request.json['time_start']
+    time_end = request.json['time_end']
+    if connect.insert_menu(time_start, time_end):
+        data = {'result': True, 'error': 'Thêm thực đơn thành công'}
+        return jsonify(data)
+    data = {'result': False, 'error': 'Thêm thất bại'}
+    return jsonify(data)
+
+
+@app.route("/admin/menu_detail", methods=['POST'])
+def insert_menu_detail(ls):
+    # don't comple
+    sign = False
+    if connect.insert_menu_detail(ls[0], ls[1]):
+        sign = True
+    return jsonify(sign)
+
+
+@app.route("/staff/order", methods=['POST'])
+def insert_order_off():
+    # don't complete
+    time_now = str(datetime.now())
+    time_now, _ = time_now.split('.')
+    staff_id = request.json['staff_id']
+    if connect.insert_customer_order(time_now, 1, staff_id, "Tại chỗ", None):
+        id_order = connect.get_id_order_by_time_staff_id(time_now, staff_id)
+        # use loop to add menu food in order
+        food_name = request.json['food_name']
+        num_food = request.json['num_food']
+        cur_price = request.json['cur_price']
+        if connect.insert_order_detail(id_order, food_name, num_food, cur_price):
+            data = {'result': True, 'error': 'Thêm hóa đơn thành công'}
+            return jsonify(data)
+    data = {'result': False, 'error': 'Thêm thất bại'}
+    return jsonify(data)
+
+
+@app.route("/customer/order", methods=['POST'])
+def insert_order_onl():
+    time_now = str(datetime.now())
+    time_now, _ = time_now.split('.')
+    address = request.json['address']
+    customer_id = request.json['customer_id']
+    if connect.insert_customer_order(time_now, 0, 'NV00', address, customer_id):
+        id_order = connect.get_id_order_by_time_customer_id(time_now, customer_id)
+        # use loop to add menu food in order
+        food_name = request.json['food_name']
+        num_food = request.json['num_food']
+        cur_price = request.json['cur_price']
+        if connect.insert_order_detail(id_order, food_name, num_food, cur_price):
+            data = {'result': True, 'error': 'Thêm hóa đơn thành công'}
+            return jsonify(data)
+    data = {'result': False, 'error': 'Thêm thất bại'}
+    return jsonify(data)
+
+
+@app.route("/customer/login", methods=['POST'])
+def login_customer():
+    user = request.json['user']
+    password = request.json['password']
+    if connect.check_login_customer(user, password):
+        id_cus = connect.get_id_person_from_user(user, 0)
+        info_cus = connect.get_info_customer_by_id(id_cus)
+        data = {'result': True, 'id': info_cus[0], 'name': info_cus[1], 'vip': info_cus[7]}
+        return jsonify(data)
+    else:
+        data = {'result': False, 'error': "Tài khoản hoặc mật khẩu không chính xác"}
+        return jsonify(data)
+
+
+@app.route("/staff/login", methods=['POST'])
+def login_staff():
+    user = request.json['user']
+    password = request.json['password']
+    if connect.check_login_staff(user, password):
+        id_staff = connect.get_id_person_from_user(user, 1)
+        info_staff = connect.get_info_staff_by_id(id_staff)
+        data = {'result': True, 'id': info_staff[0], 'name': info_staff[1], 'role': info_staff[7]}
+        return jsonify(data)
+    else:
+        data = {'result': False, 'error': "Tài khoản hoặc mật khẩu không chính xác"}
+        return jsonify(data)
+
+
+@app.route("/customer/change_password", methods=['POST'])
+def change_password_customer():
+    user = request.json['user']
+    old_pass = request.json['old_pass']
+    new_pass = request.json['new_pass']
+    if connect.check_login_customer(user, old_pass):
+        if connect.update_customer_user_password(user, new_pass):
+            data = {'result': True, 'error': 'Thay đổi mật khẩu thành công!'}
+            return jsonify(data)
+        else:
+            data = {'result': False, 'error': 'Thay đổi mật khẩu thất bại!'}
+            return jsonify(data)
+    data = {'result': False, 'error': 'Thay đổi mật khẩu thất bại!'}
+    return jsonify(data)
+
+
+@app.route('/staff/change_password', methods=['POST'])
+def change_password_staff():
+    user = request.json['user']
+    old_pass = request.json['old_pass']
+    new_pass = request.json['new_pass']
+    if connect.check_login_staff(user, old_pass):
+        if connect.update_user_login_password(user, new_pass):
+            data = {'result': True, 'error': 'Thay đổi mật khẩu thành công!'}
+            return jsonify(data)
+        else:
+            data = {'result': False, 'error': 'Thay đổi mật khẩu thất bại!'}
+            return jsonify(data)
+    data = {'result': False, 'error': 'Thay đổi mật khẩu thất bại!'}
+    return jsonify(data)
+
+
+@app.route('/customer/reset_password', methods=['POST'])
+def reset_password_customer():
+    user = request.json['user']
+    id_card = request.json['id_card']
+    phone = request.json['phone']
+    new_pass = request.json['new_pass']
+    if connect.reset_password_customer(user, id_card, phone, new_pass):
+        data = {'result': True, 'error': 'Thay đổi mật khẩu thành công!'}
+        return jsonify(data)
+    data = {'result': False, 'error': 'Thay đổi mật khẩu thất bại!'}
+    return jsonify(data)
+
+
+@app.route('/staff/reset_password', methods=['POST'])
+def reset_password_staff():
+    user = request.json['user']
+    id_card = request.json['id_card']
+    phone = request.json['phone']
+    new_pass = request.json['new_pass']
+    if connect.reset_password_staff(user, id_card, phone, new_pass):
+        data = {'result': True, 'error': 'Thay đổi mật khẩu thành công!'}
+        return jsonify(data)
+    data = {'result': False, 'error': 'Thay đổi mật khẩu thất bại!'}
     return jsonify(data)
 
 
