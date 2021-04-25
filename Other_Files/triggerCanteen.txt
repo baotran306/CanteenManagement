@@ -60,6 +60,7 @@ begin
 		rollback
 	end
 end
+go
 
 create trigger LimitTimeEndMenu
 on Menu
@@ -98,6 +99,7 @@ begin
 		rollback
 	end
 end
+go
 
 create trigger CurrentFoodInMenu
 on OrderDetail
