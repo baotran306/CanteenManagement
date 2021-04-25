@@ -54,8 +54,9 @@
                 </ul>
                 <script>
                     function comeback() {
-                        sessionStorage.removeItem("role")
-                        sessionStorage.removeItem("name")
+                        sessionStorage.removeItem("NameCustomer")
+                        sessionStorage.removeItem("IdCustomer")
+                        sessionStorage.removeItem("Vip")
                         window.location.href = 'loginCustom.html'
                     }
                 </script>
@@ -135,22 +136,24 @@
                             <thead>
                                 <tr>
                                     <th>Mã hóa đơn</th>
-                                    <th>Dánh sách món ăn</th>
+                                    <th>Danh sách món ăn</th>
                                     <th>Số lượng</th>
+                                    <th>Giá</th>
                                     <th>Tổng tiền</th>
+                                    <th>Địa chỉ giao</th>
                                     <th>Thời gian đặt</th>
                                     <th>Trạng thái</th>
                                 </tr>
                             </thead>
                             <tbody id="listbill">
-                                <tr>
+                                <!-- <tr>
                                     <th style="vertical-align: middle;">123456</th>
                                     <th>
-                                        A
+                                        Canh khổ qua nhồi thịt
                                         <br>
-                                        B
+                                        Canh khổ qua nhồi thịt
                                         <br>
-                                        C
+                                        Canh khổ qua nhồi thịt
                                         <br>
                                         D
                                         <br>
@@ -168,10 +171,22 @@
                                         50
                                         <br>
                                     </th>
+                                    <th>
+                                        20000
+                                        <br>
+                                        20000
+                                        <br>
+                                        2000
+                                        <br>
+                                        2000
+                                        <br>
+                                        2000
+                                    </th>
                                     <th style="vertical-align: middle;">123456</th>
-                                    <th style="vertical-align: middle;">123456</th>
+                                    <th style="vertical-align: middle;">1234567890234567890</th>
+                                    <th style="vertical-align: middle;">1234567890123456</th>
                                     <th style="vertical-align: middle;">Đang giao</th>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -216,6 +231,8 @@
     <!-- Page level plugins -->
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="js/renderhoadon.js"></script>
+    <script>renderHoaDonCustomer('123')</script>
 </body>
 
 </html>

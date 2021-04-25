@@ -1,33 +1,25 @@
-const checklogin = function(notPermissRoles){
-    var positionUser = sessionStorage.getItem("role")
-    var nameUser = sessionStorage.getItem("name")
-    var navItemList = document.getElementsByClassName("header__nav-item")
-    var isPermiss = true
-    if (nameUser != null)
-    alert(`Chào ${nameUser}`)
-    if (positionUser == null)
+const checkloginAdmin = function(){
+    var role = sessionStorage.getItem("Role")
+    var nameStaff = sessionStorage.getItem("NameStaff")
+    var name = document.getElementById("UserName")
+    name.innerHTML = nameStaff
+    console.log(name.innerHTML)
+    if (role.toLocaleLowerCase() === 'quản lý')
         {
-            window.location.href='loginUser.html'
+            alert(`Xin chào ${nameStaff}`)
         }    
-    for (let i=0;i<notPermissRoles.length;i++)
-        {
-            if (positionUser === notPermissRoles[i])
-                isPermiss = false
-        }   
-    if (!isPermiss)    
-        {
-            if (positionUser=== "Shipper")
-            window.location.href = 'listhoadon.html'
-            else
-            window.location.href = 'trangchu.html'
-            
-            alert (`Bạn không có quyền truy cập`)
-        }
-    if (positionUser !== "QuanLy")
-        {
-            for (let i=1;i<navItemList.length;i++)
-                {
-                    navItemList[i].classList.add("hidden")
-                }
-        }    
+    if (role.toLocaleLowerCase() === 'nhân viên giao hàng')
+    {
+        alert('Bạn không có quyền truy cập')
+        window.location.href = 'shipper.html' 
+    }
+    if (role.toLocaleLowerCase() === 'thu ngân')
+    {
+        alert('Bạn không có quyền truy cập')
+        window.location.href = 'homepage.html'
+    }
+    if (role === null)
+    {
+        window.location.href = 'loginStaff.html'
+    }
 }

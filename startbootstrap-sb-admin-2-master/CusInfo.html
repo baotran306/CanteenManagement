@@ -43,8 +43,9 @@
                 </ul>
                 <script>
                     function comeback() {
-                        sessionStorage.removeItem("role")
-                        sessionStorage.removeItem("name")
+                        sessionStorage.removeItem("NameCustomer")
+                        sessionStorage.removeItem("IdCustomer")
+                        sessionStorage.removeItem("Vip")
                         window.location.href = 'loginCustom.html'
                     }
                 </script>
@@ -119,10 +120,6 @@
                     <input type="text" disabled value="ABCXYZ" id="userName" style="margin-left: 20px;">
                     <br>
                     <br>
-                    <label">Mật khẩu</label>
-                        <input type="password" id="passWord" value="123456" style="margin-left: 60px;">
-                        <br>
-                        <br>
                         <label">Họ và tên</label>
                             <input type="text" value="Nguyễn Văn A" id="name" style="margin-left: 57px;">
                             <br>

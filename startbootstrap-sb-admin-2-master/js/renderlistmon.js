@@ -40,8 +40,15 @@ const DeleteFood = function (id) {
     })
         .then(res => res.json())
         .then(data => {
-            alert(data)
-            var objCancel = document.querySelector("." + id)
-            objCancel.remove()
+            if (data.result=== true)
+            {
+                var objCancel = document.querySelector("." + id)
+                objCancel.remove()
+                alert("Xóa thành công")
+            }
+            if (data.result === false)
+            {
+                alert(data.error)
+            }
         })
 }
