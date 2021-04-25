@@ -9,7 +9,7 @@ def check_type_customer(customer_type):
 
 
 def check_status_order(stt_order):
-    if stt_order not in [0, 1, 2]:
+    if stt_order not in [0, 1, 2, 3]:
         print("----status order not acceptable in check_status_order(just 0, 1, 2)----")
         return False
     return True
@@ -50,8 +50,10 @@ def status_type(stt_type):
         return "Chưa giao"
     elif stt_type == 1:
         return "Đã giao"
+    elif stt_type == 2:
+        return "Đang giao"
     else:
-        return "Hủy đơn"
+        return "Hủy"
 
 
 def check_input_id_person(inp):
