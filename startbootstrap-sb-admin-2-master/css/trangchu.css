@@ -191,7 +191,9 @@ html {
 
 .titleProduct {
     text-align: center;
+    padding-top:10px;
     background-color: green;
+    height: 50px;
 }
 
 .container__products-list-item {
@@ -218,15 +220,19 @@ html {
 }
 
 .nameProduct {
-    padding-left:40px;
+    text-align: center;
+    width: 160px
 }
 
 .priceProduct {
-    padding-left:40px;
+    text-align: center;
+    width: 160px
 }
 
 .valueAmount {
-    margin-left:55px;
+    text-align: center;
+    width: 40px;
+    margin-left:20px;
 }
 
 /* Đây là phần của footer */
@@ -258,4 +264,13 @@ html {
     margin-left: 20px;
     border: 1px solid black;
     background-color:gray;
+}
+
+.datmon {
+    height: 100px;
+    position: fixed;
+    top: 80px;
+    left: 120px;
+    right: 0;
+    z-index: 1;
 }

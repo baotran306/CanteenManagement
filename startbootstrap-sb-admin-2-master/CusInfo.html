@@ -35,6 +35,12 @@
                         </a>
                     </li>
                     <li class="header__nav-item opacityhover">
+                        <i class="icon ti-menu"></i>
+                        <a href="AllFood.html" style="text-decoration: none;color:white">
+                            Xem danh sách món ăn
+                        </a>
+                    </li>
+                    <li class="header__nav-item opacityhover">
                         <i class="icon ti-user"></i>
                         <a href="CusInfo.html" style="text-decoration: none;color:white">
                             Xem thông tin tài khoản
@@ -114,18 +120,18 @@
 
         <!-- Đây là phần show thông tin -->
         <div class="container__CusInfo">
-            <div class="CusInfo">
+            <div id="CusInfo">
                 <h2 style="padding-bottom: 20px; padding-left: 350px;">THÔNG TIN TÀI KHOẢN CỦA BẠN</h2>
-                <label">Tên đăng nhập</label>
-                    <input type="text" disabled value="ABCXYZ" id="userName" style="margin-left: 20px;">
+                <label">Mã khách hàng</label>
+                    <input type="text" disabled value="ABCXYZ" id="userName" style="margin-left: 15px;">
                     <br>
                     <br>
                         <label">Họ và tên</label>
                             <input type="text" value="Nguyễn Văn A" id="name" style="margin-left: 57px;">
                             <br>
                             <br>
-                            <label">Email</label>
-                                <input type="text" disabled value="ABCXYZ@gmail.com" id="email" style="margin-left: 85px;">
+                            <label">VIP</label>
+                                <input type="text" value="yes" id="vip" style="margin-left: 100px; width: 30px;" disabled>
                                 <br>
                                 <br>
                                 <label">Địa chỉ</label>
@@ -149,6 +155,7 @@
 
             <div class="ConfirmChange" style="padding-top: 20px;">
                 <button id= "change">Thay đổi thông tin</button>
+                <button id="changepass" style="margin-left: 20px;">Đổi mật khẩu</button>
             </div>
         </div>
     </div>

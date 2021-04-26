@@ -6,11 +6,11 @@ fetch("http://127.0.0.1:5000/admin/all_food")
             return `
                 <tr class="${food.id_food}">
                     <th>
-                        <img src="img/Image_Food/${food.image} alt="Ảnh bị lỗi" width="150px">
+                        <img src="img/Image_Food/${food.image}" alt="Ảnh bị lỗi" width="150px">
                     </th>
                     <th>${food.id_food}</th>
                     <th>${food.food_name}</th>
-                    <th>${food.price}</th>
+                    <th>${food.cur_price}</th>
                     <th>${food.describe}</th>
                     <th>
                         <button class="btn-primary btn-Edit" onclick="activeForm()">Chỉnh sửa</button>

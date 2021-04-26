@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +11,7 @@
     <script src="js/scroll.js"></script>
     <title>Căn tin PTIT</title>
 </head>
+
 <body>
     <div id="header">
         <div class="header__nav grid">
@@ -22,7 +24,8 @@
             <div class="header__nav-mid">
                 <!-- <input type="text" class="header__nav-barsreach" placeholder="SREACH ....">
                 <button class="btn-barsreach">SREACH</button> -->
-                <h2 style="color:red ;font-size:40px; width: 100%; vertical-align: middle; padding: 20px 0px 0px 170px">HÃY CHỌN MÓN BẠN THÍCH</h2>
+                <h2 style="color:red ;font-size:40px; width: 100%; vertical-align: middle; padding: 20px 0px 0px 170px">
+                    HÃY CHỌN MÓN BẠN THÍCH</h2>
                 <div class="header__nav-suggest">
                     <a class="item-suggest opacityhover"></a>
                     <a class="item-suggest opacityhover" onclick="scrollToID('title-1')">Sáng</a>
@@ -33,17 +36,27 @@
 
             <div class="header__nav-right">
                 <ul class="header__nav-list-item" style="list-style-type: none;">
-                    <li class="header__nav-item opacityhover" onclick="comeback()">
+                    <li class="header__nav-item opacityhover">
+                        <i class="icon ti-user"></i>
+                        <a href="loginCustom.html" style="text-decoration: none;color:white">Đăng nhập</a>
+                    </li>
+                    <li class="header__nav-item opacityhover hidden" onclick="comeback()">
                         <i class="icon ti-power-off"></i>
                         Đăng xuất
                     </li>
-                    <li class="header__nav-item opacityhover">
+                    <li class="header__nav-item opacityhover hidden">
                         <i class="icon ti-menu"></i>
                         <a href="CusBill.html" style="text-decoration: none;color:white">
                             Xem hóa đơn
                         </a>
                     </li>
                     <li class="header__nav-item opacityhover">
+                        <i class="icon ti-menu"></i>
+                        <a href="AllFood.html" style="text-decoration: none;color:white">
+                            Xem danh sách món ăn
+                        </a>
+                    </li>
+                    <li class="header__nav-item opacityhover hidden">
                         <i class="icon ti-user"></i>
                         <a href="CusInfo.html" style="text-decoration: none;color:white">
                             Xem thông tin tài khoản
@@ -73,219 +86,249 @@
             </div>
         </div>
     </div>
-
+     <div class="datmon">
+            <button style="margin:30px 0px 50px 1200px;width:100px;height:50px;" class="btnDatMon"
+                onclick="showDatHang()">Đặt hàng</button>
+        </div>
     <div id="cotaniner">
         <!--Đây là slider đồ ăn giới thiệu sản phẩm-->
+       
         <div class="container__slider">
-            <div class="mySlides fade">
-              <img src="./img/mon_an/1.jpg" class="img-slider"  >
-              <div class="slider-info">
-                  <h3 class="slider-name">A</h3>
-                  <br>
-                  <span class="slider-description">A is</span>
-              </div>
-            </div>
             
             <div class="mySlides fade">
-              <img src="img/mon_an/2.jpg" class="img-slider">
-              <div class="slider-info">
-                <h3 class="slider-name">B</h3>
-                <br>
-                <span class="slider-description">B is</span>
+                <img src="./img/mon_an/1.jpg" class="img-slider">
+                <div class="slider-info">
+                    <h3 class="slider-name">A</h3>
+                    <br>
+                    <span class="slider-description">A is</span>
+                </div>
             </div>
-            </div>
-            
+
             <div class="mySlides fade">
-              <img src="img/mon_an/3.jpg" class="img-slider">
-              <div class="slider-info">
-                <h3 class="slider-name">C</h3>
-                <br>
-                <span class="slider-description">C is</span>
-            </div>
-            </div>
-
-            </div>
-            <br>
-            <div class="wrap-dots" style="text-align:center">
-              <span class="dot"></span> 
-              <span class="dot"></span> 
-              <span class="dot"></span> 
-            </div>
-
-            <script>
-                var slideIndex = 0;
-                showSlides();
-                
-                function showSlides() {
-                  var i;
-                  var slides = document.getElementsByClassName("mySlides");
-                  var dots = document.getElementsByClassName("dot");
-                  for (i = 0; i < slides.length; i++) {
-                    slides[i].style.display = "none";  
-                  }
-                  slideIndex++;
-                  if (slideIndex > slides.length) {slideIndex = 1}    
-                  for (i = 0; i < dots.length; i++) {
-                    dots[i].className = dots[i].className.replace(" active", "");
-                  }
-                  slides[slideIndex-1].style.display = "block";  
-                  dots[slideIndex-1].className += " active";
-                  setTimeout(showSlides, 2000); 
-                }
-            </script>
-
-        <!--Đây là phần trình bày sản phẩm và đặt sản phẩm-->
-        <div class="container__products">
-            <h2 class="titleProduct" id="title-1">Sáng</h2>
-            <div class="container__products-list-item">
-                <div class="container__products-item">
-                    <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-                   
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
+                <img src="img/mon_an/2.jpg" class="img-slider">
+                <div class="slider-info">
+                    <h3 class="slider-name">B</h3>
+                    <br>
+                    <span class="slider-description">B is</span>
                 </div>
             </div>
 
-            <div class="container__products-list-item">
-                <div class="container__products-item">
-                    <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-                    
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-                   
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
-                </div>
-            </div>
-            <br> 
-            <br>
-            <h2 class="titleProduct" id="title-2">Trưa</h2>
-            <div class="container__products-list-item">
-                <div class="container__products-item">
-                    <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-                    
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-                   
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
-                </div>
-            </div>
-
-            <div class="container__products-list-item">
-                <div class="container__products-item">
-                    <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-                    
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-                   
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
-                </div>
-            </div>
-            <br>
-            <br>
-            <h2 class="titleProduct" id="title-3">Chiều</h2>
-            <div class="container__products-list-item">
-                <div class="container__products-item">
-                    <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-                    
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-                   
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
-                </div>
-            </div>
-
-            <div class="container__products-list-item">
-                <div class="container__products-item">
-                    <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-                    
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-                   
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
-                </div>
-                <div class="container__products-item">
-                     <img src="./img/mon_an/1.jpg" alt="" class="img-product">
-
+            <div class="mySlides fade">
+                <img src="img/mon_an/3.jpg" class="img-slider">
+                <div class="slider-info">
+                    <h3 class="slider-name">C</h3>
+                    <br>
+                    <span class="slider-description">C is</span>
                 </div>
             </div>
 
         </div>
-    </div>
+        <br>
+        <div class="wrap-dots" style="text-align:center">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
 
+        <script>
+            var slideIndex = 0;
+            showSlides();
+
+            function showSlides() {
+                var i;
+                var slides = document.getElementsByClassName("mySlides");
+                var dots = document.getElementsByClassName("dot");
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+                slideIndex++;
+                if (slideIndex > slides.length) { slideIndex = 1 }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                }
+                slides[slideIndex - 1].style.display = "block";
+                dots[slideIndex - 1].className += " active";
+                setTimeout(showSlides, 2000);
+            }
+        </script>
+
+        <!--Đây là phần trình bày sản phẩm và đặt sản phẩm-->
+        <div class="container__products">
+            
+            <div id="wrap-morning">
+
+                <h2 class="titleProduct" id="title-1">Sáng</h2>
+                <div class="container__products-list-item" id="morning">
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product" title="abcxyz">
+                        <br>
+                        <div class="nameProduct">Tàu hủ chiên giòn</div>
+                        <br>
+                        <div class="priceProduct">40.000 đồng</div>
+                        <br>
+                        <div class="wrap-amount hidden">
+                            Số lượng đặt:
+                            <input class="valueAmount" type="number" value='0' min="0" max="99"
+                                onchange="minMaxNum(event)">
+                        </div>
+                    </div>
+
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                </div>
+
+                <div class="container__products-list-item">
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                </div>
+                <br>
+                <br>
+            </div>
+            <div id='wrap-lunch'>
+
+                <h2 class="titleProduct" id="title-2">Trưa</h2>
+                <div class="container__products-list-item" id="lunch">
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                </div>
+
+                <div class="container__products-list-item">
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                </div>
+                <br>
+                <br>
+            </div>
+            <div id='wrap-afternoon'>
+
+                <h2 class="titleProduct" id="title-3">Chiều</h2>
+                <div class="container__products-list-item" id="afternoon">
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                </div>
+
+                <div class="container__products-list-item">
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                    <div class="container__products-item">
+                        <img src="./img/mon_an/1.jpg" alt="" class="img-product">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- <div class="datmon">
+            <button style="margin:30px 0px 50px 1200px;width:100px;height:50px;" class="btnDatMon"
+                onclick="showDatHang()">Đặt hàng</button>
+        </div> -->
+    </div>
+    
     <div id="footer">
         <div class="social-list">
             <a href="" class="link">
@@ -310,7 +353,52 @@
         <div class="source">Thực hiện bởi @ <a href="" class="link" style="text-decoration:none">Căn Tin PTIT</a></div>
     </div>
     <script>
-        // checklogin(["Shipper"])
+        function minMaxNum(e) {
+            var x = e.target.value
+            if (x - Number.parseInt(x) > 0)
+                e.target.value = 0
+            if (x < 0)
+                e.target.value = 0
+            if (x > 100)
+                e.target.value = 0
+        }
+        function showDatHang() {
+            var obj = document.getElementsByClassName('wrap-amount')
+            var morning = document.getElementById('wrap-morning')
+            console.log(morning)
+            var lunch = document.getElementById('wrap-lunch')
+            var afternoon = document.getElementById('wrap-afternoon')
+            var datenow = new Date()
+            var timenow = datenow.getHours()
+            if (sessionStorage.getItem('IdCustomer') == null)
+            {
+                alert('Xin bạn hãy đăng nhập trước khi đặt hàng nhé')
+                window.location.href = 'loginCustom.html'
+            }
+            if (timenow >=16 && timenow <= 24 ) {
+                lunch.classList.add('hidden')
+                morning.classList.add('hidden')
+            }
+            if (timenow>=5 && timenow<=10)
+            {
+                lunch.classList.add('hidden')
+                afternoon.classList.add('hidden')
+            }
+            if (timenow>=11 && timenow<=15)
+            {
+                morning.classList.add('hidden')
+                afternoon.classList.add('hidden')
+            }
+            if(timenow>=0 && timenow <=4)
+            {
+                alert('Không phải giờ đặt hàng xin bạn hãy quay lại sau')
+                return
+            }
+            for (let i = 0; i < obj.length; i++) {
+                obj[i].classList.remove('hidden')
+            }
+        }
     </script>
 </body>
+
 </html>

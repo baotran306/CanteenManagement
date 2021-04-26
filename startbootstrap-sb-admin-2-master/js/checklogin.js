@@ -3,11 +3,6 @@ const checkloginAdmin = function(){
     var nameStaff = sessionStorage.getItem("NameStaff")
     var name = document.getElementById("UserName")
     name.innerHTML = nameStaff
-    console.log(name.innerHTML)
-    if (role.toLocaleLowerCase() === 'quản lý')
-        {
-            alert(`Xin chào ${nameStaff}`)
-        }    
     if (role.toLocaleLowerCase() === 'nhân viên giao hàng')
     {
         alert('Bạn không có quyền truy cập')
