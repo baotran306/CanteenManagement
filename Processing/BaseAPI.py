@@ -27,6 +27,23 @@ def get_all_staff():
     return jsonify(data)
 
 
+@app.route("/staff/<string:staff_id>", methods=['GET'])
+def get_staff_by_id(staff_id):
+    row = connect.get_info_staff_by_id(staff_id)
+    data = {
+        'id': row[0],
+        'name': row[1],
+        'gender': row[2],
+        'identity_card': row[3],
+        'day_of_birth': row[4],
+        'phone_num': row[5],
+        'address': row[6],
+        'role_name': row[7],
+        'salary': row[8]
+    }
+    return jsonify(data)
+
+
 @app.route("/customer", methods=['GET'])
 def get_info_customer():
     rows = connect.get_all_info_customer()
@@ -40,8 +57,24 @@ def get_info_customer():
             'day_of_birth': r[4],
             'phone_num': r[5],
             'address': r[6],
-            'VIP': r[7]
+            'vip': r[7]
         })
+    return jsonify(data)
+
+
+@app.route("/customer/<string:customer_id>", methods=['GET'])
+def get_info_customer_by_id(customer_id):
+    info = connect.get_info_customer_by_id(customer_id)
+    data = {
+        'id': info[0],
+        'name': info[1],
+        'gender': info[2],
+        'identity_card': info[3],
+        'day_of_birth': info[4],
+        'phone_num': info[5],
+        'address': info[6],
+        'vip': info[7]
+    }
     return jsonify(data)
 
 
@@ -62,9 +95,9 @@ def stats_order_revenue():
     return jsonify(data)
 
 
-@app.route("/admin/stats/month", methods=['GET'])
-def stats_revenue_by_month():
-    rows = connect.stats_revenue_by_month()
+@app.route("/admin/stats/month/<int:year>", methods=['GET'])
+def stats_revenue_by_month(year):
+    rows = connect.stats_revenue_by_month(year)
     data = []
     for r in rows:
         data.append({
@@ -74,9 +107,17 @@ def stats_revenue_by_month():
     return jsonify(data)
 
 
+@app.route("/admin/stats/day", methods=['POST'])
+def stats_revenue_by_day():
+    day = request.json['day']
+    info = connect.stats_revenue_by_day(day)
+    data = {'day': info[0], 'revenue': info[1], 'num_success': info[2], 'percent_success': info[3]}
+    return jsonify(data)
+
+
 @app.route("/admin/stats/all_order", methods=['GET'])
 def get_all_order():
-    rows = connect.get_all_info_order(3)
+    rows = connect.get_all_info_order(4)
     data = []
     for r in rows:
         data.append({
@@ -87,7 +128,8 @@ def get_all_order():
             'total': r[4],
             'order_time': r[5],
             'status': r[6],
-            'address': r[7]
+            'address': r[7],
+            'name_customer': r[8]
         })
     return jsonify(data)
 
@@ -120,7 +162,27 @@ def get_not_complete_order():
             'total': r[4],
             'order_time': r[5],
             'status': r[6],
-            'address': r[7]
+            'address': r[7],
+            'name_customer': r[8]
+        })
+    return jsonify(data)
+
+
+@app.route("/admin/stats/delivering_order", methods=['GET'])
+def get_delivering_order():
+    rows = connect.get_all_info_order(2)
+    data = []
+    for r in rows:
+        data.append({
+            'id_order': r[0],
+            'food': r[1],
+            'num_of_food': r[2],
+            'price': r[3],
+            'total': r[4],
+            'order_time': r[5],
+            'status': r[6],
+            'address': r[7],
+            'name_customer': r[8]
         })
     return jsonify(data)
 
@@ -138,14 +200,15 @@ def get_completed_order():
             'total': r[4],
             'order_time': r[5],
             'status': r[6],
-            'address': r[7]
+            'address': r[7],
+            'name_customer': r[8]
         })
     return jsonify(data)
 
 
 @app.route("/admin/stats/cancel_order", methods=['GET'])
 def get_cancel_order():
-    rows = connect.get_all_info_order(2)
+    rows = connect.get_all_info_order(3)
     data = []
     for r in rows:
         data.append({
@@ -156,7 +219,8 @@ def get_cancel_order():
             'total': r[4],
             'order_time': r[5],
             'status': r[6],
-            'address': r[7]
+            'address': r[7],
+            'name_customer': r[8]
         })
     return jsonify(data)
 
@@ -358,6 +422,37 @@ def reset_password_staff():
         return jsonify(data)
     data = {'result': False, 'error': 'Thay đổi mật khẩu thất bại!'}
     return jsonify(data)
+
+
+def get_menu_detail(day, session):
+    info = connect.get_menu_in_session_day(day, session)
+    if len(info) == 0:
+        data = {'result': False, 'error': 'Menu không tồn tại'}
+        return jsonify(data)
+    else:
+        data = {'result': False, 'info': info}
+        return jsonify(data)
+
+
+@app.route("/admin/menu/breakfast", methods=['POST'])
+def menu_breakfast():
+    day = request.json['day']
+    session = request.json['session']
+    return get_menu_detail(day, session)
+
+
+@app.route("/admin/menu/lunch", methods=['POST'])
+def menu_lunch():
+    day = request.json['day']
+    session = request.json['session']
+    return get_menu_detail(day, session)
+
+
+@app.route("/admin/menu/dinner", methods=['POST'])
+def menu_dinner():
+    day = request.json['day']
+    session = request.json['session']
+    return get_menu_detail(day, session)
 
 
 if __name__ == "__main__":

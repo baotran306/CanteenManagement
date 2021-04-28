@@ -625,6 +625,19 @@ class SqlFunction:
             print(ex)
             return []
 
+    def get_info_food_by_id(self, id_food):
+        try:
+            cursor = self.func
+            cursor.execute("select * from food where id = ?", id_food)
+            info_food = []
+            for r in cursor:
+                info_food = [r[0], r[1], r[2], float(r[3]), r[4]]
+            return info_food
+        except Exception as ex:
+            print("----Error in all_food----")
+            print(ex)
+            return []
+
     def get_info_menu_detail(self, menu_id):
         try:
             cursor = self.func
@@ -675,10 +688,10 @@ class SqlFunction:
             print(ex)
             return False
 
-    def stats_revenue_by_month(self):
+    def stats_revenue_by_month(self, year):
         try:
             cursor = self.func
-            cursor.execute("select * from dbo.StatsRevenueByMonth()")
+            cursor.execute("select * from dbo.StatsRevenueByMonth(?)", year)
             ans = []
             for r in cursor:
                 tmp = [r[0], float(r[1])]
@@ -687,6 +700,36 @@ class SqlFunction:
             return ans
         except Exception as ex:
             print('----Error in stats_revenue_by_month')
+            print(ex)
+            return False
+
+    def stats_revenue_by_day(self, day):
+        try:
+            day = day.strip()
+            cursor = self.func
+            cursor.execute("select * from dbo.StatsRevenueByDay(?)", day)
+            ans = []
+            for r in cursor:
+                ans.append(r[0])
+                ans.append(float(r[1]))
+                break
+            cursor.execute("select * from dbo.CountSuccessOrder(?)", day)
+            for r in cursor:
+                ans.append(r[1])
+                break
+            cursor.execute("select * from dbo.CountAllOrder(?)", day)
+            for r in cursor:
+                ans.append('{:.02f}%'.format(float(ans[-1]) / r[1] * 100))
+                break
+            cursor.commit()
+            if len(ans) == 0:
+                ans.append(day)
+                ans.append(float(0))
+                ans.append(float(0))
+                ans.append('0%')
+            return ans
+        except Exception as ex:
+            print('----Error in stats_revenue_by_day')
             print(ex)
             return False
 
@@ -813,6 +856,32 @@ class SqlFunction:
             print(ex)
             return False
 
+    def get_cus_name_in_order(self, id_order):
+        try:
+            if not self.check_existed_id("CustomerOrder", id_order):
+                return ""
+            cursor = self.func
+            cursor.execute("select customer_id from CustomerOrder where id = ?", id_order)
+            cus_id = ""
+            for row in cursor:
+                cus_id = row[0]
+                break
+            if cus_id is None:
+                return ""
+            cursor.execute("select name from Person where id = ?", cus_id)
+            cus_name = ""
+            for row in cursor:
+                cus_name = row[0]
+                break
+            if cus_name is None:
+                return ""
+            else:
+                return cus_name
+        except Exception as ex:
+            print("----error in get_cus_name_in_order----")
+            print(ex)
+            return ""
+
     def get_order_time_stt_address_by_id(self, id_order):
         try:
             if not self.check_existed_id("CustomerOrder", id_order):
@@ -854,6 +923,7 @@ class SqlFunction:
             info.append(info_order[0])
             info.append(info_order[1])
             info.append(info_order[2])
+            info.append(self.get_cus_name_in_order(id_order))
             cursor.commit()
             return info
         except Exception as ex:
@@ -866,13 +936,14 @@ class SqlFunction:
         :param type_inp: type of order which want to select.
             - type = 0 is  order has status = 0 (Not complete ship)
             - type = 1 is  order has status = 1 (Completed ship)
-            - type = 2 is  order has status = 2 (Cancel Order)
+            - type = 2 is order has status = 2 (Delivering)
+            - type = 3 is  order has status = 3 (Cancel Order)
             else all of order
         :return: list of info order
         """
         try:
             cursor = self.func
-            if type_inp not in [0, 1, 2]:
+            if type_inp not in [0, 1, 2, 3]:
                 cursor.execute("select id from CustomerOrder")
             else:
                 cursor.execute("select id from CustomerOrder where status_now = ?", type_inp)
@@ -959,6 +1030,29 @@ class SqlFunction:
             print(ex)
             return ""
 
+    def get_menu_in_session_day(self, day, session):
+        try:
+            ans = []
+            time = ck.get_time_from_session(session)
+            time_check = day + " " + time
+            cursor = self.func
+            cursor.execute("select id from menu where time_start <= ? and time_end >= ?", time_check, time_check)
+            menu_id = ""
+            for row in cursor:
+                menu_id = row[0]
+                break
+            cursor.execute("select food_id from MenuDetail where menu_id = ?", menu_id)
+            list_food_id = []
+            for food in cursor:
+                list_food_id.append(food[0])
+            for food_id in list_food_id:
+                ans.append(self.get_info_food_by_id(food_id))
+            return ans
+        except Exception as ex:
+            print("----Error in get_menu_in_session_day")
+            print(ex)
+            return []
+
 
 """Testing"""
 sql_func = SqlFunction()
@@ -1018,3 +1112,7 @@ sql_func = SqlFunction()
 # print(sql_func.get_id_order_by_time_customer_id('2021-04-12 19:34:00', 'KH005'))
 # print(sql_func.get_id_person_from_user('admin', 1))
 # print(sql_func.get_info_staff_by_id(sql_func.get_id_person_from_user('admin', 1)))
+# for i in range(20, 30, 2):
+#     sql_func.insert_menu_detail(5, i)
+# print(sql_func.get_menu_in_session_day("2021-03-12", "SÁNG"))
+print(sql_func.stats_revenue_by_day('2021-04-12'))

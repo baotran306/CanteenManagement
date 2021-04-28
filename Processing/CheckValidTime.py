@@ -96,12 +96,23 @@ def get_session_day_menu(time_day):
     _, time = time_day.split(" ")
     hour = time[:2]
     if int(hour) < 10:
-        return "Buổi sáng"
+        return "sáng"
     elif int(hour) < 16:
-        return "Buổi trưa"
+        return "trưa"
     else:
-        return "Buổi chiều"
+        return "chiều"
     pass
+
+
+def get_time_from_session(session):
+    if session.lower() == "sáng":
+        return "07:30:00"
+    elif session.lower() == "trưa":
+        return "11:30:00"
+    elif session.lower() == "chiều":
+        return "18:30:00"
+    else:
+        return "00:00:00"
 
 
 # print(str(dt.now()) > "2020-08-15 04:06:00")
