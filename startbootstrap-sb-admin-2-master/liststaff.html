@@ -25,8 +25,8 @@
     <link rel="stylesheet" href="css/test.css">
     <link rel="stylesheet" href="css/modal.css">
     <script src="js/modal.js"></script>
-    <script src="js/checklogin.js"></script>
-    <script>checkloginAdmin()</script>
+    
+    
     
 </head>
 
@@ -86,6 +86,11 @@
                 <a class="nav-link active" href="listfood.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh sách món ăn</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="NewMenu.html">
+                    <i class="fas fa-fw fa-plus"></i>
+                    <span>Tạo menu</span></a>
             </li>
             <!-- Nav Item - THÊM MÓN ĂN -->
             <li class="nav-item">
@@ -287,7 +292,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="UserName"></span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -406,15 +411,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn chắc có muốn thoát</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Chọn nút chấp nhận để đăng xất</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="loginStaff.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                    <a class="btn btn-primary" href="loginStaff.html">Đăng xuất</a>
                 </div>
             </div>
         </div>
@@ -460,6 +465,7 @@
     <!-- Page level custom scripts -->
     <!-- <script src="js/demo/datatables-demo.js"></script> -->
     <script src="js/rendernhanvien.js"></script>
-
+    <script src="js/checklogin.js"></script>
+    <script>checkloginAdmin()</script>
 </body>
 </html>

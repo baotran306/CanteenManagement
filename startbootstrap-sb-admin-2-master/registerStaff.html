@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    
+
     <title>Thêm nhân viên</title>
 
     <!-- Custom fonts for this template-->
@@ -62,17 +62,27 @@
 
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="ID"
+                                        <input type="text" class="form-control form-control-user" id="CMND"
                                             placeholder="CMND">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="Addresses"
+                                        <input type="text" class="form-control form-control-user" id="Address"
                                             placeholder="Địa chỉ">
                                     </div>
                                 </div>
 
-                                
-                                
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="date" class="form-control form-control-user" id="Birthday">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select  id="Gender" class="form-control" style="height: 50px;">
+                                            <option value="Nam">Nam</option>
+                                            <option value="Nữ">Nữ</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user" id="Password"
@@ -83,7 +93,7 @@
                                             id="RepeatPassword" placeholder="Nhập lại mật khẩu">
                                     </div>
                                 </div>
-                                <button  class="btn btn-primary btn-user btn-block">
+                                <button class="btn btn-primary btn-user btn-block">
                                     Thêm nhân viên
                                 </button>
                                 <br>
@@ -121,7 +131,8 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
+    <script src="js/checklogin.js"></script>
+    <script>checkloginAdmin()</script>
 </body>
 
 </html>

@@ -19,6 +19,8 @@
     <!-- <link rel="stylesheet" href="css/test.css"> -->
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="js/checklogin.js"></script>
+    <script>checkloginShipper();</script>
 </head>
 
 <body>
@@ -30,44 +32,22 @@
                 </a>
             </div>
             <div class="header__nav-mid">
-                <h2 style="color:red ;font-size:40px; width: 100%; vertical-align: middle; padding: 20px 0px 0px 180px">
-                    MÓN ĂN CỦA CĂN TIN PTIT</h2>
+                <h2 style="color:red ;font-size:40px; width: 100%; vertical-align: middle; padding: 20px 0px 0px 200px">
+                    CÁC ĐƠN HÀNG VẬN CHUYỂN</h2>
             </div>
             <div class="header__nav-right">
                 <ul class="header__nav-list-item" style="list-style-type: none;">
-                    <li class="header__nav-item opacityhover">
-                        <i class="icon ti-user"></i>
-                        <a href="loginCustom.html" style="text-decoration: none;color:white">Đăng nhập</a>
-                    </li>
-                    <li class="header__nav-item opacityhover hidden" onclick="comeback()">
+                    <li class="header__nav-item opacityhover" onclick="comeback()">
                         <i class="icon ti-power-off"></i>
                         Đăng xuất
-                    </li>
-                    <li class="header__nav-item opacityhover hidden">
-                        <i class="icon ti-menu"></i>
-                        <a href="CusBill.html" style="text-decoration: none;color:white">
-                            Xem hóa đơn
-                        </a>
-                    </li>
-                    <li class="header__nav-item opacityhover">
-                        <i class="icon ti-menu"></i>
-                        <a href="AllFood.html" style="text-decoration: none;color:white">
-                            Xem danh sách món ăn
-                        </a>
-                    </li>
-                    <li class="header__nav-item opacityhover hidden">
-                        <i class="icon ti-user"></i>
-                        <a href="CusInfo.html" style="text-decoration: none;color:white">
-                            Xem thông tin tài khoản
-                        </a>
                     </li>
                 </ul>
                 <script>
                     function comeback() {
-                        sessionStorage.removeItem("NameCustomer")
-                        sessionStorage.removeItem("IdCustomer")
-                        sessionStorage.removeItem("Vip")
-                        window.location.href = 'loginCustom.html'
+                        sessionStorage.removeItem("NameStaff")
+                        sessionStorage.removeItem("IdStaff")
+                        sessionStorage.removeItem("Role")
+                        window.location.href = 'loginStaff.html'
                     }
                 </script>
             </div>
@@ -138,22 +118,66 @@
         <div class="container-fluid">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Danh sách các món ăn của căn tin PTIT</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Các hóa đơn của bạn</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>Hình ảnh</th>
-                                    <th>Mã món</th>
-                                    <th>Tên món</th>
+                                    <th>Mã hóa đơn</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Danh sách món ăn</th>
+                                    <th>Số lượng</th>
                                     <th>Giá</th>
-                                    <th>Mô tả</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Địa chỉ giao</th>
+                                    <th>Thời gian đặt</th>
+                                    <th>Trạng thái</th>
                                 </tr>
                             </thead>
-                            <tbody id="listfood">
-                               
+                            <tbody id="listbill">
+                                <!-- <tr>
+                                    <th style="vertical-align: middle;">123456</th>
+                                    <th>
+                                        Canh khổ qua nhồi thịt
+                                        <br>
+                                        Canh khổ qua nhồi thịt
+                                        <br>
+                                        Canh khổ qua nhồi thịt
+                                        <br>
+                                        D
+                                        <br>
+                                        E
+                                    </th>
+                                    <th>
+                                        10
+                                        <br>
+                                        20
+                                        <br>
+                                        30
+                                        <br>
+                                        40
+                                        <br>
+                                        50
+                                        <br>
+                                    </th>
+                                    <th>
+                                        20000
+                                        <br>
+                                        20000
+                                        <br>
+                                        2000
+                                        <br>
+                                        2000
+                                        <br>
+                                        2000
+                                    </th>
+                                    <th style="vertical-align: middle;">123456</th>
+                                    <th style="vertical-align: middle;">1234567890234567890</th>
+                                    <th style="vertical-align: middle;">1234567890123456</th>
+                                    <th style="vertical-align: middle;">Đang giao</th>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -198,9 +222,8 @@
     <!-- Page level plugins -->
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-    <script src="js/renderallfood.js"></script>
-    <script src="js/checklogin.js"></script>
-    <script>checkloginCustomer()</script>
+    <script src="js/renderhoadon.js"></script>
+    <script>renderHoaDonShipper()</script>
 </body>
 
 </html>

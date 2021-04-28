@@ -7,8 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/trangchu.css">
     <link rel="stylesheet" href="./fonts/themify-icons/themify-icons.css">
+    <script src="JS/checklogin.js"></script>
     <script src="js/scroll.js"></script>
     <title>Căn tin PTIT</title>
+    <script src="js/checklogin.js"></script>
+    <script>checkloginSaler()</script>
 </head>
 
 <body>
@@ -23,8 +26,8 @@
             <div class="header__nav-mid">
                 <!-- <input type="text" class="header__nav-barsreach" placeholder="SREACH ....">
                 <button class="btn-barsreach">SREACH</button> -->
-                <h2 style="color:red ;font-size:40px; width: 100%; vertical-align: middle; padding: 20px 0px 0px 170px">
-                    HÃY CHỌN MÓN BẠN THÍCH</h2>
+                <h2 style="color:red ;font-size:40px; width: 100%; vertical-align: middle; padding: 20px 0px 0px 200px">
+                    XIN ĐỪNG ĐẤM KHÁCH</h2>
                 <div class="header__nav-suggest">
                     <a class="item-suggest opacityhover"></a>
                     <a class="item-suggest opacityhover" onclick="scrollToID('title-1')">Sáng</a>
@@ -35,32 +38,19 @@
 
             <div class="header__nav-right">
                 <ul class="header__nav-list-item" style="list-style-type: none;">
-                    <li class="header__nav-item opacityhover" id='DangNhap'>
-                        <i class="icon ti-user"></i>
-                        <a href="loginCustom.html" style="text-decoration: none;color:white">Đăng nhập</a>
-                    </li>
-                    <li class="header__nav-item opacityhover hidden" id="DangXuat" onclick="comeback()">
+
+                    <li class="header__nav-item opacityhover " onclick="comeback()">
                         <i class="icon ti-power-off"></i>
                         Đăng xuất
                     </li>
-                    <li class="header__nav-item opacityhover hidden" id="HoaDon">
-                        <i class="icon ti-menu"></i>
-                        <a href="CusBill.html" style="text-decoration: none;color:white">
-                            Xem hóa đơn
-                        </a>
-                    </li>
+
                     <li class="header__nav-item opacityhover">
                         <i class="icon ti-menu"></i>
                         <a href="AllFood.html" style="text-decoration: none;color:white">
                             Xem danh sách món ăn
                         </a>
                     </li>
-                    <li class="header__nav-item opacityhover hidden" id="Info">
-                        <i class="icon ti-user"></i>
-                        <a href="CusInfo.html" style="text-decoration: none;color:white">
-                            Xem thông tin tài khoản
-                        </a>
-                    </li>
+
                     <!-- <li class="header__nav-item opacityhover" onclick="window.location.href='listhoadon.html'">
                         <i class="icon ti-menu"></i>
                         Xem danh sách hóa đơn
@@ -76,19 +66,19 @@
                 </ul>
                 <script>
                     function comeback() {
-                        sessionStorage.removeItem("NameCustomer")
-                        sessionStorage.removeItem("IdCustomer")
-                        sessionStorage.removeItem("Vip")
-                        window.location.href = 'homepage.html'
+                        sessionStorage.removeItem("NameStaff")
+                        sessionStorage.removeItem("IdStaff")
+                        sessionStorage.removeItem("Role")
+                        window.location.href = 'loginStaff.html'
                     }
                 </script>
             </div>
         </div>
     </div>
     <div class="datmon" id="DatMon">
-        <button style="margin:30px 0px 50px 1200px;width:100px;height:50px; color: red; background: yellow;" class="btnDatMon"
+        <button style="width:100px;height:50px;color:red;background: yellow;" class="btnDatMon"
             onclick="showDatHang()">
-            <i class='icon ti-shopping-cart' >Đặt hàng</i>
+            <i class='icon ti-shopping-cart' >Bắt đầu bán hàng</i>
         </button>
     </div>
     <div id="cotaniner">
@@ -326,86 +316,84 @@
 
                 </div>
                 <div class="hidden" id="XacNhanDat">
-                    <button style="margin:30px 0px 50px 880px;width:100px;height:50px; color: red; background: yellow;" class="btnDatMon" onclick="showDatHang()">
-                       <i class="icon ti-shopping-cart">
-                           Lập đơn giao hàng
-                       </i> 
+                    <button style="margin:30px 0px 50px 880px;width:100px;height:50px; color: red; background: yellow;" class="btnDatMon"
+                        onclick="">
+                        <i class="icon ti-shopping-cart">
+                            Lập đơn giao hàng
+                        </i> 
                     </button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div id="footer">
-            <div class="social-list">
-                <a href="" class="link">
-                    <i class="icon ti-facebook"></i>
-                </a>
-                <a href="" class="link">
-                    <i class="icon ti-instagram"></i>
-                </a>
-                <a href="" class="link">
-                    <i class="icon ti-youtube"></i>
-                </a>
-                <a href="" class="link">
-                    <i class="icon ti-pinterest"></i>
-                </a>
-                <a href="" class="link">
-                    <i class="icon ti-twitter"></i>
-                </a>
-                <a href="" class="link">
-                    <i class="icon ti-linkedin"></i>
-                </a>
-            </div>
-            <div class="source">Thực hiện bởi @ <a href="" class="link" style="text-decoration:none">Căn Tin PTIT</a>
-            </div>
+    <div id="footer">
+        <div class="social-list">
+            <a href="" class="link">
+                <i class="icon ti-facebook"></i>
+            </a>
+            <a href="" class="link">
+                <i class="icon ti-instagram"></i>
+            </a>
+            <a href="" class="link">
+                <i class="icon ti-youtube"></i>
+            </a>
+            <a href="" class="link">
+                <i class="icon ti-pinterest"></i>
+            </a>
+            <a href="" class="link">
+                <i class="icon ti-twitter"></i>
+            </a>
+            <a href="" class="link">
+                <i class="icon ti-linkedin"></i>
+            </a>
         </div>
-        <script>
-            function minMaxNum(e) {
-                var x = e.target.value
-                if (x - Number.parseInt(x) > 0)
-                    e.target.value = 0
-                if (x < 0)
-                    e.target.value = 0
-                if (x > 100)
-                    e.target.value = 0
+        <div class="source">Thực hiện bởi @ <a href="" class="link" style="text-decoration:none">Căn Tin
+                PTIT</a></div>
+    </div>
+    <script>
+        function minMaxNum(e) {
+            var x = e.target.value
+            if (x - Number.parseInt(x) > 0)
+                e.target.value = 0
+            if (x < 0)
+                e.target.value = 0
+            if (x > 100)
+                e.target.value = 0
+        }
+        function showDatHang() {
+            var obj = document.getElementsByClassName('wrap-amount')
+            var morning = document.getElementById('wrap-morning')
+
+            var lunch = document.getElementById('wrap-lunch')
+            var afternoon = document.getElementById('wrap-afternoon')
+            var datenow = new Date()
+            var timenow = datenow.getHours()
+            if (timenow >= 16 && timenow <= 24) {
+                lunch.classList.add('hidden')
+                morning.classList.add('hidden')
             }
-            function showDatHang() {
-                var obj = document.getElementsByClassName('wrap-amount')
-                var morning = document.getElementById('wrap-morning')
-                console.log(morning)
-                var lunch = document.getElementById('wrap-lunch')
-                var afternoon = document.getElementById('wrap-afternoon')
-                var datenow = new Date()
-                var timenow = datenow.getHours()
-                // if (sessionStorage.getItem('IdCustomer') == null) {
-                //     alert('Xin bạn hãy đăng nhập trước khi đặt hàng nhé')
-                //     window.location.href = 'loginCustom.html'
-                // }
-                if (timenow >= 16 && timenow <= 24) {
-                    lunch.classList.add('hidden')
-                    morning.classList.add('hidden')
-                }
-                if (timenow >= 5 && timenow <= 10) {
-                    lunch.classList.add('hidden')
-                    afternoon.classList.add('hidden')
-                }
-                if (timenow >= 11 && timenow <= 15) {
-                    morning.classList.add('hidden')
-                    afternoon.classList.add('hidden')
-                }
-                if (timenow >= 0 && timenow <= 4) {
-                    alert('Không phải giờ đặt hàng xin bạn hãy quay lại sau')
-                    return
-                }
-                for (let i = 0; i < obj.length; i++) {
-                    obj[i].classList.remove('hidden')
-                }
-                document.getElementById("XacNhanDat").classList.remove('hidden')
-                document.getElementById("DatMon").classList.add('hidden')
+            if (timenow >= 5 && timenow <= 10) {
+                lunch.classList.add('hidden')
+                afternoon.classList.add('hidden')
             }
-        </script>
-        <script src="js/checklogin.js"></script>
-        <script>checkloginCustomer()</script>
+            if (timenow >= 11 && timenow <= 15) {
+                morning.classList.add('hidden')
+                afternoon.classList.add('hidden')
+            }
+            if (timenow >= 0 && timenow <= 4) {
+                alert('Không phải giờ bán hàng xin bạn hãy quay lại sau')
+                return
+            }
+            for (let i = 0; i < obj.length; i++) {
+                obj[i].classList.remove('hidden')
+            }
+            document.getElementById("XacNhanDat").classList.remove('hidden')
+            document.getElementById("DatMon").classList.add('hidden')
+        }
+    </script>
+    <script src="js/checklogin.js"></script>
+    <script>checkloginSaler()</script>
 </body>
 
 </html>

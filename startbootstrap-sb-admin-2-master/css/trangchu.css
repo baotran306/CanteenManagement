@@ -115,6 +115,17 @@ html {
 
 /* Đây là phần của container  */
 
+#cotaniner {
+    background: url('../img/mon_an/1.jpg');
+
+}
+
+.wrap-container {
+    max-width: 1000px;
+    margin: auto;
+    background: white;
+}
+
 .container__slider {
     padding-top: 110px;
     max-width: 1000px;
@@ -187,6 +198,7 @@ html {
     position: relative;
     margin: auto;
     padding-bottom: 20px;
+    
 }
 
 .titleProduct {
@@ -269,8 +281,7 @@ html {
 .datmon {
     height: 100px;
     position: fixed;
-    top: 80px;
-    left: 120px;
-    right: 0;
+    top: 116px;
+    right: 113px;
     z-index: 1;
 }
