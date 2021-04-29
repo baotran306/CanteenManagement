@@ -7,14 +7,14 @@ const renderListFood = function () {
                 return `
                 <tr class="${food.id_food}">
                     <th>
-                        <img src="img/Image_Food/${food.image}" alt="Ảnh bị lỗi" width="150px">
+                        <img src="img/Image_Food/${food.image}" alt="Ảnh bị lỗi" width="150px" class='${food.id_food}'>
                     </th>
-                    <th>${food.id_food}</th>
-                    <th>${food.food_name}</th>
-                    <th>${food.cur_price}</th>
-                    <th>${food.describe}</th>
+                    <th class="${food.id_food}">${food.id_food}</th>
+                    <th class="${food.id_food}">${food.food_name}</th>
+                    <th class="${food.id_food}">${food.cur_price}</th>
+                    <th class="${food.id_food}">${food.describe}</th>
                     <th>
-                        <button class="btn-primary btn-Edit" onclick="activeForm()">Chỉnh sửa</button>
+                        <button class="btn-primary btn-Edit" onclick="activeForm(this)" id="${food.id_food}">Chỉnh sửa</button>
                         <button class="btn-secondary" onclick="DeleteFood(${food.id_food})" style="margin-top:20px">Xóa</button>
                     </th>
                 </tr>
@@ -28,7 +28,7 @@ const renderListFood = function () {
     }, 100);
 }
 const DeleteFood = function (id) {
-    fetch(urlDeleteFood, {
+    fetch(`http://127.0.0.1:5000/admin/manage/food/${id}`, {
         method: 'DELETE',
         mode: 'cors',
         cache: 'no-cache',
@@ -42,9 +42,10 @@ const DeleteFood = function (id) {
         .then(res => res.json())
         .then(data => {
             if (data.result === true) {
-                var objCancel = document.querySelector("." + id)
-                objCancel.remove()
+                // var objCancel = document.getElementsByClassName(id)
+                // objCancel[0].remove()
                 alert("Xóa thành công")
+                window.location.reload()
             }
             if (data.result === false) {
                 alert(data.error)
@@ -61,7 +62,7 @@ const renderListFoodAdd = function () {
                 return `
                 <tr class="${food.id_food}">
                     <th>
-                        <img src="img/Image_Food/${food.image}" alt="Ảnh bị lỗi" width="150px">
+                        <img src="img/Image_Food/${food.image}" alt="Ảnh bị lỗi">
                     </th>
                     <th>${food.id_food}</th>
                     <th>${food.food_name}</th>

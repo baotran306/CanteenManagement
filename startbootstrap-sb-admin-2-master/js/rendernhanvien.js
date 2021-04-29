@@ -22,7 +22,7 @@ fetch("http://127.0.0.1:5000/staff")
                 <th>${nhanvien.phone_num}</th>
                 <th>
                     <button class="btn-primary btn-Edit" onmousedown="activeForm()">Chỉnh sửa</button>
-                    <button class="btn-secondary" onclick="DeleStaff(${nhanvien.id})" style="margin-top:20px">Xóa</button>
+                    <button class="btn-secondary" onclick="DeleStaff('${nhanvien.id}')" style="margin-top:20px">Xóa</button>
                 </th>
                 </tr>
                 `
@@ -35,7 +35,8 @@ setTimeout(function () {
 }, 100);
 
 var DeleStaff = function (id) {
-    fetch(urlCancelBill, {
+    console.log(id)
+    fetch(`http://127.0.0.1:5000/admin/manage/staff/${id}`, {
         method: 'DELETE',
         mode: 'cors',
         cache: 'no-cache',
@@ -48,8 +49,16 @@ var DeleStaff = function (id) {
     })
         .then(res => res.json())
         .then(data => {
-            alert(data)
-            var objCancel = document.querySelector("." + id)
-            objCancel.remove()
+            if (data.result == true) {
+
+                alert(data.error)
+                // var objCancel = document.querySelector("." + id)
+                // objCancel.remove()
+                window.location.reload()
+            }
+            if (data.result == false)
+            {
+                alert(data.error)
+            }
         })
 }

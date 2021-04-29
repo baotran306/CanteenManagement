@@ -308,9 +308,9 @@
                 <div class="container-fluid">
                     <label style="color:Black">Chọn ngày bạn muốn theo dõi</label>
                     <div class="chosen-day">
-                        <input type="date" id='date-chosen' value="">
+                        <input type="date" id='date-chosen' onchange="updateTurnOverDate()">
                     </div>
-                    <script>
+                    <!-- <script>
                         // function getRealDate() {
                             var today = new Date();
                             var dd = String(today.getDate()).padStart(2, '0');
@@ -319,7 +319,7 @@
                             today = yyyy + '-' + mm + '-' + dd;
                             document.getElementById('date-chosen').value = today;
                         // }
-                    </script>
+                    </script> -->
                     <br>
                     <!-- Content Row -->
                     <div class="row">
@@ -331,7 +331,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Doanh thu ngày</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">1 tỷ đồng</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="turnoverDate"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -348,7 +348,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Số đơn theo ngày</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">1000</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="amountBill"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -368,12 +368,12 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">100%</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="finishPercent"></div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
                                                         <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 100%" aria-valuemin="0" aria-valuemax="100">
+                                                             aria-valuemin="0" aria-valuemax="100" id="percent">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -402,9 +402,8 @@
                                     <div class="chart-bar">
                                         <canvas id="myBarChart"></canvas>
                                     </div>
-                                    <hr>
-                                    Styling for the bar chart can be found in the
-                                    <code>/js/demo/chart-bar-demo.js</code> file.
+                                    <hr id="titleChart">
+                                    &star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;DOANH THU CỦA CĂN TIN PTIT NĂM 2020&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;  
                                 </div>
                             </div>
                         </div>
@@ -474,7 +473,8 @@
     <!-- <script src="js/demo/chart-area-demo.js"></script> -->
     <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
     <script src="js/demo/chart-bar-demo.js"></script>
-    <script>checkloginAdmin()</script>
+    <script src="js/turnover.js"></script>
+    <!-- <script>checkloginAdmin()</script> -->
 
 </body>
 

@@ -212,10 +212,16 @@ html {
     display: flex;
     margin-left: 40px;
     padding-top: 20px;
+    flex-wrap: wrap;
+}
+
+.container__products-item {
+    width: 20%;
+    padding-bottom: 20px;
 }
 
 .img-product {
-    width: 85%;
+    width: 80%;
     height: 120px;
 }
 
@@ -244,7 +250,7 @@ html {
 .valueAmount {
     text-align: center;
     width: 40px;
-    margin-left:20px;
+    margin-left:5px
 }
 
 /* Đây là phần của footer */

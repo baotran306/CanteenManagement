@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Danh sách nhân viên</title>
+    <title>Danh sách món ăn của căn tin PTIT</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -405,7 +405,7 @@
                     <br>
                     <br>
                     <label>Tên món</label>
-                    <input type="text" id="food_name" style="margin-left: 5px;">
+                    <input type="text" id="food_name" style="margin-left: 5px;" disabled>
                     <br>
                     <br>
                     <label>Giá</label>
@@ -414,11 +414,26 @@
                     <br>
                     <label>Mô tả</label>
                     <textarea rows="4" cols="40" type="text" id="food_description"></textarea>
-                    <div class="wrap-btn">
+                    <br>
+                    <br>
+                    <label>Hình ảnh</label>
+                    <input type="file" name="myImage" accept="image/*" id="myInputImg">
+                    <div class="wrapImg">
 
-                        <button class="btn btn-finish">Hoàn tất</button>
+                        <img id="myImgLoad" width="200px" alt="Bạn chọn file không phải hình ảnh hoặc bạn chưa chọn file">
+                    </div>
+                    <div class="wrap-btn">
+        
+                        <button class="btn btn-finish" onclick="editMenu()">Hoàn tất</button>
                         <button class="btn btn-comeback" onclick="closeForm()">Trở lại</button>
                     </div>
+                    <script>
+                        const imgSelector = document.getElementById('myInputImg');
+                        imgSelector.addEventListener('change', (event) => {
+                            let img = document.getElementById('myImgLoad')
+                            img.src = URL.createObjectURL(event.target.files[0])
+                        });
+                    </script>
                 </div>
             </div>
         </div>
@@ -445,6 +460,7 @@
     <script src="js/renderlistmon.js"></script>
     <script>renderListFood()</script>
     <script src="js/checklogin.js"></script>
-    <script>checkloginAdmin()</script>
+    <!-- <script>checkloginAdmin()</script> -->
+    
 </body>
 </html>
