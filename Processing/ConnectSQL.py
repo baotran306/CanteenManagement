@@ -1054,8 +1054,6 @@ class SqlFunction:
     def get_role_id_by_name(self, role_name):
         try:
             cursor = self.func
-            if not self.check_existed_id("Role", role_name):
-                return ""
             cursor.execute("select id from Role where role_name = ? ", role_name)
             ans = ""
             for r in cursor:
@@ -1064,7 +1062,7 @@ class SqlFunction:
             cursor.commit()
             return ans
         except Exception as ex:
-            print("----Error in get_role_id_name_by_name----")
+            print("----Error in get_role_id_by_name----")
             print(ex)
             return ""
 
@@ -1193,4 +1191,4 @@ sql_func = SqlFunction()
 # print(sql_func.get_all_order_by_cus_id('KH001'))
 # print(sql_func.delete_function("Food", "id", 31))
 # print(sql_func.get_user_from_id("NV00", 1))
-
+# print(sql_func.get_role_id_by_name("nhân viên giao hàng"))
