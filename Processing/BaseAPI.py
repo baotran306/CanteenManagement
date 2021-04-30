@@ -115,6 +115,26 @@ def stats_revenue_by_day():
     return jsonify(data)
 
 
+@app.route("/customer/stats", methods=['POST'])
+def stats_order_by_customer():
+    customer_id = request.json['customer_id']
+    info = connect.get_all_order_by_cus_id(customer_id)
+    data = []
+    for r in info:
+        data.append({
+            'id_order': r[0],
+            'food': r[1],
+            'num_of_food': r[2],
+            'price': r[3],
+            'total': r[4],
+            'order_time': r[5],
+            'status': r[6],
+            'address': r[7],
+            'name_customer': r[8]
+        })
+    return jsonify(data)
+
+
 @app.route("/admin/stats/all_order", methods=['GET'])
 def get_all_order():
     rows = connect.get_all_info_order(4)
@@ -343,7 +363,7 @@ def login_customer():
     user = request.json['user']
     password = request.json['password']
     if connect.check_login_customer(user, password):
-        id_cus = connect.get_id_person_from_user(user, 0)
+        id_cus = connect.get_user_from_id(user, 0)
         info_cus = connect.get_info_customer_by_id(id_cus)
         data = {'result': True, 'id': info_cus[0], 'name': info_cus[1], 'vip': info_cus[7]}
         return jsonify(data)
@@ -357,7 +377,7 @@ def login_staff():
     user = request.json['user']
     password = request.json['password']
     if connect.check_login_staff(user, password):
-        id_staff = connect.get_id_person_from_user(user, 1)
+        id_staff = connect.get_user_from_id(user, 1)
         info_staff = connect.get_info_staff_by_id(id_staff)
         data = {'result': True, 'id': info_staff[0], 'name': info_staff[1], 'role': info_staff[7]}
         return jsonify(data)
@@ -428,31 +448,170 @@ def get_menu_detail(day, session):
     info = connect.get_menu_in_session_day(day, session)
     if len(info) == 0:
         data = {'result': False, 'error': 'Menu không tồn tại'}
-        return jsonify(data)
-    else:
-        data = {'result': False, 'info': info}
-        return jsonify(data)
+        return data
+    id_food = []
+    food_name = []
+    description = []
+    food_price = []
+    picture = []
+    for row in info:
+        id_food.append(row[0])
+        food_name.append(row[1])
+        description.append(row[2])
+        food_price.append(row[3])
+        picture.append(row[4])
+    data = {'result': True, 'id': id_food, 'food_name': food_name,
+            'description': description, 'food_price': food_price, 'picture': picture}
+    return data
 
 
 @app.route("/admin/menu/breakfast", methods=['POST'])
 def menu_breakfast():
-    day = request.json['day']
-    session = request.json['session']
-    return get_menu_detail(day, session)
+    day_b_now = request.json['day']
+    session_b_now = request.json['session']
+    return jsonify(get_menu_detail(day_b_now, session_b_now))
 
 
 @app.route("/admin/menu/lunch", methods=['POST'])
 def menu_lunch():
-    day = request.json['day']
-    session = request.json['session']
-    return get_menu_detail(day, session)
+    day_l_now = request.json['day']
+    session_l_now = request.json['session']
+    return jsonify(get_menu_detail(day_l_now, session_l_now))
 
 
 @app.route("/admin/menu/dinner", methods=['POST'])
 def menu_dinner():
+    day_d_now = request.json['day']
+    session_d_now = request.json['session']
+    return jsonify(get_menu_detail(day_d_now, session_d_now))
+
+
+@app.route("/admin/manage/food/<int:food_id>", methods=['DELETE'])
+def delete_food(food_id):
+    if connect.delete_function("Food", "id", food_id):
+        data = {'result': True, 'error': 'Đã xóa món ăn thành công'}
+        return jsonify(data)
+    data = {'result': False, 'error': 'Món ăn đã tồn tại trong Menu, không thể xóa'}
+    return jsonify(data)
+
+
+@app.route("/admin/manage/menu/<int:menu_id>", methods=['DELETE'])
+def delete_menu(menu_id):
+    if connect.delete_function("Menu", "id", menu_id):
+        data = {'result': True, 'error': 'Đã xóa Menu thành công'}
+        return jsonify(data)
+    data = {'result': False, 'error': 'Menu chứa món ăn, không thể xóa'}
+    return jsonify(data)
+
+
+@app.route("/admin/manage/staff/<string:staff_id>", methods=['DELETE'])
+def delete_staff(staff_id):
+    if connect.check_existed_foreign_key_order(staff_id, 1):
+        connect.delete_function("UserLogin", "staff_id", staff_id)
+        connect.delete_function("Staff", "id", staff_id)
+        connect.delete_function("Person", "id", staff_id)
+        data = {'result': True, 'error': 'Xóa nhân viên thành công'}
+        return jsonify(data)
+    data = {'result': False, 'error': 'Nhân viên đã từng lập hóa đơn, không thể xóa'}
+    return jsonify(data)
+
+
+@app.route("/admin/manage/customer/<string:customer_id>", methods=['DELETE'])
+def delete_customer(customer_id):
+    if connect.check_existed_foreign_key_order(customer_id, 0):
+        connect.delete_function("UserLogin", "staff_id", customer_id)
+        connect.delete_function("Staff", "id", customer_id)
+        connect.delete_function("Person", "id", customer_id)
+        data = {'result': True, 'error': 'Xóa khách hàng thành công'}
+        return jsonify(data)
+    data = {'result': False, 'error': 'Khách hàng đã từng lập hóa đơn, không thể xóa'}
+    return jsonify(data)
+
+
+@app.route("/admin/manage/update/food/update", methods=['POST'])
+def update_food():
+    id_food = request.json['foodId']
+    name = request.json['foodName']
+    des = request.json['foodDescription']
+    img = request.json['foodImg']
+    price = request.json['foodPrice']
+    if img == "":
+        info = connect.get_info_food_by_id(id_food)
+        img = info[4]
+        if connect.update_food(id_food, name, des, price, img):
+            data = {'result': True, 'error': 'Cập nhật thành công'}
+            return jsonify(data)
+    else:
+        if connect.update_food(id_food, name, des, price, img):
+            data = {'result': True, 'error': 'Cập nhật thành công'}
+            return jsonify(data)
+    data = {'result': False, 'error': 'Cập nhật thất bại'}
+    return jsonify(data)
+
+
+@app.route("/admin/manage/update/staff/role", methods=['POST'])
+def update_role():
+    id_staff = request.json['staff_id']
+    role_name = request.json['role_name']
+    user_staff = connect.get_user_from_id(id_staff, 1)
+    role_id = connect.get_role_id_by_name(role_name)
+    if user_staff != "" and role_id != "":
+        if connect.update_user_login_role(user_staff, role_id):
+            data = {'result': True, 'error': 'Cập nhật vai trò thành công'}
+            return jsonify(data)
+        else:
+            data = {'result': False, 'error': 'Cập nhật thất bại'}
+            return jsonify(data)
+    data = {'result': False, 'error': 'Nhân viên hoặc vai trò không tồn tại, cập nhật thất bại'}
+    return jsonify(data)
+
+
+@app.route("/admin/manage/update/customer/vip", methods=['POST'])
+def update_customer_type():
+    customer_id = request.json['customer_id']
+    customer_type = request.json['customer_type']
+    if connect.update_customer(customer_id, customer_type):
+        data = {'result': True, 'error': 'Cập nhật loại khách hàng thành công'}
+        return jsonify(data)
+    data = {'result': False, 'error': 'Cập nhật loại khách hàng thất bại'}
+    return jsonify(data)
+
+
+@app.route("/admin/manage/update/staff/salary", methods=['POST'])
+def update_salary_staff():
+    staff_id = request.json['staff_id']
+    staff_salary = request.json['staff_salary']
+    if connect.update_staff(staff_id, staff_salary):
+        data = {'result': True, 'error': 'Cập nhật lương thành công'}
+        return jsonify(data)
+    data = {'result': False, 'error': 'Cập nhật lương thất bại'}
+    return jsonify(data)
+
+
+@app.route("/person/update/info", methods=['POST'])
+def update_info_person():
+    # customer and staff are similar format info
+    id_cus = request.json['id']
+    name = request.json['name']
+    gender = request.json['gender']
+    id_card = request.json['id_card']
+    dob = request.json['dob']
+    phone = request.json['phone']
+    address = request.json['address']
+    if connect.update_person(id_cus, name, gender, id_card, dob, phone, address):
+        data = {'result': True, 'error': 'Cập nhật thông tin thành công'}
+        return jsonify(data)
+    data = {'result': False, 'error': 'Cập nhật thông tin thất bại'}
+    return jsonify(data)
+
+
+@app.route("/admin/manage/update/menu", methods=['POST'])
+def update_menu():
+    # don't complete
     day = request.json['day']
     session = request.json['session']
-    return get_menu_detail(day, session)
+    connect.get_menu_in_session_day()
+    pass
 
 
 if __name__ == "__main__":

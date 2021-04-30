@@ -40,6 +40,31 @@ class SqlFunction:
             print(ex)
             return False
 
+    def check_existed_foreign_key_order(self, person_id, type_person=0):
+        """
+        :param person_id: id of person who need to check existed
+        :param type_person: type_person = 0 is customer, person_id is customer_id, else staff_id
+        :return: True if existed, else false
+        """
+        try:
+            cnt = 0
+            cursor = self.func
+            if type_person == 0:
+                cursor.execute("select * from CustomerOrder where customer_id = ?", person_id)
+            else:
+                cursor.execute("select * from CustomerOrder where staff_id = ?", person_id)
+            for _ in cursor:
+                cnt += 1
+                break
+            cursor.commit()
+            if cnt == 0:
+                return False
+            return False
+        except Exception as ex:
+            print("----Error in check_existed_foreign_key_order----")
+            print(ex)
+            return False
+
     def is_empty(self, table_name):
         # Be careful with no existed table name
         try:
@@ -699,7 +724,7 @@ class SqlFunction:
             cursor.commit()
             return ans
         except Exception as ex:
-            print('----Error in stats_revenue_by_month')
+            print('----Error in stats_revenue_by_month----')
             print(ex)
             return False
 
@@ -729,7 +754,7 @@ class SqlFunction:
                 ans.append('0%')
             return ans
         except Exception as ex:
-            print('----Error in stats_revenue_by_day')
+            print('----Error in stats_revenue_by_day----')
             print(ex)
             return False
 
@@ -748,7 +773,7 @@ class SqlFunction:
             ans = ef.auto_generate_id_person(ans)
             return ans
         except Exception as ex:
-            print("----Error in last_id_person----")
+            print("----Error in generate_new_id_person----")
             print(ex)
             return ""
 
@@ -801,7 +826,7 @@ class SqlFunction:
         Get identity card of person
         :param user_name: user name of person who need to get id
         :param type_person: if type_person = 0 is customer else staff
-        :return: identity card of this Person
+        :return: id of this Person
         """
         try:
             cursor = self.func
@@ -820,7 +845,35 @@ class SqlFunction:
             cursor.commit()
             return ans
         except Exception as ex:
-            print("----Error in get_id_card----")
+            print("----Error in get_id_person_from_user----")
+            print(ex)
+            return ""
+
+    def get_user_from_id(self, id_person, type_person=0):
+        """
+        Get identity card of person
+        :param id_person: id of person who need to get id
+        :param type_person: if type_person = 0 is customer else staff
+        :return: user_name of this Person
+        """
+        try:
+            cursor = self.func
+            if type_person == 0:
+                if not self.check_existed_id("Customer", id_person):
+                    return ""
+                cursor.execute("select user_id from CustomerUser where customer_id = ?", id_person)
+            else:
+                if not self.check_existed_id("Staff", id_person):
+                    return ""
+                cursor.execute("select user_id from UserLogin where staff_id = ?", id_person)
+            ans = ""
+            for c in cursor:
+                ans = c[0]
+                break
+            cursor.commit()
+            return ans
+        except Exception as ex:
+            print("----Error in get_user_from_id----")
             print(ex)
             return ""
 
@@ -830,7 +883,7 @@ class SqlFunction:
                 return False
             if not ef.check_regex_password(new_pass):
                 return False
-            id_staff = self.get_id_person_from_user(user_name, 1)
+            id_staff = self.get_user_from_id(user_name, 1)
             if self.get_id_card(id_staff) == id_card and self.get_phone_num(id_staff) == phone:
                 return self.update_user_login_password(user_name, new_pass)
             else:
@@ -846,7 +899,7 @@ class SqlFunction:
                 return False
             if not ef.check_regex_password(new_pass):
                 return False
-            id_customer = self.get_id_person_from_user(user_name, 0)
+            id_customer = self.get_user_from_id(user_name, 0)
             if self.get_id_card(id_customer) == id_card and self.get_phone_num(id_customer) == phone:
                 return self.update_customer_user_password(user_name, new_pass)
             else:
@@ -931,6 +984,25 @@ class SqlFunction:
             print(ex)
             return []
 
+    def get_all_order_by_cus_id(self, customer_id):
+        try:
+            if not self.check_existed_id("Customer", customer_id):
+                return []
+            cursor = self.func
+            cursor.execute("select id from CustomerOrder where customer_id = ?", customer_id)
+            list_id = []
+            info = []
+            for id_order in cursor:
+                list_id.append(id_order[0])
+            for id_order in list_id:
+                info.append(self.get_info_order_detail_by_id(id_order))
+            cursor.commit()
+            return info
+        except Exception as ex:
+            print("----Error in get_all_order_by_cus_id----")
+            print(ex)
+            return []
+
     def get_all_info_order(self, type_inp=0):
         """
         :param type_inp: type of order which want to select.
@@ -958,7 +1030,7 @@ class SqlFunction:
             cursor.commit()
             return ans
         except Exception as ex:
-            print("----Error in get_food_name_by_id----")
+            print("----Error in get_all_info_order----")
             print(ex)
             return []
 
@@ -1047,6 +1119,7 @@ class SqlFunction:
                 list_food_id.append(food[0])
             for food_id in list_food_id:
                 ans.append(self.get_info_food_by_id(food_id))
+            cursor.commit()
             return ans
         except Exception as ex:
             print("----Error in get_menu_in_session_day")
@@ -1112,7 +1185,12 @@ sql_func = SqlFunction()
 # print(sql_func.get_id_order_by_time_customer_id('2021-04-12 19:34:00', 'KH005'))
 # print(sql_func.get_id_person_from_user('admin', 1))
 # print(sql_func.get_info_staff_by_id(sql_func.get_id_person_from_user('admin', 1)))
-# for i in range(20, 30, 2):
-#     sql_func.insert_menu_detail(5, i)
-# print(sql_func.get_menu_in_session_day("2021-03-12", "SÁNG"))
-print(sql_func.stats_revenue_by_day('2021-04-12'))
+# for i in [1, 4, 2, 6, 10, 14, 15, 20, 22, 23, 24, 27, 29, 30, 8]:
+#     sql_func.insert_menu_detail(11, i)
+# print(sql_func.get_menu_in_session_day("2021-04-12", "Chiều"))
+# print(sql_func.stats_revenue_by_day('2021-04-12'))
+# print(sql_func.generate_new_id_person(0))
+# print(sql_func.get_all_order_by_cus_id('KH001'))
+# print(sql_func.delete_function("Food", "id", 31))
+# print(sql_func.get_user_from_id("NV00", 1))
+
