@@ -99,9 +99,10 @@ def get_session_day_menu(time_day):
         return "sáng"
     elif int(hour) < 16:
         return "trưa"
-    else:
+    elif int(hour) <= 20:
         return "chiều"
-    pass
+    else:
+        return "đêm"
 
 
 def get_time_from_session(session):
@@ -113,6 +114,17 @@ def get_time_from_session(session):
         return "18:30:00"
     else:
         return "00:00:00"
+
+
+def get_start_end_time_session(session):
+    if session.lower() == "sáng":
+        return ["05:00:00", "09:59:00"]
+    elif session.lower() == "trưa":
+        return ["10:00:00", "15:59:00"]
+    elif session.lower() == "chiều":
+        return ["16:00:00", "21:00:00"]
+    else:
+        return ["00:00:00", "00:01:00"]
 
 
 # print(str(dt.now()) > "2020-08-15 04:06:00")

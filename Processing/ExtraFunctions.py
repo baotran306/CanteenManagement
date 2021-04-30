@@ -40,8 +40,8 @@ def check_positive_number(num):
 
 def check_str_all_num(your_str):
     if your_str.isdigit():
-        print('----Deny phone number or identity card contains character----')
         return True
+    print('----Deny phone number or identity card contains character----')
     return False
 
 
@@ -71,15 +71,16 @@ def check_input_id_person(inp):
 
 
 def auto_generate_id_person(inp):
+    # loi o day
     prefix = inp[:2]
     suffix = int(inp[2:])
     suffix += 1
     if suffix < 10:
-        return prefix + "00" + suffix
+        return prefix + "00" + str(suffix)
     elif suffix < 100:
-        return prefix + "0" + suffix
+        return prefix + "0" + str(suffix)
     else:
-        return prefix + suffix
+        return prefix + str(suffix)
 
 
 # if __name__ == "__main__":
