@@ -422,6 +422,21 @@ class SqlFunction:
             print(ex)
             return False
 
+    def update_shipper(self, order_id, staff_id):
+        try:
+            cursor = self.func
+            if not self.check_existed_id("Staff", staff_id):
+                return False
+            if not self.check_existed_id("CustomerOrder", order_id):
+                return False
+            cursor.execute("update CustomerOrder set staff_id = ? where id = ?", staff_id, order_id)
+            cursor.commit()
+            return True
+        except Exception as ex:
+            print("----Error in update_shipper----")
+            print(ex)
+            return False
+
     def update_customer(self, ids, vip):
         try:
             vip = vip.upper()
@@ -1035,6 +1050,27 @@ class SqlFunction:
             print(ex)
             return []
 
+    def get_delivering_order_by_shipper(self, id_shipper):
+        try:
+            cursor = self.func
+            if not self.check_existed_id("Staff", id_shipper):
+                return False
+            cursor.execute("select id from CustomerOrder where status_now = 2 and staff_id = ?", id_shipper)
+            list_id = []
+            for r in cursor:
+                list_id.append(r[0])
+            ans = []
+            for id_order in list_id:
+                if not self.check_existed_id("OrderDetail", id_order):
+                    continue
+                ans.append(self.get_info_order_detail_by_id(id_order))
+            cursor.commit()
+            return ans
+        except Exception as ex:
+            print("----Error in get_delivering_order_by_shipper----")
+            print(ex)
+            return []
+
     def get_food_name_by_id(self, food_id):
         try:
             cursor = self.func
@@ -1194,3 +1230,4 @@ sql_func = SqlFunction()
 # print(sql_func.get_user_from_id("NV00", 1))
 # print(sql_func.get_role_id_by_name("nhân viên giao hàng"))
 # print(sql_func.update_customer_order(2, "đã giao"))
+# print(sql_func.get_delivering_order_by_shipper('NV002'))

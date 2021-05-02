@@ -115,9 +115,8 @@ def stats_revenue_by_day():
     return jsonify(data)
 
 
-@app.route("/customer/stats", methods=['POST'])
-def stats_order_by_customer():
-    customer_id = request.json['customer_id']
+@app.route("/customer/stats/<string:customer_id>", methods=['GET'])
+def stats_order_by_customer(customer_id):
     info = connect.get_all_order_by_cus_id(customer_id)
     data = []
     for r in info:
@@ -607,9 +606,11 @@ def shipper_change_status_order():
     check_complete = False
     status = request.json['status']
     id_order = request.json['id_order']
+    id_staff = request.json['id_staff']
     if status.lower() == "chưa giao":
-        if connect.update_customer_order(id_order, "đang giao"):
-            check_complete = True
+        if connect.update_customer_order(id_order, "đang giao"):  # update status
+            if connect.update_shipper(id_order, id_staff):  # update shipper who is delivering this order
+                check_complete = True
     elif status.lower() == "đang giao":
         if connect.update_customer_order(id_order, "đã giao"):
             check_complete = True
@@ -620,15 +621,30 @@ def shipper_change_status_order():
     return jsonify(data)
 
 
-@app.route("/customer/manage/order", methods=['POST'])
-def customer_change_status_order():
-    check_complete = False
-    status = request.json['status']
-    id_order = request.json['id_order']
-    if status.lower() == "chưa giao":
-        if connect.update_customer_order(id_order, "hủy"):
-            check_complete = True
-    if check_complete:
+@app.route("/shipper/manage/show/<string:id_staff>", methods=['GET'])
+def get_shipper_order(id_staff):
+    not_complete = connect.get_all_info_order(0)
+    delivering = connect.get_delivering_order_by_shipper(id_staff)
+    rows = not_complete + delivering
+    data = []
+    for r in rows:
+        data.append({
+            'id_order': r[0],
+            'food': r[1],
+            'num_of_food': r[2],
+            'price': r[3],
+            'total': r[4],
+            'order_time': r[5],
+            'status': r[6],
+            'address': r[7],
+            'name_customer': r[8]
+        })
+    return jsonify(data)
+
+
+@app.route("/customer/manage/order/<int:id_order>", methods=['GET'])
+def customer_change_status_order(id_order):
+    if connect.update_customer_order(id_order, "hủy"):
         data = {'result': True, 'error': 'Đã cập nhật trạng thái'}
         return jsonify(data)
     data = {'result': False, 'error': 'Cập nhật trạng thái thất bại'}
