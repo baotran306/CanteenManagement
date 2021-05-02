@@ -486,6 +486,7 @@ class SqlFunction:
 
     def update_customer_order(self, ido, stt):
         try:
+            stt = ef.change_status_type(stt)
             if not ef.check_status_order(stt):
                 return False
             if not self.check_existed_id("CustomerOrder", ido):
@@ -1192,3 +1193,4 @@ sql_func = SqlFunction()
 # print(sql_func.delete_function("Food", "id", 31))
 # print(sql_func.get_user_from_id("NV00", 1))
 # print(sql_func.get_role_id_by_name("nhân viên giao hàng"))
+# print(sql_func.update_customer_order(2, "đã giao"))

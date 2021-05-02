@@ -256,6 +256,9 @@ def insert_customer():
     address = request.json['address']
     user = request.json['user']
     password = request.json['password']
+    if connect.check_existed_id("CustomerUser", user):
+        data = {'result': False, 'error': 'Đăng kí thất bại'}
+        return jsonify(data)
     if connect.insert_person(new_id, name, gender, id_card, dob, phone, address):
         if connect.insert_customer(new_id, vip="NO"):
             if connect.insert_customer_user(user, password, new_id):
@@ -278,6 +281,9 @@ def insert_staff():
     password = request.json['password']
     role_name = request.json['role_name']
     role_id = connect.get_role_id_by_name(role_name)
+    if connect.check_existed_id("UserLogin", user):
+        data = {'result': False, 'error': 'Đăng kí thất bại'}
+        return jsonify(data)
     if connect.insert_person(new_id, name, gender, id_card, dob, phone, address):
         if connect.insert_staff(new_id):
             if connect.insert_user_login(user, password, role_id, new_id):
@@ -363,7 +369,7 @@ def login_customer():
     user = request.json['user']
     password = request.json['password']
     if connect.check_login_customer(user, password):
-        id_cus = connect.get_user_from_id(user, 0)
+        id_cus = connect.get_id_person_from_user(user, 0)
         info_cus = connect.get_info_customer_by_id(id_cus)
         data = {'result': True, 'id': info_cus[0], 'name': info_cus[1], 'vip': info_cus[7]}
         return jsonify(data)
@@ -377,7 +383,7 @@ def login_staff():
     user = request.json['user']
     password = request.json['password']
     if connect.check_login_staff(user, password):
-        id_staff = connect.get_user_from_id(user, 1)
+        id_staff = connect.get_id_person_from_user(user, 1)
         info_staff = connect.get_info_staff_by_id(id_staff)
         data = {'result': True, 'id': info_staff[0], 'name': info_staff[1], 'role': info_staff[7]}
         return jsonify(data)
@@ -549,20 +555,22 @@ def update_food():
     return jsonify(data)
 
 
-@app.route("/admin/manage/update/staff/role", methods=['POST'])
-def update_role():
+@app.route("/admin/manage/update/staff", methods=['POST'])
+def update_staff():
     id_staff = request.json['staff_id']
     role_name = request.json['role_name']
     user_staff = connect.get_user_from_id(id_staff, 1)
     role_id = connect.get_role_id_by_name(role_name)
+    staff_salary = request.json['staff_salary']
     if user_staff != "" and role_id != "":
-        if connect.update_user_login_role(user_staff, role_id):
-            data = {'result': True, 'error': 'Cập nhật vai trò thành công'}
+        if connect.update_user_login_role(user_staff, role_id)\
+                and connect.update_staff(id_staff, staff_salary):
+            data = {'result': True, 'error': 'Cập nhật nhân viên thành công'}
             return jsonify(data)
         else:
             data = {'result': False, 'error': 'Cập nhật thất bại'}
             return jsonify(data)
-    data = {'result': False, 'error': 'Nhân viên hoặc vai trò không tồn tại, cập nhật thất bại'}
+    data = {'result': False, 'error': 'Có lỗi xảy ra, cập nhật thất bại'}
     return jsonify(data)
 
 
@@ -574,17 +582,6 @@ def update_customer_type():
         data = {'result': True, 'error': 'Cập nhật loại khách hàng thành công'}
         return jsonify(data)
     data = {'result': False, 'error': 'Cập nhật loại khách hàng thất bại'}
-    return jsonify(data)
-
-
-@app.route("/admin/manage/update/staff/salary", methods=['POST'])
-def update_salary_staff():
-    staff_id = request.json['staff_id']
-    staff_salary = request.json['staff_salary']
-    if connect.update_staff(staff_id, staff_salary):
-        data = {'result': True, 'error': 'Cập nhật lương thành công'}
-        return jsonify(data)
-    data = {'result': False, 'error': 'Cập nhật lương thất bại'}
     return jsonify(data)
 
 
@@ -602,6 +599,39 @@ def update_info_person():
         data = {'result': True, 'error': 'Cập nhật thông tin thành công'}
         return jsonify(data)
     data = {'result': False, 'error': 'Cập nhật thông tin thất bại'}
+    return jsonify(data)
+
+
+@app.route("/shipper/manage/order", methods=['POST'])
+def shipper_change_status_order():
+    check_complete = False
+    status = request.json['status']
+    id_order = request.json['id_order']
+    if status.lower() == "chưa giao":
+        if connect.update_customer_order(id_order, "đang giao"):
+            check_complete = True
+    elif status.lower() == "đang giao":
+        if connect.update_customer_order(id_order, "đã giao"):
+            check_complete = True
+    if check_complete:
+        data = {'result': True, 'error': 'Đã cập nhật trạng thái'}
+        return jsonify(data)
+    data = {'result': False, 'error': 'Cập nhật trạng thái thất bại'}
+    return jsonify(data)
+
+
+@app.route("/customer/manage/order", methods=['POST'])
+def customer_change_status_order():
+    check_complete = False
+    status = request.json['status']
+    id_order = request.json['id_order']
+    if status.lower() == "chưa giao":
+        if connect.update_customer_order(id_order, "hủy"):
+            check_complete = True
+    if check_complete:
+        data = {'result': True, 'error': 'Đã cập nhật trạng thái'}
+        return jsonify(data)
+    data = {'result': False, 'error': 'Cập nhật trạng thái thất bại'}
     return jsonify(data)
 
 
