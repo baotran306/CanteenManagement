@@ -19,8 +19,6 @@
     <!-- <link rel="stylesheet" href="css/test.css"> -->
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <script src="js/checklogin.js"></script>
-    <script>checkloginShipper();</script>
 </head>
 
 <body>
@@ -41,12 +39,26 @@
                         <i class="icon ti-power-off"></i>
                         Đăng xuất
                     </li>
+                    <li class="header__nav-item opacityhover">
+                        <i class="icon ti-menu"></i>
+                        <a href="shipper.html" style="text-decoration: none;color:white">
+                            Xem danh sách đơn vận chuyển
+                        </a>
+                    </li>
+                    <li class="header__nav-item opacityhover">
+                        <i class="icon ti-user"></i>
+                        <a href="staffInfo.html" style="text-decoration: none;color:white">
+                            Xem thông tin cá nhân
+                        </a>
+                    </li>
+
                 </ul>
                 <script>
                     function comeback() {
                         sessionStorage.removeItem("NameStaff")
                         sessionStorage.removeItem("IdStaff")
                         sessionStorage.removeItem("Role")
+                        sessionStorage.removeItem("UserStaff")
                         window.location.href = 'loginStaff.html'
                     }
                 </script>
@@ -223,6 +235,8 @@
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="js/renderhoadon.js"></script>
+    <script src="js/checklogin.js"></script>
+    <!-- <script>checkloginShipper();</script> -->
     <script>renderHoaDonShipper()</script>
 </body>
 

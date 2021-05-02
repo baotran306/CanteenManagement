@@ -25,9 +25,9 @@
     <link rel="stylesheet" href="css/test.css">
     <link rel="stylesheet" href="css/modal.css">
     <script src="js/modal.js"></script>
-    
-    
-    
+
+
+
 </head>
 
 <body id="page-top">
@@ -81,8 +81,8 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh sách hóa đơn</span></a>
             </li>
-             <!-- Nav Item - DANH SÁCH MÓN ĂN -->
-             <li class="nav-item">
+            <!-- Nav Item - DANH SÁCH MÓN ĂN -->
+            <li class="nav-item">
                 <a class="nav-link active" href="listfood.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh sách món ăn</span></a>
@@ -341,7 +341,7 @@
                                             <th>Chức năng</th>
                                         </tr>
                                     </thead>
-                                    
+
                                     <tbody id="liststaff">
                                         <!-- <tr>
                                             <th>456</th>
@@ -428,18 +428,31 @@
     <!--CHỨC NĂNG EDIT-->
     <div id="modal">
         <div class="modal__overplay"></div>
-        <div class="modal__body">
+        <div class="modal__body" style="height: 60%;">
             <div class="modal__body-container">
                 <div class="modal__body-container-header">
-                    <h2>EDIT</h2>
+                    <h2 style="color: red;">CHỈNH SỬA THÔNG TIN</h2>
                 </div>
+                <br>
+                <br>
 
                 <div class="modal__body-container-content">
-                    <input type="text" class="id_account content-input" placeholder="Nhập tên tài khoản đăng kí">
-                    <input type="password" class="pass_account content-input" placeholder="Nhập pass">
-                    <input type="password" class="passagain_account content-input" placeholder="Nhập lại pass">
-                    <input type="text" class="codeconfirm-input" placeholder="Nhập mã xác nhận">
-                    <button class="btn btn-finish">Hoàn tất</button>
+                    <label>Mã nhân viên</label>
+                    <input type="text" id="IdStaff" disabled> 
+                    <br>
+                    <br>
+                    <label>Lương</label>
+                    <input type="Number" id="salary" onchange="checkValue(event)">
+                    <br>
+                    <br>
+                    <select id="Role" class="form-control" style="height: 50px;">
+                        <option value="Quản Lý">Quản Lý</option>
+                        <option value="Thu Ngân">Thu ngân</option>
+                        <option value="Nhân viên giao hàng">Nhân viên giao hàng</option>
+                    </select>
+                    <br>
+                    <br>
+                    <button class="btn btn-finish" onclick="setDataStaff()">Hoàn tất</button>
                     <button class="btn btn-comeback" onclick="closeForm()">Trở lại</button>
                 </div>
             </div>
@@ -461,11 +474,22 @@
     <script type="text/javascript" src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <!-- <script src="js/rendernhanvien.js"></script> -->
-    
+
     <!-- Page level custom scripts -->
     <!-- <script src="js/demo/datatables-demo.js"></script> -->
     <script src="js/rendernhanvien.js"></script>
     <script src="js/checklogin.js"></script>
     <!-- <script>checkloginAdmin()</script> -->
+    <script>
+        function checkValue(e) {
+            var salary = document.getElementById('salary')
+            var x = e.target.value
+            if (x - Number.parseInt(x) > 0)
+                e.target.value = 0
+            if (x < 0)
+                e.target.value = 0
+        }
+    </script>
 </body>
+
 </html>

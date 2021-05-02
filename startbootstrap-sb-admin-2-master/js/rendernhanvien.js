@@ -17,11 +17,11 @@ fetch("http://127.0.0.1:5000/staff")
                 <th>${nhanvien.gender}</th>
                 <th>${nhanvien.address}</th>
                 <th>${nhanvien.day_of_birth}</th>
-                <th>${nhanvien.role_name}</th>
-                <th>${nhanvien.salary}</th>
+                <th class="${nhanvien.id}">${nhanvien.role_name}</th>
+                <th class="${nhanvien.id}">${nhanvien.salary}</th>
                 <th>${nhanvien.phone_num}</th>
                 <th>
-                    <button class="btn-primary btn-Edit" onmousedown="activeForm()">Chỉnh sửa</button>
+                    <button class="btn-primary btn-Edit" onmousedown="openEditStaff(this)" id="${nhanvien.id}">Chỉnh sửa</button>
                     <button class="btn-secondary" onclick="DeleStaff('${nhanvien.id}')" style="margin-top:20px">Xóa</button>
                 </th>
                 </tr>

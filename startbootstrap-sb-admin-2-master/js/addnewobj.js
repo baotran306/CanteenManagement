@@ -10,7 +10,7 @@ const addNewStaff = function () {
         var dob = document.getElementById("Birthday")
         var gender = document.getElementById("Gender")
         var password = document.getElementById("Password")
-        var repeatPassword = document.getElementById("RepeatPassWord")
+        var repeatPassword = document.getElementById("RepeatPassword")
         var check = true;
         if (user.value == '') {
             user.focus()
@@ -47,9 +47,9 @@ const addNewStaff = function () {
             check = false
             password.placeholder = "Bạn chưa nhập password"
         }
-        if (repeatPassWord.value =='') {
-            repeatPassWord.focus()
-            repeatPassWord.placeholder = "Bạn chưa nhập lại passWord"
+        if (repeatPassword.value == '') {
+            repeatPassword.focus()
+            repeatPassword.placeholder = "Bạn chưa nhập lại passWord"
             check = false
         }
         if (repeatPassword.value !== password.value) {
@@ -64,11 +64,12 @@ const addNewStaff = function () {
                 name: name.value,
                 phone: phone.value,
                 id_card: CMND.value,
-                role_name: role.value,
+                role_name: role.options[role.selectedIndex].value,
                 address: address.value,
                 gender: gender.options[gender.selectedIndex].value,
                 dob: dob.value
             }
+            console.log(data)
             fetch("http://127.0.0.1:5000/admin/register", {
                 method: 'POST',
                 mode: 'cors',
@@ -192,49 +193,46 @@ const addNewFood = function () {
     var price = document.getElementById('price')
     var description = document.getElementById('description')
     var inputIMG = document.getElementById('myInputImg')
-    if (foodName.value =='')
-    {
+    if (foodName.value == '') {
         foodName.focus()
-        foodName.placeholder= "Bạn chưa nhập tên món ăn"
+        foodName.placeholder = "Bạn chưa nhập tên món ăn"
     }
-    if (price.value =='')
-    {
+    if (price.value == '') {
         price.focus()
         price.placeholder = 'Bạn chưa nhập giá tiền'
-    }   
-    if (description.value =='')
-    {
+    }
+    if (description.value == '') {
         description.focus()
         description.placeholder = 'Hãy nhập 1 số mô tả cho khách hàng cùng biết'
     }
     try {
-       var pic = inputIMG.files[0].name
+        var pic = inputIMG.files[0].name
     } catch (error) {
         inputIMG.focus()
         alert("Hãy chọn ảnh")
         return
     }
     var data = {
-        name : foodName.value,
-        price : price.value,
-        describe : description.value,
-        image : pic
+        name: foodName.value,
+        price: price.value,
+        describe: description.value,
+        image: pic
     }
     console.log(data)
-    fetch('http://127.0.0.1:5000/admin/food' , {
+    fetch('http://127.0.0.1:5000/admin/food', {
         method: 'POST',
-            mode: 'cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            redirect: 'follow',
-            referrerPolicy: 'no-referrer',
-            body: JSON.stringify(data)
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data)
     })
-    .then(res => res.json())
-    .then(newdata=> {
-        alert(newdata.error)
-    })
+        .then(res => res.json())
+        .then(newdata => {
+            alert(newdata.error)
+        })
 }

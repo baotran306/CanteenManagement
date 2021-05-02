@@ -17,6 +17,7 @@ function loginCustomer() {
             user: user,
             password: password
         }
+        console.log(data)
         fetch("http://127.0.0.1:5000/customer/login", {
             method: 'POST',
             mode: 'cors',
@@ -31,13 +32,14 @@ function loginCustomer() {
         })
             .then(res => res.json())
             .then(newdata => {
-                // console.log(newdata)
+                console.log(newdata)
                 if (newdata.result === false)
                     alert(newdata.error)
                 if (newdata.result === true) {
                     sessionStorage.setItem('IdCustomer', newdata.id)
                     sessionStorage.setItem('NameCustomer', newdata.name)
                     sessionStorage.setItem('Vip', newdata.vip)
+                    sessionStorage.setItem('UserCustomer',user)
                 }
                 // console.log(sessionStorage.getItem('Id'))
                 if (sessionStorage.getItem('IdCustomer') != null) {
@@ -86,6 +88,7 @@ function loginStaff() {
                 sessionStorage.setItem('IdStaff', newdata.id)
                 sessionStorage.setItem('NameStaff', newdata.name)
                 sessionStorage.setItem('Role', newdata.role)
+                sessionStorage.setItem('UserStaff',user)
             }
             // console.log(sessionStorage.getItem('Role').toLocaleLowerCase)
             if (sessionStorage.getItem('Role').toLocaleLowerCase() === 'quản lý') {

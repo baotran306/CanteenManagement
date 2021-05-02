@@ -326,7 +326,7 @@
                                         <br>
                                         <label>Giá</label>
                                         <br>
-                                        <input type="number" id="price">
+                                        <input type="number" id="price" onchange="minMaxNum(event)">
                                         <br>
                                         <br>
                                         <label>Mô tả</label>
@@ -420,6 +420,17 @@
     <script src="js/checklogin.js"></script>
     <!-- <script>checkloginAdmin()</script> -->
     <script src="js/addnewobj.js"></script>
+    <script>
+          function minMaxNum(e) {
+            var x = e.target.value
+            if (x - Number.parseInt(x) > 0)
+                e.target.value = 0
+            if (x < 0)
+                e.target.value = 0
+            if (x > 100)
+                e.target.value = 0
+        }
+    </script>
 </body>
 
 </html>

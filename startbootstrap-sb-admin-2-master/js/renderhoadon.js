@@ -27,11 +27,20 @@ const renderHoaDonAdmin = function () {
     }, 100)
 }
 
-const changeStatus = function (id, e) {
-    if (e.target.innerHTML === "Chưa giao") {
-        e.target.innerHTML = "Đã giao"
+const changeStatus = function (element) {
+    var data = {
+        status: element.innerHTML,
+        id_order: element.id,
+        id_shipper: sessionStorage.getItem("IdStaff")
     }
-    fetch(urlChangeStatus, {
+    if (element.innerHTML == "Đang giao") {
+        element.innerHTML = "Đã giao"
+    }
+    if (element.innerHTML == "Chưa giao") {
+        element.innerHTML = "Đang giao"
+    }
+    console.log(data)
+    fetch("http://127.0.0.1:5000/shipper/manage/order", {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
@@ -41,36 +50,34 @@ const changeStatus = function (id, e) {
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data)
     })
         .then(res => res.json())
-        .then(data => {
-            alert(data)
+        .then(newData => {
+            if (newData.result == true) {
+                alert(newData.error)
+                window.location.reload()
+            }
+            if (newData.result == false) {
+                alert(newData.error)
+            }
         })
 }
 
-const CancelBill = function (id) {
-    fetch(urlCancelBill, {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-    })
+const CancelBill = function (element) {
+    var id_order = element.id
+    fetch(`http://127.0.0.1:5000/customer/manage/order/${id_order}`)
         .then(res => res.json())
         .then(data => {
-            alert(data)
-            var objCancel = document.querySelector("." + id)
-            objCancel.remove()
+            alert(data.error)
+            window.location.reload()
         })
 }
 
-const renderHoaDonCustomer = function (IdCustomer) {
-    // fetch(`http://127.0.0.1:5000/customer/order/${IdCustomer}`)
-    fetch('http://127.0.0.1:5000/admin/stats/all_order')
+const renderHoaDonCustomer = function () {
+    var IdCustomer = sessionStorage.getItem('IdCustomer')
+    fetch(`http://127.0.0.1:5000/customer/order/${IdCustomer}`)
+        // fetch('http://127.0.0.1:5000/admin/stats/all_order')
         .then(res => res.json())
         .then(listHoaDon => {
             var output = ''
@@ -105,7 +112,16 @@ const renderHoaDonCustomer = function (IdCustomer) {
                 <th>${listHoaDon[i].order_time}</th>
                 <th>${listHoaDon[i].status}</th>
                 `
-                output += billCode + `<th>` + listfood + `</th> <th>` + listamount + `</th> <th>` + listprice + `</th>` + all
+                var buttonCancel = '<th></th>'
+                if (listHoaDon[i].status == "Chưa giao")
+                {
+                    buttonCancel = `
+                    <th>
+                        <button class ="btn-primary" id="${listHoaDon[i].id_order}" onclick = "CancelBill(this)">Hủy</button>
+                    </th>
+                    `
+                }
+                output += billCode + `<th>` + listfood + `</th> <th>` + listamount + `</th> <th>` + listprice + `</th>` + all + buttonCancel
             }
             var list = document.querySelector("#listbill")
 
@@ -152,7 +168,9 @@ const renderHoaDonShipper = function () {
                 <th>${listHoaDon[i].total}</th>
                 <th>${listHoaDon[i].address}</th>
                 <th>${listHoaDon[i].order_time}</th>
-                <th>${listHoaDon[i].status}</th>
+                <th>
+                <button class="btn-primary" id="${listHoaDon[i].id_order}" onclick="changeStatus(this)">${listHoaDon[i].status}</button>
+                </th>
                 `
                 output += billCode + `<th>` + listfood + `</th> <th>` + listamount + `</th> <th>` + listprice + `</th>` + all
             }

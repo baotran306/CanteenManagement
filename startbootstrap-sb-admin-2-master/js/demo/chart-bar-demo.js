@@ -11,7 +11,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
     sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
     dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
     s = '',
-    toFixedFix = function(n, prec) {
+    toFixedFix = function (n, prec) {
       var k = Math.pow(10, prec);
       return '' + Math.round(n * k) / k;
     };
@@ -26,19 +26,19 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   }
   return s.join(dec);
 }
-
+var mydata = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 // Bar Chart Example
 var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9","Tháng 10","Tháng 11","Tháng 12"],
+    labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
     datasets: [{
       label: "Doanh thu",
       backgroundColor: "#4e73df",
       hoverBackgroundColor: "#2e59d9",
       borderColor: "#4e73df",
-      data: [20, 30, 16, 37, 80, 20,10,70,24,70,100,60],
+      data: mydata
     }],
   },
   options: {
@@ -72,7 +72,7 @@ var myBarChart = new Chart(ctx, {
           maxTicksLimit: 5,
           padding: 10,
           // Include a dollar sign in the ticks
-          callback: function(value, index, values) {
+          callback: function (value, index, values) {
             return number_format(value) + ` Triệu`;
           }
         },
@@ -101,7 +101,7 @@ var myBarChart = new Chart(ctx, {
       displayColors: false,
       caretPadding: 10,
       callbacks: {
-        label: function(tooltipItem, chart) {
+        label: function (tooltipItem, chart) {
           var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
           return datasetLabel + ' ' + number_format(tooltipItem.yLabel) + ' Triệu';
         }
@@ -109,3 +109,28 @@ var myBarChart = new Chart(ctx, {
     },
   }
 });
+
+const tableYear = function () {
+  var chosenYear = document.getElementById('chosen-year')
+  var date = new Date()
+  if (chosenYear.value - Number.parseInt(chosenYear.value) > 0)
+    chosenYear.value = Number.parseInt(date.getFullYear())
+  if (chosenYear.value < 0)
+    chosenYear.value = Number.parseInt(date.getFullYear())
+  if (chosenYear.value > 2100)
+    chosenYear.value = Number.parseInt(date.getFullYear())
+  if (chosenYear.value < 2000)
+    chosenYear.value = Number.parseInt(date.getFullYear())
+  fetch(`http://127.0.0.1:5000/admin/stats/month/${chosenYear.value}`)
+    .then(res => res.json())
+    .then(newData => {
+      if (newData != null) {
+        var mydata2 = []
+        for (let i = 0; i < 12; i++) {
+          mydata2.push(newData[i].revenue)
+        }
+        myBarChart.data.datasets[0].data = mydata2
+        myBarChart.update()
+      }
+    })
+}

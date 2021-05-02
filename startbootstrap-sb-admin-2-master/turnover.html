@@ -368,12 +368,13 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800" id="finishPercent"></div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"
+                                                        id="finishPercent"></div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
                                                         <div class="progress-bar bg-info" role="progressbar"
-                                                             aria-valuemin="0" aria-valuemax="100" id="percent">
+                                                            aria-valuemin="0" aria-valuemax="100" id="percent">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -390,9 +391,9 @@
                     <div class="row">
 
                         <div class="col-xl-8 col-lg-7">
-
-
-
+                            <label>Chọn năm bạn muốn xem</label>
+                            <br>
+                            <input type="number" min='2000' max='2100' id='chosen-year' onchange='tableYear()'>
                             <!-- BẢNG DOANH THU CỦA CANTEEN -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
@@ -403,7 +404,9 @@
                                         <canvas id="myBarChart"></canvas>
                                     </div>
                                     <hr id="titleChart">
-                                    &star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;DOANH THU CỦA CĂN TIN PTIT NĂM 2020&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;  
+                                    &star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;DOANH
+                                    THU CỦA CĂN TIN PTIT NĂM
+                                    2020&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;
                                 </div>
                             </div>
                         </div>
@@ -475,7 +478,10 @@
     <script src="js/demo/chart-bar-demo.js"></script>
     <script src="js/turnover.js"></script>
     <!-- <script>checkloginAdmin()</script> -->
-
+    <script>
+        var date = new Date()
+        document.getElementById('chosen-year').value = Number.parseInt(date.getFullYear())
+    </script>
 </body>
 
 </html>

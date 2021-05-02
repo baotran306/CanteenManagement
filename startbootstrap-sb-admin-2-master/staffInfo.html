@@ -50,11 +50,10 @@
                 </ul>
                 <script>
                     function comeback() {
-                        sessionStorage.removeItem("NameCustomer")
-                        sessionStorage.removeItem("IdCustomer")
-                        sessionStorage.removeItem("Vip")
-                        sessionStorage.removeItem('UserCustomer')
-                        window.location.href = 'loginCustom.html'
+                        sessionStorage.removeItem("NameStaff")
+                        sessionStorage.removeItem("IdStaff")
+                        sessionStorage.removeItem("Role")
+                        window.location.href = 'loginStaff.html'
                     }
                 </script>
             </div>
@@ -161,7 +160,7 @@
                     </div>
 
                     <div class="ConfirmChange" style="padding-top: 20px;">
-                        <button id="change" onclick='changeInfoCustomer()'>Thay đổi thông tin</button>
+                        <button id="change" onclick='changeInfoStaff()'>Thay đổi thông tin</button>
                         <button id="changepass" style="margin-left: 20px;" onclick="openModal()">Đổi mật khẩu</button>
                     </div>
                 </div>
@@ -218,7 +217,7 @@
 
                     <div class="wrap-btn">
 
-                        <button class="btn btn-finish" onclick="changepass()">Hoàn tất</button>
+                        <button class="btn btn-finish" onclick="changepassStaff()">Hoàn tất</button>
                         <button class="btn btn-comeback" onclick="closeForm()">Trở lại</button>
                     </div>
                 </div>
@@ -226,12 +225,11 @@
         </div>
     </div>
     <script src="js/modal.js"></script>
-    <script src="js/renderinfocustomer.js"></script>
-    <script >
-        if (sessionStorage.getItem('IdCustomer')== null)
-        {
+    <script src="js/renderinfostaff.js"></script>
+    <script>
+        if (sessionStorage.getItem('IdStaff') == null) {
+            window.location.href = "loginStaff.html"
             alert("Hãy đăng nhập rồi xem thông tin nhé")
-            window.location.href = 'loginCustom.html'
         }
     </script>
 </body>

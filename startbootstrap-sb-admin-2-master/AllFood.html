@@ -75,66 +75,70 @@
     </div>
     </div>
     <div id="cotaniner">
-        <!--Đây là slider đồ ăn giới thiệu sản phẩm-->
-        <div class="container__slider" style="padding-top:140px;">
-            <div class="mySlides fade">
-                <img src="./img/mon_an/1.jpg" class="img-slider">
-                <div class="slider-info">
-                    <h3 class="slider-name">A</h3>
-                    <br>
-                    <span class="slider-description">A is</span>
-                </div>
-            </div>
+        <div style="background: #00000066;">
+            <div class="wrap-container">
+                <!--Đây là slider đồ ăn giới thiệu sản phẩm-->
+                <div class="container__slider" style="padding-top:140px;">
+                    <div class="mySlides fade">
+                        <img src="./img/mon_an/1.jpg" class="img-slider">
+                        <div class="slider-info">
+                            <h3 class="slider-name">A</h3>
+                            <br>
+                            <span class="slider-description">A is</span>
+                        </div>
+                    </div>
 
-            <div class="mySlides fade">
-                <img src="img/mon_an/2.jpg" class="img-slider">
-                <div class="slider-info">
-                    <h3 class="slider-name">B</h3>
-                    <br>
-                    <span class="slider-description">B is</span>
-                </div>
-            </div>
+                    <div class="mySlides fade">
+                        <img src="img/mon_an/2.jpg" class="img-slider">
+                        <div class="slider-info">
+                            <h3 class="slider-name">B</h3>
+                            <br>
+                            <span class="slider-description">B is</span>
+                        </div>
+                    </div>
 
-            <div class="mySlides fade">
-                <img src="img/mon_an/3.jpg" class="img-slider">
-                <div class="slider-info">
-                    <h3 class="slider-name">C</h3>
-                    <br>
-                    <span class="slider-description">C is</span>
-                </div>
-            </div>
+                    <div class="mySlides fade">
+                        <img src="img/mon_an/3.jpg" class="img-slider">
+                        <div class="slider-info">
+                            <h3 class="slider-name">C</h3>
+                            <br>
+                            <span class="slider-description">C is</span>
+                        </div>
+                    </div>
 
+                </div>
+                <br>
+                <div class="wrap-dots" style="text-align:center">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+                <script>
+                    var slideIndex = 0;
+                    showSlides();
+
+                    function showSlides() {
+                        var i;
+                        var slides = document.getElementsByClassName("mySlides");
+                        var dots = document.getElementsByClassName("dot");
+                        for (i = 0; i < slides.length; i++) {
+                            slides[i].style.display = "none";
+                        }
+                        slideIndex++;
+                        if (slideIndex > slides.length) { slideIndex = 1 }
+                        for (i = 0; i < dots.length; i++) {
+                            dots[i].className = dots[i].className.replace(" active", "");
+                        }
+                        slides[slideIndex - 1].style.display = "block";
+                        dots[slideIndex - 1].className += " active";
+                        setTimeout(showSlides, 2000);
+                    }
+                </script>
+
+                <!-- Đây là danh sách món ăn -->
+            </div>
         </div>
-        <br>
-        <div class="wrap-dots" style="text-align:center">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-        </div>
-
-        <script>
-            var slideIndex = 0;
-            showSlides();
-
-            function showSlides() {
-                var i;
-                var slides = document.getElementsByClassName("mySlides");
-                var dots = document.getElementsByClassName("dot");
-                for (i = 0; i < slides.length; i++) {
-                    slides[i].style.display = "none";
-                }
-                slideIndex++;
-                if (slideIndex > slides.length) { slideIndex = 1 }
-                for (i = 0; i < dots.length; i++) {
-                    dots[i].className = dots[i].className.replace(" active", "");
-                }
-                slides[slideIndex - 1].style.display = "block";
-                dots[slideIndex - 1].className += " active";
-                setTimeout(showSlides, 2000);
-            }
-        </script>
-
-        <!-- Đây là bản hóa đơn khách -->
         <div class="container-fluid">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -153,7 +157,7 @@
                                 </tr>
                             </thead>
                             <tbody id="listfood">
-                               
+
                             </tbody>
                         </table>
                     </div>

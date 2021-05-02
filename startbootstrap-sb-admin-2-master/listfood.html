@@ -409,7 +409,7 @@
                     <br>
                     <br>
                     <label>Giá</label>
-                    <input type="number" id="food_price" style="margin-left:40px">
+                    <input type="number" id="food_price" style="margin-left:40px" onchange="minMaxNum(event)">
                     <br>
                     <br>
                     <label>Mô tả</label>
@@ -461,6 +461,16 @@
     <script>renderListFood()</script>
     <script src="js/checklogin.js"></script>
     <!-- <script>checkloginAdmin()</script> -->
-    
+    <script>
+        function minMaxNum(e) {
+          var x = e.target.value
+          if (x - Number.parseInt(x) > 0)
+              e.target.value = 0
+          if (x < 0)
+              e.target.value = 0
+          if (x > 100)
+              e.target.value = 0
+      }
+  </script>
 </body>
 </html>
