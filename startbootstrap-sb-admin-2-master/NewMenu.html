@@ -27,7 +27,7 @@
     <script src="js/modal.js"></script>
 
 
-    
+
 </head>
 
 <body id="page-top">
@@ -81,8 +81,8 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh sách hóa đơn</span></a>
             </li>
-             <!-- Nav Item - DANH SÁCH MÓN ĂN -->
-             <li class="nav-item ">
+            <!-- Nav Item - DANH SÁCH MÓN ĂN -->
+            <li class="nav-item ">
                 <a class="nav-link " href="listfood.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh sách món ăn</span></a>
@@ -327,14 +327,14 @@
                         </div>
                         <div class="card-body">
                             <div class="chosen-time">
-                                <label >Chọn ngày</label>
+                                <label>Chọn ngày</label>
                                 <br>
                                 <input type="date" id="date-chosen" onchange="checkRenderListFoodAdd()">
                                 <br>
                                 <br>
-                                <label >Chọn buổi</label>
+                                <label>Chọn buổi</label>
                                 <br>
-                                <select  id="Buoi" onchange="checkRenderListFoodAdd() ">
+                                <select id="Buoi" onchange="checkRenderListFoodAdd() ">
                                     <option value="Sáng">Sáng</option>
                                     <option value="Trưa">Trưa</option>
                                     <option value="Chiều">Chiều</option>
@@ -353,7 +353,7 @@
                                             <th>Chọn</th>
                                         </tr>
                                     </thead>
-                                    
+
                                     <tbody id="listfood">
                                     </tbody>
                                 </table>
@@ -401,7 +401,7 @@
                 <div class="modal-body">Hãy chọn nút chấp nhận để thoát</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
-                    <a class="btn btn-primary" href="loginStaff.html">Chấp nhận</a>
+                    <button class="btn btn-primary" onclick="comeback()">Chấp nhận</a>
                 </div>
             </div>
         </div>
@@ -456,12 +456,22 @@
     <script type="text/javascript" src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <!-- <script src="js/rendernhanvien.js"></script> -->
-    
+
     <!-- Page level custom scripts -->
     <!-- <script src="js/demo/datatables-demo.js"></script> -->
     <script src="js/renderlistmon.js"></script>
     <script src="js/checklogin.js"></script>
     <script>checkloginAdmin()</script>
     <script>renderListFoodAdd()</script>
+    <script>
+        function comeback() {
+            sessionStorage.removeItem("NameStaff")
+            sessionStorage.removeItem("IdStaff")
+            sessionStorage.removeItem("Role")
+            sessionStorage.removeItem("UserStaff")
+            window.location.href = 'loginStaff.html'
+        }
+    </script>
 </body>
+
 </html>

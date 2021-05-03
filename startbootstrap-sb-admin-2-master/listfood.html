@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="css/test.css">
     <link rel="stylesheet" href="css/modal.css">
     <script src="js/modal.js"></script>
-    
+
 </head>
 
 <body id="page-top">
@@ -79,8 +79,8 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh sách hóa đơn</span></a>
             </li>
-             <!-- Nav Item - DANH SÁCH MÓN ĂN -->
-             <li class="nav-item active">
+            <!-- Nav Item - DANH SÁCH MÓN ĂN -->
+            <li class="nav-item active">
                 <a class="nav-link " href="listfood.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh sách món ăn</span></a>
@@ -336,7 +336,7 @@
                                             <th>Chức năng</th>
                                         </tr>
                                     </thead>
-                                    
+
                                     <tbody id="listfood">
                                     </tbody>
                                 </table>
@@ -384,7 +384,7 @@
                 <div class="modal-body">Chọn nút chấp nhận bên dưới để thoát</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
-                    <a class="btn btn-primary" href="loginStaff.html">Chấp nhận</a>
+                    <button class="btn btn-primary" onclick="comeback()">Chấp nhận</button>
                 </div>
             </div>
         </div>
@@ -420,10 +420,11 @@
                     <input type="file" name="myImage" accept="image/*" id="myInputImg">
                     <div class="wrapImg">
 
-                        <img id="myImgLoad" width="200px" alt="Bạn chọn file không phải hình ảnh hoặc bạn chưa chọn file">
+                        <img id="myImgLoad" width="200px"
+                            alt="Bạn chọn file không phải hình ảnh hoặc bạn chưa chọn file">
                     </div>
                     <div class="wrap-btn">
-        
+
                         <button class="btn btn-finish" onclick="editMenu()">Hoàn tất</button>
                         <button class="btn btn-comeback" onclick="closeForm()">Trở lại</button>
                     </div>
@@ -454,23 +455,33 @@
     <script type="text/javascript" src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <!-- <script src="js/rendernhanvien.js"></script> -->
-    
+
     <!-- Page level custom scripts -->
     <!-- <script src="js/demo/datatables-demo.js"></script> -->
     <script src="js/renderlistmon.js"></script>
     <script>renderListFood()</script>
     <script src="js/checklogin.js"></script>
-    <!-- <script>checkloginAdmin()</script> -->
+    <script>checkloginAdmin()</script>
     <script>
         function minMaxNum(e) {
-          var x = e.target.value
-          if (x - Number.parseInt(x) > 0)
-              e.target.value = 0
-          if (x < 0)
-              e.target.value = 0
-          if (x > 100)
-              e.target.value = 0
-      }
-  </script>
+            var x = e.target.value
+            if (x - Number.parseInt(x) > 0)
+                e.target.value = 0
+            if (x < 0)
+                e.target.value = 0
+            if (x > 100)
+                e.target.value = 0
+        }
+    </script>
+    <script>
+        function comeback() {
+            sessionStorage.removeItem("NameStaff")
+            sessionStorage.removeItem("IdStaff")
+            sessionStorage.removeItem("Role")
+            sessionStorage.removeItem("UserStaff")
+            window.location.href = 'loginStaff.html'
+        }
+    </script>
 </body>
+
 </html>

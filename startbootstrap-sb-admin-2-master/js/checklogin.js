@@ -51,7 +51,7 @@ const checkloginSaler = function () {
 }
 
 const checkloginCustomer = function () {
-    if (sessionStorage.getItem('IdCustomer') != null) {
+    if (sessionStorage.getItem('IdCustomer') != null || sessionStorage.getItem('IdStaff')) {
         document.getElementById('DangNhap').classList.add('hidden')
         document.getElementById('DangXuat').classList.remove('hidden')
         document.getElementById('HoaDon').classList.remove('hidden')

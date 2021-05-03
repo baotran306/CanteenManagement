@@ -31,7 +31,7 @@ const changeStatus = function (element) {
     var data = {
         status: element.innerHTML,
         id_order: element.id,
-        id_shipper: sessionStorage.getItem("IdStaff")
+        id_staff: sessionStorage.getItem("IdStaff")
     }
     if (element.innerHTML == "Đang giao") {
         element.innerHTML = "Đã giao"
@@ -76,7 +76,7 @@ const CancelBill = function (element) {
 
 const renderHoaDonCustomer = function () {
     var IdCustomer = sessionStorage.getItem('IdCustomer')
-    fetch(`http://127.0.0.1:5000/customer/order/${IdCustomer}`)
+    fetch(`http://127.0.0.1:5000/customer/stats/${IdCustomer}`)
         // fetch('http://127.0.0.1:5000/admin/stats/all_order')
         .then(res => res.json())
         .then(listHoaDon => {
@@ -133,8 +133,9 @@ const renderHoaDonCustomer = function () {
 }
 
 const renderHoaDonShipper = function () {
-    // fetch(`http://127.0.0.1:5000/customer/order/${IdCustomer}`)
-    fetch('http://127.0.0.1:5000/admin/stats/all_order')
+    var IdStaff = sessionStorage.getItem('IdStaff')
+
+    fetch(`http://127.0.0.1:5000/shipper/manage/show/${IdStaff}`)
         .then(res => res.json())
         .then(listHoaDon => {
             var output = ''

@@ -26,7 +26,17 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   }
   return s.join(dec);
 }
-var mydata = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+var mydata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+fetch(`http://127.0.0.1:5000/admin/stats/month/${Number.parseInt(document.getElementById('chosen-year').value)}`)
+  .then(res => res.json())
+  .then(newData => {
+    if (newData != null) {
+      for (let i = 0; i < newData.length; i++) {
+        mydata[Number.parseInt(newData[i].month) - 1] = newData[i].revenue
+      }
+    }
+  })
+
 // Bar Chart Example
 var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
@@ -125,12 +135,13 @@ const tableYear = function () {
     .then(res => res.json())
     .then(newData => {
       if (newData != null) {
-        var mydata2 = []
-        for (let i = 0; i < 12; i++) {
-          mydata2.push(newData[i].revenue)
+        var mydata2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        for (let i = 0; i < newData.length; i++) {
+          mydata2[Number.parseInt(newData[i].month) - 1] = newData[i].revenue
         }
         myBarChart.data.datasets[0].data = mydata2
         myBarChart.update()
+        document.getElementById('titleChart').innerHTML = `&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;DOANHTHU CỦA CĂN TIN PTIT NĂM ${document.getElementById('chosen-year').value}&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;`
       }
     })
 }

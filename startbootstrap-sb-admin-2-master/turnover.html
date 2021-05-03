@@ -453,7 +453,7 @@
                 <div class="modal-body">Chọn nút chấp nhận để đăng xuất</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
-                    <a class="btn btn-primary" href="loginStaff.html">Chấp nhận</a>
+                    <a class="btn btn-primary" href="loginStaff.html" onclick="comeback()">Chấp nhận</a>
                 </div>
             </div>
         </div>
@@ -475,13 +475,22 @@
     <!-- Page level custom scripts -->
     <!-- <script src="js/demo/chart-area-demo.js"></script> -->
     <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
-    <script src="js/demo/chart-bar-demo.js"></script>
     <script src="js/turnover.js"></script>
-    <!-- <script>checkloginAdmin()</script> -->
+    <script>checkloginAdmin()</script>
     <script>
         var date = new Date()
         document.getElementById('chosen-year').value = Number.parseInt(date.getFullYear())
     </script>
+    <script>
+        function comeback() {
+            sessionStorage.removeItem("NameStaff")
+            sessionStorage.removeItem("IdStaff")
+            sessionStorage.removeItem("Role")
+            sessionStorage.removeItem("UserStaff")
+            window.location.href = 'loginStaff.html'
+        }
+    </script>
+    <script src="js/demo/chart-bar-demo.js"></script>
 </body>
 
 </html>

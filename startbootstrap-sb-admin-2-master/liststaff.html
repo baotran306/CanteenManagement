@@ -419,7 +419,7 @@
                 <div class="modal-body">Chọn nút chấp nhận để đăng xất</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
-                    <a class="btn btn-primary" href="loginStaff.html">Đăng xuất</a>
+                    <button class="btn btn-primary" onclick="comeback()">Chấp nhận</button>
                 </div>
             </div>
         </div>
@@ -438,7 +438,7 @@
 
                 <div class="modal__body-container-content">
                     <label>Mã nhân viên</label>
-                    <input type="text" id="IdStaff" disabled> 
+                    <input type="text" id="IdStaff" disabled>
                     <br>
                     <br>
                     <label>Lương</label>
@@ -479,7 +479,7 @@
     <!-- <script src="js/demo/datatables-demo.js"></script> -->
     <script src="js/rendernhanvien.js"></script>
     <script src="js/checklogin.js"></script>
-    <!-- <script>checkloginAdmin()</script> -->
+    <script>checkloginAdmin()</script>
     <script>
         function checkValue(e) {
             var salary = document.getElementById('salary')
@@ -488,6 +488,15 @@
                 e.target.value = 0
             if (x < 0)
                 e.target.value = 0
+        }
+    </script>
+    <script>
+        function comeback() {
+            sessionStorage.removeItem("NameStaff")
+            sessionStorage.removeItem("IdStaff")
+            sessionStorage.removeItem("Role")
+            sessionStorage.removeItem("UserStaff")
+            window.location.href = 'loginStaff.html'
         }
     </script>
 </body>

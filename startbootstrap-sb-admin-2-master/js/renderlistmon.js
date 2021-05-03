@@ -62,7 +62,7 @@ const renderListFoodAdd = function () {
                 return `
                 <tr class="${food.id_food}">
                     <th>
-                        <img src="img/Image_Food/${food.image}" alt="Ảnh bị lỗi">
+                        <img src="img/Image_Food/${food.image}" alt="Ảnh bị lỗi" style="width:150px">
                     </th>
                     <th>${food.id_food}</th>
                     <th>${food.food_name}</th>
