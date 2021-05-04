@@ -27,15 +27,6 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 var mydata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-fetch(`http://127.0.0.1:5000/admin/stats/month/${Number.parseInt(document.getElementById('chosen-year').value)}`)
-  .then(res => res.json())
-  .then(newData => {
-    if (newData != null) {
-      for (let i = 0; i < newData.length; i++) {
-        mydata[Number.parseInt(newData[i].month) - 1] = newData[i].revenue
-      }
-    }
-  })
 
 // Bar Chart Example
 var ctx = document.getElementById("myBarChart");
@@ -49,6 +40,7 @@ var myBarChart = new Chart(ctx, {
       hoverBackgroundColor: "#2e59d9",
       borderColor: "#4e73df",
       data: mydata
+      // data: [10, 20, 30, 40, 50, 60, 70, 80, 50, 60, 20, 10]
     }],
   },
   options: {
@@ -78,7 +70,7 @@ var myBarChart = new Chart(ctx, {
       yAxes: [{
         ticks: {
           min: 0,
-          max: 100,
+          max: 50,
           maxTicksLimit: 5,
           padding: 10,
           // Include a dollar sign in the ticks
@@ -119,6 +111,21 @@ var myBarChart = new Chart(ctx, {
     },
   }
 });
+setTimeout(function () {
+  fetch(`http://127.0.0.1:5000/admin/stats/month/${Number.parseInt(document.getElementById('chosen-year').value)}`)
+    .then(res => res.json())
+    .then(newData => {
+      if (newData != null) {
+        for (let i = 0; i < newData.length; i++) {
+          mydata[Number.parseInt(newData[i].month - 1)] = newData[i].revenue / 10000
+        }
+        myBarChart.update()
+        document.getElementById('titleChart').innerHTML = `&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;DOANHTHU CỦA CĂN TIN PTIT NĂM ${document.getElementById('chosen-year').value}&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;`
+      }
+    })
+}, 1000)
+// console.log(mydata)
+
 
 const tableYear = function () {
   var chosenYear = document.getElementById('chosen-year')
@@ -137,7 +144,7 @@ const tableYear = function () {
       if (newData != null) {
         var mydata2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         for (let i = 0; i < newData.length; i++) {
-          mydata2[Number.parseInt(newData[i].month) - 1] = newData[i].revenue
+          mydata2[Number.parseInt(newData[i].month) - 1] = newData[i].revenue / 10000
         }
         myBarChart.data.datasets[0].data = mydata2
         myBarChart.update()

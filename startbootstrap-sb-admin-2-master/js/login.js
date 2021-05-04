@@ -98,7 +98,7 @@ function loginStaff() {
                 window.location.href = 'shipper.html'
             }
             if (sessionStorage.getItem('Role').toLocaleLowerCase() === 'thu ngân') {
-                window.location.href = 'homepage.html'
+                window.location.href = 'saler.html'
             }
         })
 }

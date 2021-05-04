@@ -1,6 +1,6 @@
 const renderHoaDonAdmin = function () {
 
-    fetch("http://127.0.0.1:5000//admin/stats/order")
+    fetch("http://127.0.0.1:5000/admin/stats/order")
         .then(res => res.json())
         .then(listHoaDon => {
             var output = '';
