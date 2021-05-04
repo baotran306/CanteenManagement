@@ -733,12 +733,20 @@ class SqlFunction:
         try:
             cursor = self.func
             cursor.execute("select * from dbo.StatsRevenueByMonth(?)", year)
+            month_in_year = []
+            month_revenue = []
             ans = []
             for r in cursor:
-                tmp = [r[0], float(r[1])]
+                _, month = map(int, r[0].split('-'))
+                month_in_year.append(month)
+                tmp = [month, float(r[1])]
+                month_revenue.append(float(r[1]))
                 ans.append(tmp)
             cursor.commit()
-            return ans
+            for i in range(1, 13):
+                if i not in month_in_year:
+                    ans.append([i, 0])
+            return sorted(ans)
         except Exception as ex:
             print('----Error in stats_revenue_by_month----')
             print(ex)
@@ -1212,7 +1220,7 @@ sql_func = SqlFunction()
 # Id ở Role, Menu, Food và customer order nên để tự tăng
 # print(sql_func.calculate_order_id(2))
 # print(sql_func.stats_order_revenue())
-# print(sql_func.stats_revenue_by_month())
+print(sql_func.stats_revenue_by_month(2021))
 # print(sql_func.last_id_person(0))
 # print(sql_func.get_info_order_detail_by_id(2))
 # print(sql_func.get_all_info_order(1))
