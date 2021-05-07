@@ -342,7 +342,6 @@ class SqlFunction:
                 return False
             if not self.check_existed_column(table_name, col):
                 return False
-            # loi
             cursor = self.func
             cursor.execute('delete from {} where {} = {}'.format(table_name, col, val))
             cursor.commit()
@@ -684,11 +683,11 @@ class SqlFunction:
             cursor = self.func
             if not self.check_existed_id("MenuDetail", menu_id):
                 return []
-            cursor.execute("select name, describe, price, img from Food, MenuDetail "
+            cursor.execute("select food.id, name, describe, price, img from Food, MenuDetail "
                            "where food.id = menudetail.food_id and menudetail.menu_id = ?", menu_id)
             ans = []
             for r in cursor:
-                tmp = [r[0], r[1], float(r[2]), r[3]]
+                tmp = [r[0], r[1], r[2], float(r[3]), r[4]]
                 ans.append(tmp)
             cursor.commit()
             return ans
@@ -717,7 +716,7 @@ class SqlFunction:
     def stats_order_revenue(self):
         try:
             cursor = self.func
-            cursor.execute("select * from dbo.InfoOrder()")
+            cursor.execute("select * from dbo.InfoAllOrder()")
             ans = []
             for r in cursor:
                 tmp = [r[0], float(r[1]), str(r[3]), ef.status_type(r[4]), r[5], r[6], r[7]]
@@ -1220,7 +1219,7 @@ sql_func = SqlFunction()
 # Id ở Role, Menu, Food và customer order nên để tự tăng
 # print(sql_func.calculate_order_id(2))
 # print(sql_func.stats_order_revenue())
-print(sql_func.stats_revenue_by_month(2021))
+# print(sql_func.stats_revenue_by_month(2021))
 # print(sql_func.last_id_person(0))
 # print(sql_func.get_info_order_detail_by_id(2))
 # print(sql_func.get_all_info_order(1))

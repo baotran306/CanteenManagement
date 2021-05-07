@@ -168,6 +168,24 @@ def get_all_food():
     return jsonify(data)
 
 
+@app.route("/admin/menu/detail", methods=['POST'])
+def get_menu_detail():
+    session = request.json['session']
+    day = request.json['day']
+    menu_id = connect.get_menu_in_session_day(day, session)
+    list_food = connect.get_info_menu_detail(menu_id)
+    data = []
+    for r in list_food:
+        data.append({
+            'id_food': r[0]
+            # 'food_name': r[1],
+            # 'describe': r[2],
+            # 'cur_price': r[3],
+            # 'image': r[4]
+        })
+    return jsonify(data)
+
+
 @app.route("/admin/stats/not_complete_order", methods=['GET'])
 def get_not_complete_order():
     rows = connect.get_all_info_order(0)
@@ -316,12 +334,13 @@ def insert_menu():
     return jsonify(data)
 
 
-@app.route("/admin/menu_detail", methods=['POST'])
-def insert_menu_detail():
+@app.route("/admin/update/menu/detail", methods=['POST'])
+def update_menu_detail():
     session = request.json['session']
     day = request.json['day']
     menu_id = connect.get_menu_in_session_day(day, session)
     list_food = request.json['list_food']
+    connect.delete_function("MenuDetail", "menu_id", menu_id)
     check = False
     for i in range(len(list_food)):
         if connect.insert_menu_detail(menu_id, list_food[i]):
