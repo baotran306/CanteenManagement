@@ -62,32 +62,6 @@ begin
 end
 go
 
-create trigger LimitTimeEndMenu
-on Menu
-for insert, update
-as
-begin
-	if(exists(select * from inserted where inserted.time_end > DATEADD(minute,1,GETDATE())))
-	begin
-		print(N'Không thể thêm hoặc cập nhật ngày giờ lớn hơn thời điểm hiện tại')
-		rollback
-	end
-end
-go
-
-create trigger LimitTimeStartMenu
-on Menu
-for insert, update
-as
-begin
-	if(exists(select * from inserted where inserted.time_start > DATEADD(minute,1,GETDATE())))
-	begin
-		print(N'Không thể thêm hoặc cập nhật ngày giờ lớn hơn thời điểm hiện tại')
-		rollback
-	end
-end
-go
-
 create trigger LimitTimeCustomerOrder
 on CustomerOrder
 for insert, update
