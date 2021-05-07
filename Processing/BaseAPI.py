@@ -317,27 +317,42 @@ def insert_menu():
 
 
 @app.route("/admin/menu_detail", methods=['POST'])
-def insert_menu_detail(ls):
-    # don't comple
-    sign = False
-    if connect.insert_menu_detail(ls[0], ls[1]):
-        sign = True
-    return jsonify(sign)
+def insert_menu_detail():
+    session = request.json['session']
+    day = request.json['day']
+    menu_id = connect.get_menu_in_session_day(day, session)
+    list_food = request.json['list_food']
+    check = False
+    for i in range(len(list_food)):
+        if connect.insert_menu_detail(menu_id, list_food[i]):
+            check = True
+        else:
+            break
+    if check:
+        data = {'result': True, 'error': 'Cập nhật menu thành công', 'list_food': list_food}
+        return jsonify(data)
+    data = {'result': False, 'error': 'Cập nhật menu thất bại'}
+    return jsonify(data)
 
 
 @app.route("/staff/order", methods=['POST'])
 def insert_order_off():
-    # don't complete
     time_now = str(datetime.now())
     time_now, _ = time_now.split('.')
     staff_id = request.json['staff_id']
     if connect.insert_customer_order(time_now, 1, staff_id, "Tại chỗ", None):
         id_order = connect.get_id_order_by_time_staff_id(time_now, staff_id)
         # use loop to add menu food in order
-        food_name = request.json['food_name']
+        food_id = request.json['food_id']
         num_food = request.json['num_food']
         cur_price = request.json['cur_price']
-        if connect.insert_order_detail(id_order, food_name, num_food, cur_price):
+        check = False
+        for i in range(len(food_id)):
+            if connect.insert_order_detail(id_order, food_id[i], num_food[i], cur_price[i]):
+                check = True
+            else:
+                break
+        if check:
             data = {'result': True, 'error': 'Thêm hóa đơn thành công'}
             return jsonify(data)
     data = {'result': False, 'error': 'Thêm thất bại'}
@@ -353,10 +368,16 @@ def insert_order_onl():
     if connect.insert_customer_order(time_now, 0, 'NV00', address, customer_id):
         id_order = connect.get_id_order_by_time_customer_id(time_now, customer_id)
         # use loop to add menu food in order
-        food_name = request.json['food_name']
+        food_id = request.json['food_id']
         num_food = request.json['num_food']
         cur_price = request.json['cur_price']
-        if connect.insert_order_detail(id_order, food_name, num_food, cur_price):
+        check = False
+        for i in range(len(food_id)):
+            if connect.insert_order_detail(id_order, food_id, num_food, cur_price):
+                check = True
+            else:
+                check = False
+        if check:
             data = {'result': True, 'error': 'Thêm hóa đơn thành công'}
             return jsonify(data)
     data = {'result': False, 'error': 'Thêm thất bại'}
