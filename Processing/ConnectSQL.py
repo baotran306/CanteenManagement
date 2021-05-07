@@ -302,7 +302,7 @@ class SqlFunction:
                 return False
             if self.check_existed_id("Food", food_id) and self.check_existed_id("CustomerOrder", order_id):
                 cursor = self.func
-                cursor.execute("select * from OrderDetail where order_id = ?, food_id = ?", order_id, food_id)
+                cursor.execute("select * from OrderDetail where order_id = ? and food_id = ?", order_id, food_id)
                 cnt = 0
                 for _ in cursor:
                     cnt += 1
@@ -1141,6 +1141,23 @@ class SqlFunction:
             return ans
         except Exception as ex:
             print("----Error in get_id_order_by_time_customer_id----")
+            print(ex)
+            return ""
+
+    def get_id_menu_by_session_day(self, day, session):
+        try:
+            time = ck.get_time_from_session(session)
+            time_check = day + " " + time
+            cursor = self.func
+            cursor.execute("select id from menu where time_start <= ? and time_end >= ?", time_check, time_check)
+            menu_id = ""
+            for row in cursor:
+                menu_id = row[0]
+                break
+            cursor.commit()
+            return menu_id
+        except Exception as ex:
+            print("----Error in get_menu_in_session_day----")
             print(ex)
             return ""
 

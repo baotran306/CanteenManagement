@@ -172,7 +172,7 @@ def get_all_food():
 def get_menu_detail():
     session = request.json['session']
     day = request.json['day']
-    menu_id = connect.get_menu_in_session_day(day, session)
+    menu_id = connect.get_id_menu_by_session_day(day, session)
     list_food = connect.get_info_menu_detail(menu_id)
     data = []
     for r in list_food:
