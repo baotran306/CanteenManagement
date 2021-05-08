@@ -906,7 +906,7 @@ class SqlFunction:
                 return False
             if not ef.check_regex_password(new_pass):
                 return False
-            id_staff = self.get_user_from_id(user_name, 1)
+            id_staff = self.get_id_person_from_user(user_name, 1)
             if self.get_id_card(id_staff) == id_card and self.get_phone_num(id_staff) == phone:
                 return self.update_user_login_password(user_name, new_pass)
             else:
@@ -922,7 +922,7 @@ class SqlFunction:
                 return False
             if not ef.check_regex_password(new_pass):
                 return False
-            id_customer = self.get_user_from_id(user_name, 0)
+            id_customer = self.get_id_person_from_user(user_name, 0)
             if self.get_id_card(id_customer) == id_card and self.get_phone_num(id_customer) == phone:
                 return self.update_customer_user_password(user_name, new_pass)
             else:
