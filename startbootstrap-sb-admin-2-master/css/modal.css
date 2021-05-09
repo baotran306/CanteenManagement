@@ -95,3 +95,16 @@
     height: 30px;
     justify-content:space-between;
 }
+.mytable {
+    border-top: 2px black solid;
+    border-left: 2px black solid;
+    
+}
+.mytable th {
+    padding-left: 25px;
+    padding-right: 20px;
+    border-bottom: 2px black solid;
+    border-right: 2px black solid;
+    
+}
+

@@ -79,7 +79,7 @@ const renderListFoodAdd = function () {
 
     setTimeout(function () {
         $('#dataTable').DataTable();
-    }, 100);
+    }, 100)
 }
 
 const checkRenderListFoodAdd = function () {
@@ -87,16 +87,16 @@ const checkRenderListFoodAdd = function () {
     var chosenBuoi = document.getElementById('Buoi')
     var datenow = new Date()
     var datechosen = new Date(chosenDate.value)
-    if (datenow > datechosen) {
-        alert('Thời gian bạn chọn đã qua rồi bạn không thể tạo mới')
-        window.location.reload()
-    }
+    // if (datenow > datechosen) {
+    //     alert('Thời gian bạn chọn đã qua rồi bạn không thể tạo mới')
+    //     window.location.reload()
+    // }
 
     var data = {
-        Date: chosenDate.value,
-        Buoi: chosenBuoi.value
+        day: chosenDate.value,
+        session: chosenBuoi.options[chosenBuoi.selectedIndex].value
     }
-    fetch(url, {
+    fetch("http://127.0.0.1:5000/admin/menu/detail", {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
@@ -111,13 +111,62 @@ const checkRenderListFoodAdd = function () {
         .then(res => res.json())
         .then(resData => {
             var allCheckBox = document.getElementsByClassName('mycheckbox')
+            var mytable = document.getElementById('dataTable')
             for (let i = 0; i < allCheckBox.length; i++) {
                 allCheckBox[i].checked = false
             }
-            if (resData.listfood !== null) {
-                for (let j = 0; j < resData.listfood.length; i++) {
-                    document.getElementById(resData.listfood[i]).checked = true
+            if (resData.id_food != undefined) {
+                for (let j = 0; j < resData.id_food.length; j++) {
+                    for (let k = 0; k < allCheckBox.length; k++) {
+                        if (allCheckBox[k].id == resData.id_food[j]) {
+                            allCheckBox[k].checked = true
+                        }
+                    }
                 }
+            }
+        })
+}
+
+const makeNewMenu = function () {
+    var chosenDate = document.getElementById('date-chosen')
+    var chosenBuoi = document.getElementById('Buoi')
+    var allCheckBox = document.getElementsByClassName('mycheckbox')
+    var listFood = []
+    if (chosenDate.value == null) {
+        alert("Hãy chọn ngày")
+        return
+    }
+    for (let i = 0; i < allCheckBox.length; i++) {
+        if (allCheckBox[i].checked == true) {
+            listFood.push(allCheckBox[i].id)
+        }
+    }
+    var data = {
+        day: chosenDate.value,
+        session: chosenBuoi.options[chosenBuoi.selectedIndex].value,
+        list_food: listFood
+    }
+    console.log(data)
+    fetch('http://127.0.0.1:5000/admin/update/menu/detail', {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data)
+    })
+        .then(res => res.json())
+        .then(newData => {
+            if (newData.result == true) {
+                alert(newData.error)
+                window.location.reload()
+            }
+            if (newData.result == false) {
+                alert(newData.error)
             }
         })
 }

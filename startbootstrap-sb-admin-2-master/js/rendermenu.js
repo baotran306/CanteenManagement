@@ -1,9 +1,9 @@
-// var today = new Date();
-// var dd = String(today.getDate()).padStart(2, '0');
-// var mm = String(today.getMonth() + 1).padStart(2, '0');
-// var yyyy = today.getFullYear();
-// today = yyyy + '-' + mm + '-' + dd;
-var today = '2021-04-12'
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0');
+var yyyy = today.getFullYear();
+today = yyyy + '-' + mm + '-' + dd;
+// var today = '2021-04-12'
 var data1 = {
     day: today,
     session: 'Sáng'
@@ -17,49 +17,49 @@ var data3 = {
     session: "Chiều"
 }
 // Danh sách món ăn buổi sáng
-fetch('http://127.0.0.1:5000/admin/menu/breakfast', {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
-    body: JSON.stringify(data1)
-})
-    .then(res => res.json())
-    .then(listmenu => {
-        console.log(listmenu)
-        if (listmenu.result == false)
-        {
-            return
-        }
-        var morning = document.getElementById('morning')
-        var outputSang = ''
-        for (let i =0;i<listmenu.id.length;i++)
-        {
+setTimeout(() => {
 
-            outputSang += `
-            
-                <div class="container__products-item">
-                    <img src="img/Image_Food/${listmenu.picture[i]}" alt="" class="img-product" title="${listmenu.description[i]}">
-                    <br>
-                    <div class="nameProduct">${listmenu.food_name[i]}</div>
-                    <br>
-                    <div class="priceProduct">${listmenu.food_price[i]} đồng</div>
-                    <br>
-                    <div class="wrap-amount hidden">
-                    Số lượng đặt:
-                    <input class="valueAmount" type="number" value='0' min="0" max="99" onchange="minMaxNum(event)">
-                    </div>
-                </div>
-            
-            `
-        }
-        morning.innerHTML = outputSang
+    fetch('http://127.0.0.1:5000/admin/menu/breakfast', {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data1)
     })
+        .then(res => res.json())
+        .then(listmenu => {
+            if (listmenu.result == false) {
+                return
+            }
+            var morning = document.getElementById('morning')
+            var outputSang = ''
+            for (let i = 0; i < listmenu.id.length; i++) {
+
+                outputSang += `
+                
+                    <div class="container__products-item">
+                        <img src="img/Image_Food/${listmenu.picture[i]}" alt="" class="img-product" title="${listmenu.description[i]}">
+                        <br>
+                        <div class="nameProduct">${listmenu.food_name[i]}</div>
+                        <br>
+                        <div class="priceProduct">${listmenu.food_price[i]} đồng</div>
+                        <br>
+                        <div class="wrap-amount hidden">
+                        Số lượng đặt:
+                        <input class="valueAmount" type="number" value='0' min="0" max="99" onchange="minMaxNum(event)" id="${listmenu.id[i]}">
+                        </div>
+                    </div>
+                
+                `
+            }
+            morning.innerHTML = outputSang
+        })
+}, 100)
 // Danh sách món ăn buổi trưa
 setTimeout(() => {
 
@@ -77,16 +77,13 @@ setTimeout(() => {
     })
         .then(res => res.json())
         .then(listmenu => {
-            console.log(listmenu)
-            if (listmenu.result == false)
-            {
+            if (listmenu.result == false) {
                 return
             }
 
             var lunch = document.getElementById('lunch')
             var outputTrua = ''
-            for (let i =0;i<listmenu.id.length;i++)
-            {
+            for (let i = 0; i < listmenu.id.length; i++) {
 
                 outputTrua += `
                 
@@ -99,7 +96,7 @@ setTimeout(() => {
                         <br>
                         <div class="wrap-amount hidden">
                         Số lượng đặt:
-                        <input class="valueAmount" type="number" value='0' min="0" max="99" onchange="minMaxNum(event)">
+                        <input class="valueAmount" type="number" value='0' min="0" max="99" onchange="minMaxNum(event)" id="${listmenu.id[i]}">
                         </div>
                     </div>
                 
@@ -126,16 +123,13 @@ setTimeout(() => {
     })
         .then(res => res.json())
         .then(listmenu => {
-            console.log(listmenu)
-            if (listmenu.result == false)
-            {
+            if (listmenu.result == false) {
                 return
             }
 
             var afternoon = document.getElementById('afternoon')
             var outputChieu = ''
-            for (let i=0;i<listmenu.id.length;i++)
-            {
+            for (let i = 0; i < listmenu.id.length; i++) {
 
                 outputChieu += `
                 
@@ -148,7 +142,7 @@ setTimeout(() => {
                         <br>
                         <div class="wrap-amount hidden">
                         Số lượng đặt:
-                        <input class="valueAmount" type="number" value='0' min="0" max="99" onchange="minMaxNum(event)">
+                        <input class="valueAmount" type="number" value='0' min="0" max="99" onchange="minMaxNum(event)" id="${listmenu.id[i]}">
                         </div>
                     </div>
                 

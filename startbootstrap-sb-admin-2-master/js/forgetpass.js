@@ -1,3 +1,10 @@
+const checkPass = (myPass) => {
+    var pass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/
+    if (!myPass.match(pass)) {
+        alert("Mật khẩu phải nhập từ 8-16 ký tự có ít nhất 1 chữ viết hoa và không sử dụng ký tự đặc biệt")
+        return
+    }
+}
 const getAgainPass = function () {
     document.getElementById("form-restpass").onsubmit = (e) => {
         e.preventDefault();
@@ -37,6 +44,7 @@ const getAgainPass = function () {
             check = false
             alert("Nhập lại mật khẩu không trùng khớp")
         }
+        checkPass(password.value)
         if (check) {
             var data = {
                 user: user.value,

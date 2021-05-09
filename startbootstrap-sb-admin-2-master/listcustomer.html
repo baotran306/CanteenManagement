@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Danh sách món ăn của căn tin PTIT</title>
+    <title>Danh sách nhân viên</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="css/test.css">
     <link rel="stylesheet" href="css/modal.css">
     <script src="js/modal.js"></script>
+
+
 
 </head>
 
@@ -74,7 +76,7 @@
                     <span>Danh sách nhân viên</span></a>
             </li>
             <!-- Nav Item - Danh sách khách hàng -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="listcustomer.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh sách khách hàng</span></a>
@@ -86,13 +88,12 @@
                     <span>Danh sách hóa đơn</span></a>
             </li>
             <!-- Nav Item - DANH SÁCH MÓN ĂN -->
-            <li class="nav-item active">
-                <a class="nav-link " href="listfood.html">
+            <li class="nav-item">
+                <a class="nav-link active" href="listfood.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh sách món ăn</span></a>
             </li>
-            <!-- Nav Item - TẠO MENU CHO NGÀY -->
-            <li class="nav-item ">
+            <li class="nav-item">
                 <a class="nav-link" href="NewMenu.html">
                     <i class="fas fa-fw fa-plus"></i>
                     <span>Tạo menu</span></a>
@@ -327,23 +328,56 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Danh sách món ăn của căn tin PTIT</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Danh sách nhân viên của căn tin PTIT</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Hình ảnh</th>
-                                            <th>Mã món</th>
-                                            <th>Tên món</th>
-                                            <th>Giá</th>
-                                            <th>Mô tả</th>
+                                            <th>Mã nhân viên</th>
+                                            <th>Họ và tên</th>
+                                            <th>CMND</th>
+                                            <th>Giới tính</th>
+                                            <th>Địa chỉ</th>
+                                            <th>Ngày sinh</th>
+                                            <th>SĐT</th>
+                                            <th>Vip</th>
                                             <th>Chức năng</th>
                                         </tr>
                                     </thead>
 
-                                    <tbody id="listfood">
+                                    <tbody id="listcustomer">
+                                        <!-- <tr>
+                                            <th>456</th>
+                                            <th>Nguyễn Lê Tấn Tài</th>
+                                            <th>123456789</th>
+                                            <th>123456789</th>
+                                            <th>123456789</th>
+                                            <th>123456789</th>
+                                            <th>123456789</th>
+                                            <th>123456789</th>
+                                            <th>123456789</th>
+                                            <th>
+                                                <button class="btn-secondary">Delete</button>
+                                                <button class="btn-primary btn-Edit">Edit</button>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th>889</th>
+                                            <th>Nguyễn Lê Tấn Tài</th>
+                                            <th>123456789</th>
+                                            <th>123456789</th>
+                                            <th>123456789</th>
+                                            <th>123456789</th>
+                                            <th>123456789</th>
+                                            <th>123456789</th>
+                                            <th>123456789</th>
+                                            <th>
+                                                <button class="btn-secondary">Delete</button>
+                                                <button class="btn-primary btn-Edit">Edit</button>
+                                            </th>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
@@ -382,12 +416,12 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn thoát</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn chắc có muốn thoát</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Chọn nút chấp nhận bên dưới để thoát</div>
+                <div class="modal-body">Chọn nút chấp nhận để đăng xất</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
                     <button class="btn btn-primary" onclick="comeback()">Chấp nhận</button>
@@ -399,48 +433,29 @@
     <!--CHỨC NĂNG EDIT-->
     <div id="modal">
         <div class="modal__overplay"></div>
-        <div class="modal__body">
+        <div class="modal__body" style="height: 60%;">
             <div class="modal__body-container">
                 <div class="modal__body-container-header">
-                    <h2 style="color:red">Chỉnh sửa thông tin món ăn</h2>
+                    <h2 style="color: red;">CHỈNH SỬA THÔNG TIN</h2>
                 </div>
+                <br>
+                <br>
 
                 <div class="modal__body-container-content">
-                    <label>Mã món</label>
-                    <input type="text" id="food_id" style="margin-left: 5px;" disabled>
+                    <label>Mã khách hàng</label>
+                    <input type="text" id="IdCustomer" disabled>
                     <br>
                     <br>
-                    <label>Tên món</label>
-                    <input type="text" id="food_name" style="margin-left: 5px;" disabled>
+                    <label>Vip</label>
+                    
+                    <select id="Vip" class="form-control" style="height: 50px;">
+                        <option value="yes">yes</option>
+                        <option value="no">no</option>
+                    </select>
                     <br>
                     <br>
-                    <label>Giá</label>
-                    <input type="number" id="food_price" style="margin-left:40px" onchange="minMaxNum(event)">
-                    <br>
-                    <br>
-                    <label>Mô tả</label>
-                    <textarea rows="4" cols="40" type="text" id="food_description"></textarea>
-                    <br>
-                    <br>
-                    <label>Hình ảnh</label>
-                    <input type="file" name="myImage" accept="image/*" id="myInputImg">
-                    <div class="wrapImg">
-
-                        <img id="myImgLoad" width="200px"
-                            alt="Bạn chọn file không phải hình ảnh hoặc bạn chưa chọn file">
-                    </div>
-                    <div class="wrap-btn">
-
-                        <button class="btn btn-finish" onclick="editMenu()">Hoàn tất</button>
-                        <button class="btn btn-comeback" onclick="closeForm()">Trở lại</button>
-                    </div>
-                    <script>
-                        const imgSelector = document.getElementById('myInputImg');
-                        imgSelector.addEventListener('change', (event) => {
-                            let img = document.getElementById('myImgLoad')
-                            img.src = URL.createObjectURL(event.target.files[0])
-                        });
-                    </script>
+                    <button class="btn btn-finish" onclick="setDataCustomer()">Hoàn tất</button>
+                    <button class="btn btn-comeback" onclick="closeForm()">Trở lại</button>
                 </div>
             </div>
         </div>
@@ -464,19 +479,9 @@
 
     <!-- Page level custom scripts -->
     <!-- <script src="js/demo/datatables-demo.js"></script> -->
-    <script src="js/renderlistmon.js"></script>
-    <script>renderListFood()</script>
+    <script src="js/rendercustomer.js"></script>
     <script src="js/checklogin.js"></script>
     <script>checkloginAdmin()</script>
-    <script>
-        function minMaxNum(e) {
-            var x = e.target.value
-            if (x - Number.parseInt(x) > 0)
-                e.target.value = 0
-            if (x < 0)
-                e.target.value = 0
-        }
-    </script>
     <script>
         function comeback() {
             sessionStorage.removeItem("NameStaff")

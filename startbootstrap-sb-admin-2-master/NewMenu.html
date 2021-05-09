@@ -75,6 +75,12 @@
                     <i class="fas fa-fw fa-table"></i>
                     <span>Danh sách nhân viên</span></a>
             </li>
+            <!-- Nav Item - Danh sách khách hàng -->
+            <li class="nav-item">
+                <a class="nav-link" href="listcustomer.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Danh sách khách hàng</span></a>
+            </li>
             <!-- Nav Item - Danh sách hóa đơn  -->
             <li class="nav-item">
                 <a class="nav-link" href="listbill.html">
@@ -357,6 +363,8 @@
                                     <tbody id="listfood">
                                     </tbody>
                                 </table>
+                                <br>
+                                <button class="btn-addMenu" style="margin-left: 1080px" onclick="makeNewMenu()">Thêm thực đơn</button>
                             </div>
                         </div>
                     </div>
@@ -461,7 +469,7 @@
     <!-- <script src="js/demo/datatables-demo.js"></script> -->
     <script src="js/renderlistmon.js"></script>
     <script src="js/checklogin.js"></script>
-    <script>checkloginAdmin()</script>
+    <!-- <script>checkloginAdmin()</script> -->
     <script>renderListFoodAdd()</script>
     <script>
         function comeback() {

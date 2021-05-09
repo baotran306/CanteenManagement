@@ -2,30 +2,30 @@
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
-function number_format(number, decimals, dec_point, thousands_sep) {
-  // *     example: number_format(1234.56, 2, ',', ' ');
-  // *     return: '1 234,56'
-  number = (number + '').replace(',', '').replace(' ', '');
-  var n = !isFinite(+number) ? 0 : +number,
-    prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-    sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-    dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-    s = '',
-    toFixedFix = function (n, prec) {
-      var k = Math.pow(10, prec);
-      return '' + Math.round(n * k) / k;
-    };
-  // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-  s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-  if (s[0].length > 3) {
-    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-  }
-  if ((s[1] || '').length < prec) {
-    s[1] = s[1] || '';
-    s[1] += new Array(prec - s[1].length + 1).join('0');
-  }
-  return s.join(dec);
-}
+// function number_format(number, decimals, dec_point, thousands_sep) {
+//   // *     example: number_format(1234.56, 2, ',', ' ');
+//   // *     return: '1 234,56'
+//   number = (number + '').replace(',', '').replace(' ', '');
+//   var n = !isFinite(+number) ? 0 : +number,
+//     prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+//     sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+//     dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+//     s = '',
+//     toFixedFix = function (n, prec) {
+//       var k = Math.pow(10, prec);
+//       return '' + Math.round(n * k) / k;
+//     };
+//   // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+//   s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+//   if (s[0].length > 3) {
+//     s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+//   }
+//   if ((s[1] || '').length < prec) {
+//     s[1] = s[1] || '';
+//     s[1] += new Array(prec - s[1].length + 1).join('0');
+//   }
+//   return s.join(dec);
+// }
 var mydata = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 // Bar Chart Example
@@ -70,12 +70,12 @@ var myBarChart = new Chart(ctx, {
       yAxes: [{
         ticks: {
           min: 0,
-          max: 50,
+          max: 60,
           maxTicksLimit: 5,
           padding: 10,
           // Include a dollar sign in the ticks
           callback: function (value, index, values) {
-            return number_format(value) + ` Triệu`;
+            return value + ` Triệu`;
           }
         },
         gridLines: {
@@ -105,7 +105,7 @@ var myBarChart = new Chart(ctx, {
       callbacks: {
         label: function (tooltipItem, chart) {
           var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ' ' + number_format(tooltipItem.yLabel) + ' Triệu';
+          return datasetLabel + ' ' +tooltipItem.yLabel + ' Triệu';
         }
       }
     },
@@ -117,7 +117,9 @@ setTimeout(function () {
     .then(newData => {
       if (newData != null) {
         for (let i = 0; i < newData.length; i++) {
-          mydata[Number.parseInt(newData[i].month - 1)] = newData[i].revenue / 10000
+          mydata[Number.parseInt(newData[i].month - 1)] = Number.parseFloat(newData[i].revenue / 1000000)
+          console.log(mydata[Number.parseInt(newData[i].month) - 1])
+
         }
         myBarChart.update()
         document.getElementById('titleChart').innerHTML = `&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;DOANHTHU CỦA CĂN TIN PTIT NĂM ${document.getElementById('chosen-year').value}&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;`
@@ -144,7 +146,8 @@ const tableYear = function () {
       if (newData != null) {
         var mydata2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         for (let i = 0; i < newData.length; i++) {
-          mydata2[Number.parseInt(newData[i].month) - 1] = newData[i].revenue / 10000
+          mydata2[Number.parseInt(newData[i].month) - 1] = Number.parseFloat(newData[i].revenue / 1000000)
+          console.log(mydata2[Number.parseInt(newData[i].month) - 1])
         }
         myBarChart.data.datasets[0].data = mydata2
         myBarChart.update()

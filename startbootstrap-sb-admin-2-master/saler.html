@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/trangchu.css">
     <link rel="stylesheet" href="./fonts/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="./css/modal.css">
     <script src="JS/checklogin.js"></script>
     <script src="js/scroll.js"></script>
     <title>Căn tin PTIT</title>
@@ -317,7 +318,7 @@
                 </div>
                 <div class="hidden" id="XacNhanDat">
                     <button style="margin:30px 0px 50px 880px;width:100px;height:50px; color: red; background: yellow;"
-                        class="btnDatMon">
+                        class="btnDatMon" onclick="openBillSaler()">
                         <i class="icon ti-shopping-cart">
                             Lập đơn giao hàng
                         </i>
@@ -352,6 +353,74 @@
         <div class="source">Thực hiện bởi @ <a href="" class="link" style="text-decoration:none">Căn Tin
                 PTIT</a></div>
     </div>
+
+    <!--CHỨC NĂNG ĐẶT HÀNG-->
+    <div id="modal">
+        <div class="modal__overplay"></div>
+        <div class="modal__body" style="padding-top: 100px; width: 40%;  height:80%;">
+            <div class="modal__body-container">
+                <div class="modal__body-container-header">
+                    <h2 style="color: red;">HÓA ĐƠN</h2>
+                </div>
+                <br>
+                <br>
+
+                <div class="modal__body-container-content">
+                    <label>Mã nhân viên</label>
+                    <input type="text" id="IdStaff" disabled>
+                    <br>
+                    <br>
+                    <label>Thông tin đơn hàng</label>
+                    <br>
+                    <br>
+                    <table class="mytable" style="margin-left: 20px ;">
+                        <thead>
+                            <tr>
+                                <th>Mã món ăn</th>
+                                <th>Tên món ăn</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                            </tr>
+                        </thead>
+                        <tbody id="billinfo">
+                            <!-- <tr>
+                                <th>1</th>
+                                <th>Tàu hủ chiên dòn</th>
+                                <th>20000</th>
+                                <th>5</th>
+                            </tr>
+                            <tr>
+                                <th>1</th>
+                                <th>Tàu hủ chiên dòn</th>
+                                <th>20000</th>
+                                <th>5</th>
+                            </tr>
+                            <tr>
+                                <th>1</th>
+                                <th>Tàu hủ chiên dòn</th>
+                                <th>20000</th>
+                                <th>5</th>
+                            </tr>
+                            <tr>
+                                <th>1</th>
+                                <th>Tàu hủ chiên dòn</th>
+                                <th>20000</th>
+                                <th>5</th>
+                            </tr>
+                          
+                             -->
+                        </tbody>
+                    </table>
+                    <br>
+                    <br>
+                    <label>Tổng tiền</label>
+                    <input type="number" id='total' disabled>
+                    <button type="submit" class="btn btn-finish" onclick="datHangOffline()">Hoàn tất</button>
+                    <button class="btn btn-comeback" onclick="closeForm()">Trở lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         function minMaxNum(e) {
             var x = e.target.value
@@ -370,20 +439,20 @@
             var afternoon = document.getElementById('wrap-afternoon')
             var datenow = new Date()
             var timenow = datenow.getHours()
-            if (timenow >= 16 && timenow <= 24) {
+            if (timenow >= 16 && timenow < 21) {
                 lunch.classList.add('hidden')
                 morning.classList.add('hidden')
             }
-            if (timenow >= 5 && timenow <= 10) {
+            else if (timenow >= 5 && timenow < 10) {
                 lunch.classList.add('hidden')
                 afternoon.classList.add('hidden')
             }
-            if (timenow >= 11 && timenow <= 15) {
+            else if (timenow >= 10 && timenow < 16) {
                 morning.classList.add('hidden')
                 afternoon.classList.add('hidden')
             }
-            if (timenow >= 0 && timenow <= 4) {
-                alert('Không phải giờ bán hàng xin bạn hãy quay lại sau')
+            else {
+                alert('Không phải giờ đặt hàng xin bạn hãy quay lại sau')
                 return
             }
             for (let i = 0; i < obj.length; i++) {
@@ -393,6 +462,7 @@
             document.getElementById("DatMon").classList.add('hidden')
         }
     </script>
+    <script src="js/modal.js"></script>c
     <script src="js/checklogin.js"></script>
     <script src="js/rendermenu.js"></script>
     <script>checkloginSaler()</script>

@@ -1,4 +1,48 @@
-const addNewStaff = function () {
+
+const checkRegex = (mySDT, myCMND) => {
+    var sdt = /^[0-9]{10,11}$/
+    var cmnd = /^[0-9]{9,10}$/
+    if (!mySDT.match(sdt)) {
+        alert("Số điện thoại phải có 10 chữ số")
+        return
+    }
+    if (!myCMND.match(cmnd)) {
+        alert("CMND phải có 9-10 chữ số")
+        return
+    }
+}
+const checkBirthday = (date) => {
+    if (date == '') {
+        alert('Bạn chưa chọn ngày sinh')
+        return
+    }
+    var newDate = new Date(date)
+    var dateNow = new Date()
+    if (!(newDate.getFullYear() < dateNow.getFullYear() - 16)) {
+        alert("Bạn cần đủ 16 tuổi để đăng ký")
+        return
+    }
+}
+
+const checkPass = (myPass) => {
+    var pass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/
+    if (!myPass.match(pass)) {
+        alert("Mật khẩu phải nhập từ 8-16 ký tự có ít nhất 1 chữ viết hoa và không sử dụng ký tự đặc biệt")
+        return
+    }
+}
+
+const checkUser = (myUser) => {
+    var user = /^[a-zA-Z0-9]+$/
+    if (!myUser.match(user)) {
+        alert("Tên đăng nhập phải không dùng khoảng trắng và ký tự đặc biệt")
+        return
+    }
+}
+
+
+
+function addNewStaff() {
     document.getElementById("form-resgiter").onsubmit = (e) => {
         e.preventDefault();
         var user = document.getElementById("IDUSER")
@@ -57,6 +101,10 @@ const addNewStaff = function () {
             alert("Mật khẩu nhập lại không trùng khớp")
             check = false
         }
+        checkUser(user.value)
+        checkRegex(phone.value, CMND.value)
+        checkBirthday(dob.value)
+        checkPass(password.value)
         if (check) {
             var data = {
                 user: user.value,
@@ -69,7 +117,6 @@ const addNewStaff = function () {
                 gender: gender.options[gender.selectedIndex].value,
                 dob: dob.value
             }
-            console.log(data)
             fetch("http://127.0.0.1:5000/admin/register", {
                 method: 'POST',
                 mode: 'cors',
@@ -84,7 +131,6 @@ const addNewStaff = function () {
             })
                 .then(res => res.json())
                 .then(newdata => {
-                    // console.log(newdata)
                     if (newdata.result === false)
                         alert(newdata.error)
                     if (newdata.result === true) {
@@ -150,6 +196,10 @@ const addNewCustomer = function () {
             alert("Mật khẩu nhập lại không trùng khớp")
             check = false
         }
+        checkUser(user.value)
+        checkRegex(phone.value, CMND.value)
+        checkBirthday(dob.value)
+        checkPass(password.value)
         if (check) {
             var data = {
                 user: user.value,
@@ -161,7 +211,6 @@ const addNewCustomer = function () {
                 gender: gender.options[gender.selectedIndex].value,
                 dob: dob.value
             }
-            console.log(data)
             fetch("http://127.0.0.1:5000/customer/register", {
                 method: 'POST',
                 mode: 'cors',
@@ -176,7 +225,6 @@ const addNewCustomer = function () {
             })
                 .then(res => res.json())
                 .then(newdata => {
-                    // console.log(newdata)
                     if (newdata.result === false)
                         alert(newdata.error)
                     if (newdata.result === true) {
@@ -218,7 +266,6 @@ const addNewFood = function () {
         describe: description.value,
         image: pic
     }
-    console.log(data)
     fetch('http://127.0.0.1:5000/admin/food', {
         method: 'POST',
         mode: 'cors',

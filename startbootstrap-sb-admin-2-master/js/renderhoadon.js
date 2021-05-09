@@ -8,8 +8,8 @@ const renderHoaDonAdmin = function () {
                 output += `
             <tr class="${listHoaDon[i].order_id}">
                 <th>${listHoaDon[i].order_id}</th>
-                <th>${listHoaDon[i].staff_id}</th>
                 <th>${listHoaDon[i].customer_id}</th>
+                <th>${listHoaDon[i].staff_id}</th>
                 <th>${listHoaDon[i].address}</th>
                 <th>${listHoaDon[i].total}</th>
                 <th>${listHoaDon[i].order_time}</th>
