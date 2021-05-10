@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông tin các hóa đơn</title>
+    <title>Kho món ăn</title>
     <link rel="stylesheet" href="./css/trangchu.css">
     <link rel="stylesheet" href="./fonts/themify-icons/themify-icons.css">
     <!-- Custom fonts for this template -->
@@ -30,20 +30,21 @@
                 </a>
             </div>
             <div class="header__nav-mid">
-                <h2 style="color:red ;font-size:40px; width: 100%; vertical-align: middle; padding: 20px 0px 0px 180px">
+                <h2
+                    style="color: #ccf381 ;font-size:40px; width: 100%; vertical-align: middle; padding: 20px 0px 0px 180px">
                     MÓN ĂN CỦA CĂN TIN PTIT</h2>
             </div>
             <div class="header__nav-right">
                 <ul class="header__nav-list-item" style="list-style-type: none;">
-                    <li class="header__nav-item opacityhover">
+                    <li class="header__nav-item opacityhover" id="DangNhap">
                         <i class="icon ti-user"></i>
                         <a href="loginCustom.html" style="text-decoration: none;color:white">Đăng nhập</a>
                     </li>
-                    <li class="header__nav-item opacityhover hidden" onclick="comeback()">
+                    <li class="header__nav-item opacityhover hidden" id="DangXuat" onclick="comeback()">
                         <i class="icon ti-power-off"></i>
                         Đăng xuất
                     </li>
-                    <li class="header__nav-item opacityhover hidden">
+                    <li class="header__nav-item opacityhover hidden" id= "HoaDon">
                         <i class="icon ti-menu"></i>
                         <a href="CusBill.html" style="text-decoration: none;color:white">
                             Xem hóa đơn
@@ -55,12 +56,13 @@
                             Xem danh sách món ăn
                         </a>
                     </li>
-                    <li class="header__nav-item opacityhover hidden">
+                    <li class="header__nav-item opacityhover hidden" id="Info">
                         <i class="icon ti-user"></i>
                         <a href="CusInfo.html" style="text-decoration: none;color:white">
                             Xem thông tin tài khoản
                         </a>
                     </li>
+                  
                 </ul>
                 <script>
                     function comeback() {
@@ -71,7 +73,7 @@
                         sessionStorage.removeItem("IdStaff")
                         sessionStorage.removeItem("Role")
                         sessionStorage.removeItem("UserStaff")
-                        window.location.href = 'loginCustom.html'
+                        window.location.href = "loginStaff.html"
                     }
                 </script>
             </div>

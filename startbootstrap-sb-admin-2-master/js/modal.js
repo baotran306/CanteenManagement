@@ -2,8 +2,9 @@ const checkPass = (myPass) => {
     var pass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/
     if (!myPass.match(pass)) {
         alert("Mật khẩu phải nhập từ 8-16 ký tự có ít nhất 1 chữ viết hoa và không sử dụng ký tự đặc biệt")
-        return
+        return false
     }
+    return true
 }
 var listAmount = []
 var listId = []
@@ -111,7 +112,7 @@ let changepass = function () {
         repeatpass.focus()
         check = false
     }
-    checkPass(newpass.value)
+    check = checkPass(newpass.value)
     if (check) {
         var data = {
             user: sessionStorage.getItem('UserCustomer'),
@@ -169,7 +170,7 @@ let changepassStaff = function () {
         repeatpass.focus()
         check = false
     }
-    checkPass(newpass.value)
+    check = checkPass(newpass.value)
     if (check) {
         var data = {
             user: sessionStorage.getItem('UserStaff'),
@@ -337,7 +338,6 @@ let openBillCustomer = function () {
     listName = []
     listPrice = []
     idCustomer.value = sessionStorage.getItem('IdCustomer')
-    console.log(idCustomer, address)
     fetch(`http://127.0.0.1:5000/customer/${sessionStorage.getItem('IdCustomer')}`)
         .then(res => res.json())
         .then(newData => {
@@ -355,6 +355,12 @@ let openBillCustomer = function () {
             listName.push(objListName[i].innerHTML)
             listPrice.push(Number.parseInt(objListPrice[i].innerHTML))
         }
+    }
+    if (listId.length == 0)
+    {
+        alert("Đơn hàng đang trống")
+        document.getElementById("modal").style.display = 'none'
+        return
     }
     for (let k = 0; k < listId.length; k++) {
         table += `

@@ -59,25 +59,27 @@ fetch(`http://127.0.0.1:5000/customer/${sessionStorage.getItem('IdCustomer')}`)
     
         if (!mySDT.match(sdt)) {
             alert("Số điện thoại phải có 10 chữ số")
-            return
+            return false
         }
         if (!myCMND.match(cmnd)) {
             alert("CMND phải có 9-10 chữ số")
-            return
+            return false
         }
+        return true
     }
     const checkBirthday = (date) => {
         if (date== '')
         {
             alert('Bạn chưa chọn ngày sinh')
-            return
+            return false
         }
         var newDate = new Date(date)
         var dateNow = new Date()
-        if (newDate.getFullYear() + 17 < dateNow.getFullYear() + 1) {
+        if (!(newDate.getFullYear() + 16 < dateNow.getFullYear())) {
             alert("Bạn cần đủ 16 tuổi để đăng ký")
-            return
+            return false
         }
+        return true
     }
     
 
@@ -97,8 +99,7 @@ const changeInfoCustomer = function () {
         alert("Bạn không được phép để trống thông tin")
         check = false
     }
-    checkRegex(phone.value,id_card.value)
-    checkBirthday(dob.value)
+    check = checkRegex(phone.value,id_card.value)&&checkBirthday(dob.value)
     if (check) {
         var data = {
             id: id.value,

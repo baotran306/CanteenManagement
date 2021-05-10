@@ -15,7 +15,7 @@ html {
 
 #header {
     height: 100px;
-    background-color: rgb(1,127,255);
+    background-color: #4831D4;
     position: fixed;
     top: 0;
     left: 0;
@@ -116,7 +116,7 @@ html {
 /* Đây là phần của container  */
 
 #cotaniner {
-    background: url('../img/mon_an/1.jpg');
+    background: url('../img/mon_an/151296967_778871952728692_9157819038150618068_n.jpg');
 
 }
 
@@ -204,7 +204,7 @@ html {
 .titleProduct {
     text-align: center;
     padding-top:10px;
-    background-color: green;
+    background-color: #ffff00d1;
     height: 50px;
 }
 

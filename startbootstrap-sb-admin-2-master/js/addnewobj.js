@@ -4,40 +4,44 @@ const checkRegex = (mySDT, myCMND) => {
     var cmnd = /^[0-9]{9,10}$/
     if (!mySDT.match(sdt)) {
         alert("Số điện thoại phải có 10 chữ số")
-        return
+        return false
     }
     if (!myCMND.match(cmnd)) {
         alert("CMND phải có 9-10 chữ số")
-        return
+        return false
     }
+    return true
 }
 const checkBirthday = (date) => {
     if (date == '') {
         alert('Bạn chưa chọn ngày sinh')
-        return
+        return false
     }
     var newDate = new Date(date)
     var dateNow = new Date()
     if (!(newDate.getFullYear() < dateNow.getFullYear() - 16)) {
         alert("Bạn cần đủ 16 tuổi để đăng ký")
-        return
+        return false
     }
+    return true
 }
 
 const checkPass = (myPass) => {
     var pass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/
     if (!myPass.match(pass)) {
         alert("Mật khẩu phải nhập từ 8-16 ký tự có ít nhất 1 chữ viết hoa và không sử dụng ký tự đặc biệt")
-        return
+        return false
     }
+    return true
 }
 
 const checkUser = (myUser) => {
     var user = /^[a-zA-Z0-9]+$/
     if (!myUser.match(user)) {
         alert("Tên đăng nhập phải không dùng khoảng trắng và ký tự đặc biệt")
-        return
+        return false
     }
+    return true
 }
 
 
@@ -101,10 +105,7 @@ function addNewStaff() {
             alert("Mật khẩu nhập lại không trùng khớp")
             check = false
         }
-        checkUser(user.value)
-        checkRegex(phone.value, CMND.value)
-        checkBirthday(dob.value)
-        checkPass(password.value)
+        check = checkUser(user.value)&&checkRegex(phone.value, CMND.value)&&checkBirthday(dob.value)&&checkPass(password.value)
         if (check) {
             var data = {
                 user: user.value,
@@ -196,10 +197,7 @@ const addNewCustomer = function () {
             alert("Mật khẩu nhập lại không trùng khớp")
             check = false
         }
-        checkUser(user.value)
-        checkRegex(phone.value, CMND.value)
-        checkBirthday(dob.value)
-        checkPass(password.value)
+        check = checkUser(user.value)&&checkRegex(phone.value, CMND.value)&&checkBirthday(dob.value)&&checkPass(password.value)
         if (check) {
             var data = {
                 user: user.value,
@@ -241,23 +239,31 @@ const addNewFood = function () {
     var price = document.getElementById('price')
     var description = document.getElementById('description')
     var inputIMG = document.getElementById('myInputImg')
+    var check = true
     if (foodName.value == '') {
         foodName.focus()
         foodName.placeholder = "Bạn chưa nhập tên món ăn"
+        check = false
     }
     if (price.value == '') {
         price.focus()
         price.placeholder = 'Bạn chưa nhập giá tiền'
+        check = false
     }
     if (description.value == '') {
         description.focus()
         description.placeholder = 'Hãy nhập 1 số mô tả cho khách hàng cùng biết'
+        check = false
     }
     try {
         var pic = inputIMG.files[0].name
     } catch (error) {
         inputIMG.focus()
         alert("Hãy chọn ảnh")
+        check = false
+    }
+    if (!check)
+    {
         return
     }
     var data = {

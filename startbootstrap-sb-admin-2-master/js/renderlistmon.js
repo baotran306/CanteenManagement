@@ -78,8 +78,15 @@ const renderListFoodAdd = function () {
         })
 
     setTimeout(function () {
-        $('#dataTable').DataTable();
+        $('#dataTable').DataTable(
+            {
+                "scrollY": "400px",
+                "scrollX": false,
+                "paging": false
+            }
+        );
     }, 100)
+
 }
 
 const checkRenderListFoodAdd = function () {
@@ -131,6 +138,14 @@ const makeNewMenu = function () {
     var chosenDate = document.getElementById('date-chosen')
     var chosenBuoi = document.getElementById('Buoi')
     var allCheckBox = document.getElementsByClassName('mycheckbox')
+    var datenow = new Date()
+    var datechosen = new Date(chosenDate.value)
+    // if (datenow > datechosen) {
+    //     alert('Thời gian bạn chọn đã qua rồi bạn không thể tạo mới')
+    //     window.location.reload()
+    //     return
+    // }
+
     var listFood = []
     if (chosenDate.value == null) {
         alert("Hãy chọn ngày")
@@ -146,7 +161,6 @@ const makeNewMenu = function () {
         session: chosenBuoi.options[chosenBuoi.selectedIndex].value,
         list_food: listFood
     }
-    console.log(data)
     fetch('http://127.0.0.1:5000/admin/update/menu/detail', {
         method: 'POST',
         mode: 'cors',
