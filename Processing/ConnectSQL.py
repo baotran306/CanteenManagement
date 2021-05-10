@@ -121,8 +121,6 @@ class SqlFunction:
         try:
             if not ck.check_format_datetime(date_start) or not ck.check_format_datetime(date_end):
                 return False
-            if not ck.check_limit_time(date_start) or not ck.check_limit_time(date_end):
-                return False
             if not ck.check_start_end_time(date_start, date_end):
                 return False
             cursor = self.func
