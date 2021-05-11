@@ -401,7 +401,7 @@ def insert_order_onl():
         cur_price = request.json['cur_price']
         check = False
         for i in range(len(food_id)):
-            if connect.insert_order_detail(id_order, food_id, num_food, cur_price):
+            if connect.insert_order_detail(id_order, food_id[i], num_food[i], cur_price[i]):
                 check = True
             else:
                 check = False
