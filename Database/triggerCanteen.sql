@@ -1,3 +1,6 @@
+﻿use CanteenManagement
+go
+
 create trigger CannotDeleteAdmin
 on dbo.userlogin
 for delete
