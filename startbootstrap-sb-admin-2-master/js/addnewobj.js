@@ -28,8 +28,8 @@ const checkBirthday = (date) => {
 
 const checkPass = (myPass) => {
     var pass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/
-    if (!myPass.match(pass)) {
-        alert("Mật khẩu phải nhập từ 8-16 ký tự có ít nhất 1 chữ viết hoa và không sử dụng ký tự đặc biệt")
+    if (!myPass.match(pass) || myPass.indexOf(' ') >= 0) {
+        alert("Mật khẩu phải nhập từ 8-16 ký tự có ít nhất 1 chữ viết hoa và không sử dụng ký tự đặc biệt hay khoảng trắng ")
         return false
     }
     return true
@@ -105,7 +105,7 @@ function addNewStaff() {
             alert("Mật khẩu nhập lại không trùng khớp")
             check = false
         }
-        check = checkUser(user.value)&&checkRegex(phone.value, CMND.value)&&checkBirthday(dob.value)&&checkPass(password.value)
+        check = checkUser(user.value) && checkRegex(phone.value, CMND.value) && checkBirthday(dob.value) && checkPass(password.value)
         if (check) {
             var data = {
                 user: user.value,
@@ -197,7 +197,7 @@ const addNewCustomer = function () {
             alert("Mật khẩu nhập lại không trùng khớp")
             check = false
         }
-        check = checkUser(user.value)&&checkRegex(phone.value, CMND.value)&&checkBirthday(dob.value)&&checkPass(password.value)
+        check = checkUser(user.value) && checkRegex(phone.value, CMND.value) && checkBirthday(dob.value) && checkPass(password.value)
         if (check) {
             var data = {
                 user: user.value,
@@ -262,8 +262,7 @@ const addNewFood = function () {
         alert("Hãy chọn ảnh")
         check = false
     }
-    if (!check)
-    {
+    if (!check) {
         return
     }
     var data = {

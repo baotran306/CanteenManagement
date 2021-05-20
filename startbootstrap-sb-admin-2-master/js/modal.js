@@ -1,6 +1,6 @@
 const checkPass = (myPass) => {
     var pass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/
-    if (!myPass.match(pass)) {
+    if (!myPass.match(pass) || myPass.indexOf(' ') >= 0) {
         alert("Mật khẩu phải nhập từ 8-16 ký tự có ít nhất 1 chữ viết hoa và không sử dụng ký tự đặc biệt")
         return false
     }
@@ -356,8 +356,7 @@ let openBillCustomer = function () {
             listPrice.push(Number.parseInt(objListPrice[i].innerHTML))
         }
     }
-    if (listId.length == 0)
-    {
+    if (listId.length == 0) {
         alert("Đơn hàng đang trống")
         document.getElementById("modal").style.display = 'none'
         return

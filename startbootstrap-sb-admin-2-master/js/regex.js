@@ -13,8 +13,7 @@ const checkRegex = (mySDT, myCMND) => {
     }
 }
 const checkBirthday = (date) => {
-    if (date== '')
-    {
+    if (date == '') {
         alert('Bạn chưa chọn ngày sinh')
         return
     }
@@ -28,13 +27,14 @@ const checkBirthday = (date) => {
 
 const checkPass = (myPass) => {
     var pass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/
-    if (!myPass.match(pass)) {
+    if (!myPass.match(pass) || myPass.indexOf(' ') >= 0) {
         alert("Mật khẩu phải nhập từ 8-16 ký tự có ít nhất 1 chữ viết hoa và không sử dụng ký tự đặc biệt")
         return
     }
 }
 
 const checkUser = (myUser) => {
+    1
     var user = /^[a-zA-Z0-9]+$/
     if (!myUser.match(user)) {
         alert("Tên đăng nhập phải không dùng khoảng trắng và ký tự đặc biệt")
