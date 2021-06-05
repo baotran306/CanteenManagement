@@ -341,7 +341,7 @@ class SqlFunction:
             if not self.check_existed_column(table_name, col):
                 return False
             cursor = self.func
-            cursor.execute('delete from {} where {} = {}'.format(table_name, col, val))
+            cursor.execute('delete from {} where {} = ?'.format(table_name, col), val)
             cursor.commit()
             return True
         except Exception as ex:
@@ -1248,8 +1248,10 @@ sql_func = SqlFunction()
 # print(sql_func.stats_revenue_by_day('2021-04-12'))
 # print(sql_func.generate_new_id_person(0))
 # print(sql_func.get_all_order_by_cus_id('KH001'))
-# print(sql_func.delete_function("Food", "id", 31))
+# print(sql_func.delete_function("Food", "id", 32))
 # print(sql_func.get_user_from_id("NV00", 1))
 # print(sql_func.get_role_id_by_name("nhân viên giao hàng"))
 # print(sql_func.update_customer_order(2, "đã giao"))
 # print(sql_func.get_delivering_order_by_shipper('NV002'))
+# print(sql_func.delete_function("UserLogin", "staff_id", 'NV003'))
+
