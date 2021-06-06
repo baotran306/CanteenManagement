@@ -24,5 +24,10 @@ fetch("http://127.0.0.1:5000/customer")
 })
 
 setTimeout(function () {
-$('#dataTable').DataTable();
-}, 100);
+$('#dataTable').DataTable({
+    dom: 'Bfrtip',
+    buttons: [
+        'excel', 'pdf', 'print'
+    ]
+});
+}, 1000);

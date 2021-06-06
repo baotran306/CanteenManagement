@@ -21,7 +21,7 @@ fetch("http://127.0.0.1:5000/staff")
                 <th class="${nhanvien.id}">${nhanvien.salary}</th>
                 <th>${nhanvien.phone_num}</th>
                 <th>
-                    <button class="btn-primary btn-Edit" onmousedown="openEditStaff(this)" id="${nhanvien.id}">Chỉnh sửa</button>
+                    <button class="btn-primary btn-Edit" onmousedown="openEditStaff(this)" id="${nhanvien.id}">Sửa</button>
                     <button class="btn-secondary" onclick="DeleStaff('${nhanvien.id}')" style="margin-top:20px">Xóa</button>
                 </th>
                 </tr>
@@ -31,8 +31,13 @@ fetch("http://127.0.0.1:5000/staff")
     })
 
 setTimeout(function () {
-    $('#dataTable').DataTable();
-}, 100);
+    $('#dataTable').DataTable({
+        dom: 'Bfrtip',
+    buttons: [
+        'excel', 'pdf', 'print'
+    ]
+    });
+}, 1000);
 
 var DeleStaff = function (id) {
     console.log(id)

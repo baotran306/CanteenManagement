@@ -286,5 +286,6 @@ const addNewFood = function () {
         .then(res => res.json())
         .then(newdata => {
             alert(newdata.error)
+            window.location.reload()
         })
 }

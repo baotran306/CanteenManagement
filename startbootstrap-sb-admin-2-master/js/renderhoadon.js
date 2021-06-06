@@ -23,8 +23,13 @@ const renderHoaDonAdmin = function () {
         })
         .catch(error => console.log(error))
     setTimeout(function () {
-        $('#dataTable').DataTable();
-    }, 100)
+        $('#dataTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+               'excel', 'pdf', 'print'
+            ]
+        });
+    }, 2000)
 }
 
 const changeStatus = function (element) {
@@ -39,7 +44,6 @@ const changeStatus = function (element) {
     if (element.innerHTML == "Chưa giao") {
         element.innerHTML = "Đang giao"
     }
-    console.log(data)
     fetch("http://127.0.0.1:5000/shipper/manage/order", {
         method: 'POST',
         mode: 'cors',
@@ -113,8 +117,7 @@ const renderHoaDonCustomer = function () {
                 <th>${listHoaDon[i].status}</th>
                 `
                 var buttonCancel = '<th></th>'
-                if (listHoaDon[i].status == "Chưa giao")
-                {
+                if (listHoaDon[i].status == "Chưa giao") {
                     buttonCancel = `
                     <th>
                         <button class ="btn-primary" id="${listHoaDon[i].id_order}" onclick = "CancelBill(this)">Hủy</button>

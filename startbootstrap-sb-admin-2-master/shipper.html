@@ -68,88 +68,90 @@
     </div>
     <div id="cotaniner">
         <!--Đây là slider đồ ăn giới thiệu sản phẩm-->
-        <div class="container__slider" style="padding-top:140px;">
-            <div class="mySlides fade">
-                <img src="./img/mon_an/1.jpg" class="img-slider">
-                <div class="slider-info">
-                    <h3 class="slider-name">A</h3>
-                    <br>
-                    <span class="slider-description">A is</span>
+        <div style="background: #00000066;">
+            <div class="wrap-container">
+                <div class="container__slider" style="padding-top:140px;">
+                    <div class="mySlides fade">
+                        <img src="./img/mon_an/1.jpg" class="img-slider">
+                        <div class="slider-info">
+                            <h3 class="slider-name">A</h3>
+                            <br>
+                            <span class="slider-description">A is</span>
+                        </div>
+                    </div>
+
+                    <div class="mySlides fade">
+                        <img src="img/mon_an/2.jpg" class="img-slider">
+                        <div class="slider-info">
+                            <h3 class="slider-name">B</h3>
+                            <br>
+                            <span class="slider-description">B is</span>
+                        </div>
+                    </div>
+
+                    <div class="mySlides fade">
+                        <img src="img/mon_an/3.jpg" class="img-slider">
+                        <div class="slider-info">
+                            <h3 class="slider-name">C</h3>
+                            <br>
+                            <span class="slider-description">C is</span>
+                        </div>
+                    </div>
+
                 </div>
+                <br>
+                <div class="wrap-dots" style="text-align:center">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+                <script>
+                    var slideIndex = 0;
+                    showSlides();
+
+                    function showSlides() {
+                        var i;
+                        var slides = document.getElementsByClassName("mySlides");
+                        var dots = document.getElementsByClassName("dot");
+                        for (i = 0; i < slides.length; i++) {
+                            slides[i].style.display = "none";
+                        }
+                        slideIndex++;
+                        if (slideIndex > slides.length) { slideIndex = 1 }
+                        for (i = 0; i < dots.length; i++) {
+                            dots[i].className = dots[i].className.replace(" active", "");
+                        }
+                        slides[slideIndex - 1].style.display = "block";
+                        dots[slideIndex - 1].className += " active";
+                        setTimeout(showSlides, 2000);
+                    }
+                </script>
             </div>
-
-            <div class="mySlides fade">
-                <img src="img/mon_an/2.jpg" class="img-slider">
-                <div class="slider-info">
-                    <h3 class="slider-name">B</h3>
-                    <br>
-                    <span class="slider-description">B is</span>
-                </div>
-            </div>
-
-            <div class="mySlides fade">
-                <img src="img/mon_an/3.jpg" class="img-slider">
-                <div class="slider-info">
-                    <h3 class="slider-name">C</h3>
-                    <br>
-                    <span class="slider-description">C is</span>
-                </div>
-            </div>
-
-        </div>
-        <br>
-        <div class="wrap-dots" style="text-align:center">
-            <span class="dot"></span>
-            <span class="dot"></span>
-            <span class="dot"></span>
-        </div>
-
-        <script>
-            var slideIndex = 0;
-            showSlides();
-
-            function showSlides() {
-                var i;
-                var slides = document.getElementsByClassName("mySlides");
-                var dots = document.getElementsByClassName("dot");
-                for (i = 0; i < slides.length; i++) {
-                    slides[i].style.display = "none";
-                }
-                slideIndex++;
-                if (slideIndex > slides.length) { slideIndex = 1 }
-                for (i = 0; i < dots.length; i++) {
-                    dots[i].className = dots[i].className.replace(" active", "");
-                }
-                slides[slideIndex - 1].style.display = "block";
-                dots[slideIndex - 1].className += " active";
-                setTimeout(showSlides, 2000);
-            }
-        </script>
-
-        <!-- Đây là bản hóa đơn khách -->
-        <div class="container-fluid">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Các hóa đơn của bạn</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Mã hóa đơn</th>
-                                    <th>Tên khách hàng</th>
-                                    <th>Danh sách món ăn</th>
-                                    <th>Số lượng</th>
-                                    <th>Giá</th>
-                                    <th>Tổng tiền</th>
-                                    <th>Địa chỉ giao</th>
-                                    <th>Thời gian đặt</th>
-                                    <th>Trạng thái</th>
-                                </tr>
-                            </thead>
-                            <tbody id="listbill">
-                                <!-- <tr>
+            <!-- Đây là bản hóa đơn khách -->
+            <div class="container-fluid">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Các hóa đơn của bạn</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Mã hóa đơn</th>
+                                        <th>Tên khách hàng</th>
+                                        <th>Danh sách món ăn</th>
+                                        <th>Số lượng</th>
+                                        <th>Giá</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Địa chỉ giao</th>
+                                        <th>Thời gian đặt</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listbill">
+                                    <!-- <tr>
                                     <th style="vertical-align: middle;">123456</th>
                                     <th>
                                         Canh khổ qua nhồi thịt
@@ -190,12 +192,14 @@
                                     <th style="vertical-align: middle;">1234567890123456</th>
                                     <th style="vertical-align: middle;">Đang giao</th>
                                 </tr> -->
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 
 

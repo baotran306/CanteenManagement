@@ -298,7 +298,7 @@ var datHangOnline = function () {
         num_food: listAmount,
         cur_price: listPrice,
     }
-    console.log(data)
+
 
     fetch('http://127.0.0.1:5000/customer/order', {
         method: 'POST',
@@ -317,6 +317,10 @@ var datHangOnline = function () {
             if (newData.result == true) {
                 alert(newData.error)
                 document.getElementById("modal").style.display = 'none'
+                var allAmount = document.getElementsByClassName('valueAmount')
+                for (let i = 0; i < allAmount.length; i++) {
+                    allAmount[i].value = 0
+                }
             }
             if (newData.result == false) {
                 alert(newData.error)
@@ -409,7 +413,18 @@ let datHangOffline = function () {
         .then(newData => {
             if (newData.result == true) {
                 alert(newData.error)
+                var divToPrint = document.getElementById("billOff")
+                var totalBill = document.getElementById("total")
+                var temp = divToPrint.outerHTML +  "Tổng tiền: " +total.outerHTML
+                newWin = window.open("");
+                newWin.document.write(temp);
+                newWin.print();
+                newWin.close();
                 document.getElementById("modal").style.display = 'none'
+                var allAmount = document.getElementsByClassName('valueAmount')
+                for (let i = 0; i < allAmount.length; i++) {
+                    allAmount[i].value = 0
+                }
             }
 
             if (newData.result == false) {
@@ -430,7 +445,7 @@ let openBillSaler = function () {
     listId = []
     listName = []
     listPrice = []
-    console.log(listAmount, listId, listName, listPrice)
+    
     var objListAmount = document.getElementsByClassName('valueAmount')
     var objListName = document.getElementsByClassName('nameProduct')
     var objListPrice = document.getElementsByClassName('priceProduct')
@@ -442,6 +457,11 @@ let openBillSaler = function () {
             listName.push(objListName[i].innerHTML)
             listPrice.push(Number.parseInt(objListPrice[i].innerHTML))
         }
+    }
+    if (listId.length == 0) {
+        alert("Đơn hàng đang trống")
+        document.getElementById("modal").style.display = 'none'
+        return
     }
     for (let k = 0; k < listId.length; k++) {
         table += `
@@ -458,6 +478,6 @@ let openBillSaler = function () {
     for (let j = 0; j < listPrice.length; j++) {
         totalTemp += listPrice[j] * listAmount[j]
     }
-    total.value = totalTemp
+    total.innerHTML = totalTemp
 
 }

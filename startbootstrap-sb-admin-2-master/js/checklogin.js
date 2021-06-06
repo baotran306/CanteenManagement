@@ -46,7 +46,7 @@ const checkloginSaler = function () {
     }
     if (role.toLocaleLowerCase() === 'nhân viên giao hàng') {
         alert('Bạn là nhân viên giao hàng hãy tập trung vào giao hàng nhé')
-        window.location.href = 'saler.html'
+        window.location.href = 'shipper.html'
     }
 }
 

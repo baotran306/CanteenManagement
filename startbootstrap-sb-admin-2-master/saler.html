@@ -373,7 +373,7 @@
                     <label>Thông tin đơn hàng</label>
                     <br>
                     <br>
-                    <table class="mytable" style="margin-left: 20px ;">
+                    <table class="mytable" style="margin-left: 20px ;" id = "billOff">
                         <thead>
                             <tr>
                                 <th>Mã món ăn</th>
@@ -414,9 +414,11 @@
                     <br>
                     <br>
                     <label>Tổng tiền</label>
-                    <input type="number" id='total' disabled>
-                    <button type="submit" class="btn btn-finish" onclick="datHangOffline()">Hoàn tất</button>
-                    <button class="btn btn-comeback" onclick="closeForm()">Trở lại</button>
+                    <span type="number" id='total' disabled> </span>
+                    <div>
+                        <button type="submit" class="btn btn-finish" onclick="datHangOffline()">Hoàn tất</button>
+                        <button class="btn btn-comeback" onclick="closeForm()">Trở lại</button>
+                    </div>
                 </div>
             </div>
         </div>

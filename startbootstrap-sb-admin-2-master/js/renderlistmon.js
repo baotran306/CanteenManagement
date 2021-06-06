@@ -140,11 +140,11 @@ const makeNewMenu = function () {
     var allCheckBox = document.getElementsByClassName('mycheckbox')
     var datenow = new Date()
     var datechosen = new Date(chosenDate.value)
-    // if (datenow > datechosen) {
-    //     alert('Thời gian bạn chọn đã qua rồi bạn không thể tạo mới')
-    //     window.location.reload()
-    //     return
-    // }
+    if (datenow > datechosen) {
+        alert('Thời gian bạn chọn đã qua rồi bạn không thể tạo mới')
+        window.location.reload()
+        return
+    }
 
     var listFood = []
     if (chosenDate.value == null) {

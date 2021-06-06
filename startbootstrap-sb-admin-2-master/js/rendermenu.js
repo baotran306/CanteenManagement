@@ -33,10 +33,15 @@ setTimeout(() => {
     })
         .then(res => res.json())
         .then(listmenu => {
+            var morning = document.getElementById('morning')
             if (listmenu.result == false) {
+                morning.innerHTML = `
+                <div style = "width: 100%">
+                <p style="text-align: center; margin-left: -45px"> Không có dữ liệu </p>
+                </div>
+                `
                 return
             }
-            var morning = document.getElementById('morning')
             var outputSang = ''
             for (let i = 0; i < listmenu.id.length; i++) {
 
@@ -77,11 +82,16 @@ setTimeout(() => {
     })
         .then(res => res.json())
         .then(listmenu => {
+            var lunch = document.getElementById('lunch')
             if (listmenu.result == false) {
+                lunch.innerHTML = `
+                <div style = "width: 100%">
+                <p style="text-align: center; margin-left: -45px"> Không có dữ liệu </p>
+                </div>
+                `
                 return
             }
 
-            var lunch = document.getElementById('lunch')
             var outputTrua = ''
             for (let i = 0; i < listmenu.id.length; i++) {
 
@@ -123,11 +133,16 @@ setTimeout(() => {
     })
         .then(res => res.json())
         .then(listmenu => {
+            var afternoon = document.getElementById('afternoon')
             if (listmenu.result == false) {
+                afternoon.innerHTML = `
+                <div style = "width: 100%">
+                <p style="text-align: center; margin-left: -45px"> Không có dữ liệu </p>
+                </div>
+                `
                 return
             }
 
-            var afternoon = document.getElementById('afternoon')
             var outputChieu = ''
             for (let i = 0; i < listmenu.id.length; i++) {
 

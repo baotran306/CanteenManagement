@@ -117,9 +117,8 @@ setTimeout(function () {
     .then(newData => {
       if (newData != null) {
         for (let i = 0; i < newData.length; i++) {
-          mydata[Number.parseInt(newData[i].month - 1)] = Number.parseFloat(newData[i].revenue / 1000000)
-          console.log(mydata[Number.parseInt(newData[i].month) - 1])
-
+          mydata[Number.parseInt(newData[i].month - 1)] = Math.round(Number.parseFloat(newData[i].revenue / 1000000)*100)/100
+          
         }
         myBarChart.update()
         document.getElementById('titleChart').innerHTML = `&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;DOANHTHU CỦA CĂN TIN PTIT NĂM ${document.getElementById('chosen-year').value}&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;&star;`
@@ -146,8 +145,8 @@ const tableYear = function () {
       if (newData != null) {
         var mydata2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         for (let i = 0; i < newData.length; i++) {
-          mydata2[Number.parseInt(newData[i].month) - 1] = Number.parseFloat(newData[i].revenue / 1000000)
-          console.log(mydata2[Number.parseInt(newData[i].month) - 1])
+          mydata2[Number.parseInt(newData[i].month) - 1] = Math.round(Number.parseFloat(newData[i].revenue / 1000000)*100)/100
+          
         }
         myBarChart.data.datasets[0].data = mydata2
         myBarChart.update()
