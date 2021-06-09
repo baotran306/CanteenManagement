@@ -17,7 +17,7 @@ function loginCustomer() {
             user: user,
             password: password
         }
-        console.log(data)
+        
         fetch("http://127.0.0.1:5000/customer/login", {
             method: 'POST',
             mode: 'cors',
@@ -32,7 +32,7 @@ function loginCustomer() {
         })
             .then(res => res.json())
             .then(newdata => {
-                console.log(newdata)
+                // console.log(newdata)
                 if (newdata.result === false)
                     alert(newdata.error)
                 if (newdata.result === true) {
